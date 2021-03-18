@@ -18,22 +18,43 @@ echo DJANGO_SECRET_KEY=\'$(python3 -c 'from django.core.management.utils import 
 ```
 or just create test
 ```shell
-echo DJANGO_SECRET_KEY=testsecretkey  >> .env
+echo DJANGO_SECRET_KEY=test_secret_key  >> .env
 ```
-
-4. export variables from .env file
+4. add connection data to `.env` file
+```shell
+>>.env << __EOF__
+POSTGRES_HOST=192.168.10.1
+POSTGRES_PORT=5434
+POSTGRES_DB=taskcamp
+POSTGRES_USER=taskcamp
+POSTGRES_PASSWORD=secret
+MEMCACHED_LOCATION=192.168.10.1:11211
+__EOF__
+```
+if you need a debug to be enabled
+```shell
+>>.env << __EOF__
+DJANGO_DEBUG=True
+__EOF__
+```
+5. create and run postgresql instance (if needed)
+```shell
+docker run -d --name taskcamp-postgres --hostname taskcamp-postgres \
+    -p 5434:5432 --env-file .env postgres:13-alpine
+```
+5. export variables from .env file
 ```shell
 export $(cat .env | xargs)
 ```
-5. create a db (run migrations)
+6. create a db (run migrations)
 ```shell
 python3 manage.py migrate
 ```
-6. compile messages
+7. compile messages
 ```shell
 python3 manage.py compilemessages
 ```
-7. create superuser
+8. create superuser
 ```shell
 python3 manage.py createsuperuser
 ```
