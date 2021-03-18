@@ -28,7 +28,7 @@ POSTGRES_PORT=5434
 POSTGRES_DB=taskcamp
 POSTGRES_USER=taskcamp
 POSTGRES_PASSWORD=secret
-MEMCACHED_LOCATION=192.168.10.1:11211
+MEMCACHED_LOCATION=192.168.10.1:11214
 __EOF__
 ```
 if you need a debug to be enabled
@@ -37,10 +37,12 @@ if you need a debug to be enabled
 DJANGO_DEBUG=True
 __EOF__
 ```
-5. create and run postgresql instance (if needed)
+5. create and run postgresql and memcached instance (if needed)
 ```shell
 docker run -d --name taskcamp-postgres --hostname taskcamp-postgres \
     -p 5434:5432 --env-file .env postgres:13-alpine
+    
+docker run -d -p 11214:11211 --name taskcamp-memcached memcached:alpine
 ```
 5. export variables from .env file
 ```shell
