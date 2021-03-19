@@ -5,9 +5,43 @@
 {% block container %}
     <h1>{% translate 'Employees' %}</h1>
     <hr>
-    <ol class="list">
-    {% for employee in employee_list %}
-        <li>{{ employee.full_name }}</li>
-    {% endfor %}
-    </ol>
+    <a href="#" class="btn btn-primary">{% translate 'Create' %}</a>
+    {% if employee_list %}
+        <table class="table table-hover table-stripped align-middle">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>{% translate 'Full name' %}</th>
+                <th>{% translate 'Email' %}</th>
+                <th>{% translate 'Birthdate' %}</th>
+                <th>{% translate 'Actions' %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for employee in employee_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>
+                        <a href="{% url 'employee-detail' employee.id %}"
+                           class="link-primary">
+                            {{ employee.full_name }}
+                        </a>
+                    </td>
+                    <td>{{ employee.email }}</td>
+                    <td>{{ employee.birthdate }}</td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="#" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>{% translate 'No employees' %}</p>
+    {% endif %}
 {% endblock %}
