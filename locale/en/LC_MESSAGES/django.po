@@ -8,15 +8,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-18 12:23+0000\n"
+"POT-Creation-Date: 2021-03-19 06:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: employees/apps.py:7 employees/models.py:16 templates/nav.html:20
+msgid "Employees"
+msgstr "Employees"
 
 #: employees/models.py:6
 msgid "Firstname"
@@ -34,11 +38,15 @@ msgstr "Email"
 msgid "Birthdate"
 msgstr "Birthdate"
 
-#: projects/models.py:8 projects/models.py:25
+#: employees/models.py:15
+msgid "Employee"
+msgstr "Employee"
+
+#: projects/models.py:8 projects/models.py:29
 msgid "Title"
 msgstr "Title"
 
-#: projects/models.py:9 projects/models.py:26
+#: projects/models.py:9 projects/models.py:30
 msgid "Description"
 msgstr "Description"
 
@@ -50,41 +58,57 @@ msgstr "Due date"
 msgid "Is closed"
 msgstr "Is closed"
 
-#: projects/models.py:18
+#: projects/models.py:17
+msgid "Project"
+msgstr "Project"
+
+#: projects/models.py:18 templates/nav.html:14
+msgid "Projects"
+msgstr "Projects"
+
+#: projects/models.py:22
 msgid "New"
 msgstr "New"
 
-#: projects/models.py:19
+#: projects/models.py:23
 msgid "In Progress"
 msgstr "In Progress"
 
-#: projects/models.py:20
+#: projects/models.py:24
 msgid "Done"
 msgstr "Done"
 
-#: projects/models.py:21
+#: projects/models.py:25
 msgid "Closed"
 msgstr "Closed"
 
-#: projects/models.py:27
+#: projects/models.py:31
 msgid "Start date"
 msgstr "Start date"
 
-#: projects/models.py:28
+#: projects/models.py:32
 msgid "End date"
 msgstr "End date"
 
-#: projects/models.py:30
+#: projects/models.py:34
 msgid "Author"
 msgstr "Author"
 
-#: projects/models.py:34
+#: projects/models.py:38
 msgid "Assignee"
 msgstr "Assignee"
 
-#: projects/models.py:38
+#: projects/models.py:42
 msgid "Status"
 msgstr "Status"
+
+#: projects/models.py:50
+msgid "Task"
+msgstr "Task"
+
+#: projects/models.py:51 templates/nav.html:17
+msgid "Tasks"
+msgstr "Tasks"
 
 #: taskcamp/settings.py:153
 msgid "English"
@@ -93,3 +117,11 @@ msgstr "English"
 #: taskcamp/settings.py:154
 msgid "Russian"
 msgstr "Russian"
+
+#: templates/nav.html:11
+msgid "Home"
+msgstr "Home"
+
+#: templates/nav.html:24 templates/nav.html:25
+msgid "Search"
+msgstr "Search"

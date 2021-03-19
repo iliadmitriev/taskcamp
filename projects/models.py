@@ -13,6 +13,10 @@ class Project(models.Model):
     def __str__(self):
         return f'{self.id}: {self.title} ({self.is_closed})'
 
+    class Meta:
+        verbose_name = _('Project')
+        verbose_name_plural = _('Projects')
+
 
 class TaskStatus(models.TextChoices):
     NEW = 'new', _('New')
@@ -38,3 +42,10 @@ class Task(models.Model):
         verbose_name=_('Status'), max_length=20,
         choices=TaskStatus.choices, default=TaskStatus.NEW
     )
+
+    def __str__(self):
+        return f'{self.id}: {self.title} ({self.status})'
+
+    class Meta:
+        verbose_name = _('Task')
+        verbose_name_plural = _('Tasks')

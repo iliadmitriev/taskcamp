@@ -9,4 +9,8 @@ class Employee(models.Model):
     birthdate = models.DateField(verbose_name=_('Birthdate'))
 
     def __str__(self):
-        return f'{id}: {self.firstname} {self.surname}'
+        return f'{self.id}: {self.firstname} {self.surname}'
+
+    class Meta:
+        verbose_name = _('Employee')
+        verbose_name_plural = _('Employees')
