@@ -13,6 +13,7 @@ class Employee(models.Model):
 
     def full_name(self):
         return f'{self.firstname} {self.surname}'
+    full_name.short_description = _('Full name')
 
     class Meta:
         verbose_name = _('Employee')
