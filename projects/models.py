@@ -12,10 +12,6 @@ class Project(models.Model):
     def __str__(self):
         return f'{self.id}: {self.title} ({self.is_closed})'
 
-    def completed(self):
-        #Task.objects.filter()
-        return 0
-
     class Meta:
         verbose_name = _('Project')
         verbose_name_plural = _('Projects')

@@ -13,6 +13,8 @@
                 <th>#</th>
                 <th>{% translate 'Title' %}</th>
                 <th>{% translate 'Due date' %}</th>
+                <th>{% translate 'Tasks' %}</th>
+                <th>{% translate 'Completed' %}</th>
                 <th>{% translate 'Closed' %}</th>
                 <th>{% translate 'Actions' %}</th>
             </tr>
@@ -28,6 +30,14 @@
                         </a>
                     </td>
                     <td>{{ project.due_date }}</td>
+                    <td>{{ project.status_count }}</td>
+                    <td>
+                        {% if project.status_count %}
+                            {{ project.completed | floatformat:3 }}
+                        {% else %}
+                            0
+                        {% endif %}
+                    </td>
                     <td>
                         {{ project.is_closed }}
                     </td>
