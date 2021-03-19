@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block container %}
+    <h1>{{ employee.firstname }}</h1>
+    <hr>
+    <form method="post">{% csrf_token %}
+
+        <div class="alert alert-danger">
+            {% translate 'You want to delete?' %}
+        </div>
+        <input type="submit" class="btn btn-danger btn-lg" value="{% translate 'Confirm' %}">
+        <a href="{% url 'employee-list' %}" class="btn btn-primary btn-lg">
+            {% translate 'Cancel' %}
+        </a>
+
+    </form>
+
+{% endblock %}
