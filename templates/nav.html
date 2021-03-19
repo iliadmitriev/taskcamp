@@ -1,29 +1,43 @@
 {% load i18n %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Taskcamp</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">{% translate 'Home' %}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">{% translate 'Projects' %}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">{% translate 'Tasks' %}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">{% translate 'Employees' %}</a>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="{% translate 'Search' %}" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">{% translate 'Search' %}</button>
-      </form>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Taskcamp</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    {% url 'home' as url %}
+                    <a class="nav-link{% if request.path == url %} active{% endif %}"
+                       href="{{ url }}">
+                        {% translate 'Home' %}</a>
+                </li>
+                <li class="nav-item">
+                    {% url 'projects-list' as url %}
+                    <a class="nav-link{% if request.path == url %} active{% endif %}"
+                       href="{{ url }}">
+                        {% translate 'Projects' %}</a>
+                </li>
+                <li class="nav-item">
+                    {% url 'projects-tasks-list' as url %}
+                    <a class="nav-link{% if request.path == url %} active{% endif %}"
+                       href="{{ url }}">
+                        {% translate 'Tasks' %}</a>
+                </li>
+                <li class="nav-item">
+                    {% url 'employee-list' as url %}
+                    <a class="nav-link{% if request.path == url %} active{% endif %}"
+                       href="{{ url }}">
+                        {% translate 'Employees' %}</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="{% translate 'Search' %}"
+                       aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">{% translate 'Search' %}</button>
+            </form>
+        </div>
     </div>
-  </div>
 </nav>
