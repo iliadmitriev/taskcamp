@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block container %}
+    <h1>{% translate 'Employees' %}</h1>
+    <hr>
+    <ol class="list">
+    {% for employee in employee_list %}
+        <li>{{ employee.full_name }}</li>
+    {% endfor %}
+    </ol>
+{% endblock %}

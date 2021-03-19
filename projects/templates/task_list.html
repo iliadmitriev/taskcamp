@@ -3,11 +3,11 @@
 {% load i18n %}
 
 {% block container %}
-    <h1>{% translate 'Projects' %}</h1>
+    <h1>{% translate 'Tasks' %}</h1>
     <hr>
     <ol>
-    {% for project in project_list %}
-        <li>{{ project.title }}</li>
+    {% for task in task_list %}
+        <li>{{ task.title }}</li>
     {% endfor %}
     </ol>
 {% endblock %}

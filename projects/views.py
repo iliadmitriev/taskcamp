@@ -1,15 +1,12 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.views.generic import View
-from django.template import loader
+from django.views.generic import ListView
+from .models import Project, Task
 
 
-class ProjectsIndexView(View):
-    def get(self, *args, **kwargs):
-        template = loader.get_template('projects_list.html')
-        context = {}
-        return HttpResponse(
-            template.render(context, self.request)
-        )
+class ProjectsListView(ListView):
+    template_name = 'projects_list.html'
+    model = Project
 
 
+class TaskListView(ListView):
+    template_name = 'task_list.html'
+    model = Task

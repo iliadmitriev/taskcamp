@@ -11,6 +11,9 @@ class Employee(models.Model):
     def __str__(self):
         return f'{self.id}: {self.firstname} {self.surname}'
 
+    def full_name(self):
+        return f'{self.firstname} {self.surname}'
+
     class Meta:
         verbose_name = _('Employee')
         verbose_name_plural = _('Employees')

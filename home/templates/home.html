@@ -5,4 +5,115 @@
 {% block container %}
     <h1>{% translate 'Home' %}</h1>
     <hr>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% translate 'Projects' %}
+                    </h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            {% translate 'Total' %}
+                            <span class="badge rounded-pill  bg-info">
+                                0
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            {% translate 'In progress' %}
+                            <span class="badge rounded-pill bg-primary">
+                                0
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            {% translate 'Overdue' %}
+                            <span class="badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            {% translate 'Completed' %}
+                            <span class="badge rounded-pill bg-success">
+                                0
+                            </span>
+                        </li>
+                    </ul>
+                    <a href="{% url 'projects-list' %}" class="btn btn-primary">
+                        {% translate 'Open projects' %}
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% translate 'Tasks' %}
+                    </h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            {% translate 'Total' %}
+                            <span class="badge rounded-pill  bg-info">
+                                0
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            {% translate 'In progress' %}
+                            <span class="badge rounded-pill bg-primary">
+                                0
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            {% translate 'Overdue' %}
+                            <span class="badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            {% translate 'Completed' %}
+                            <span class="badge rounded-pill bg-success">
+                                0
+                            </span>
+                        </li>
+                    </ul>
+                    <a href="{% url 'projects-tasks-list' %}" class="btn btn-primary">
+                        {% translate 'Open Tasks' %}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% translate 'Employees' %}
+                    </h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            {% translate 'Total' %}
+                            <span class="badge rounded-pill  bg-info">
+                                0
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            {% translate 'Busy' %}
+                            <span class="badge rounded-pill bg-success">
+                                0
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            {% translate 'Without tasks' %}
+                            <span class="badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </li>
+                    </ul>
+                    <a href="{% url 'employee-list' %}" class="btn btn-primary">
+                        {% translate 'Open employees' %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
