@@ -13,16 +13,16 @@ class ProjectAdmin(admin.ModelAdmin):
 class TaskAdmin(admin.ModelAdmin):
     readonly_fields = ['id']
     fields = [
-        'id', 'title', 'description', 'start', 'end',
+        'id', 'project', 'title', 'description', 'start', 'end',
         'author', 'assignee', 'status'
     ]
     list_display = [
-        'id', 'title', 'description', 'start', 'end',
+        'id', 'title', 'project', 'description', 'start', 'end',
         'author', 'assignee', 'status'
     ]
     search_fields = ['title', 'description']
     list_filter = ['status']
-    raw_id_fields = ['author', 'assignee']
+    raw_id_fields = ['project', 'author', 'assignee']
 
 
 admin.site.register(Project, ProjectAdmin)

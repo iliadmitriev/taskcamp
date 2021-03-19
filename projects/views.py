@@ -3,7 +3,7 @@ from .models import Project, Task
 
 
 class ProjectsListView(ListView):
-    template_name = 'projects_list.html'
+    template_name = 'project_list.html'
     model = Project
 
 

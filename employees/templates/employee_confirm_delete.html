@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block container %}
-    <h1>{{ employee.firstname }}</h1>
+    <h1>{{ employee.full_name }}</h1>
     <hr>
     <form method="post">{% csrf_token %}
 

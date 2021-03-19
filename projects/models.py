@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
 from employees.models import Employee
 
 
@@ -12,6 +11,10 @@ class Project(models.Model):
 
     def __str__(self):
         return f'{self.id}: {self.title} ({self.is_closed})'
+
+    def completed(self):
+        #Task.objects.filter()
+        return 0
 
     class Meta:
         verbose_name = _('Project')
@@ -28,6 +31,7 @@ class TaskStatus(models.TextChoices):
 class Task(models.Model):
     title = models.CharField(verbose_name=_('Title'), max_length=200)
     description = models.CharField(verbose_name=_('Description'), max_length=2000)
+    project = models.ForeignKey(Project, verbose_name=_('Project'), on_delete=models.CASCADE)
     start = models.DateTimeField(verbose_name=_('Start date'), null=True)
     end = models.DateTimeField(verbose_name=_('End date'), null=True)
     author = models.ForeignKey(

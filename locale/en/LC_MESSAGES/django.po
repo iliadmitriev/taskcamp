@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-19 06:17+0000\n"
+"POT-Creation-Date: 2021-03-19 12:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,29 +18,142 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: employees/apps.py:7 employees/models.py:16 templates/nav.html:20
+#: employees/apps.py:7 employees/models.py:20
+#: employees/templates/employee_list.html:7 home/templates/home.html:89
+#: templates/nav.html:33
 msgid "Employees"
 msgstr "Employees"
 
-#: employees/models.py:6
+#: employees/models.py:6 employees/templates/employee_detail.html:16
 msgid "Firstname"
 msgstr "Firstname"
 
-#: employees/models.py:7
+#: employees/models.py:7 employees/templates/employee_detail.html:24
 msgid "Surname"
 msgstr "Surname"
 
-#: employees/models.py:8
+#: employees/models.py:8 employees/templates/employee_detail.html:32
+#: employees/templates/employee_list.html:16
 msgid "Email"
 msgstr "Email"
 
-#: employees/models.py:9
+#: employees/models.py:9 employees/templates/employee_detail.html:40
+#: employees/templates/employee_list.html:17
 msgid "Birthdate"
 msgstr "Birthdate"
 
-#: employees/models.py:15
+#: employees/models.py:16 employees/templates/employee_list.html:15
+#, fuzzy
+#| msgid "Surname"
+msgid "Full name"
+msgstr "Surname"
+
+#: employees/models.py:19
 msgid "Employee"
 msgstr "Employee"
+
+#: employees/templates/employee_confirm_delete.html:11
+msgid "You want to delete?"
+msgstr ""
+
+#: employees/templates/employee_confirm_delete.html:13
+msgid "Confirm"
+msgstr ""
+
+#: employees/templates/employee_confirm_delete.html:15
+#: employees/templates/employee_form.html:15
+msgid "Cancel"
+msgstr ""
+
+#: employees/templates/employee_detail.html:9
+msgid "Back"
+msgstr ""
+
+#: employees/templates/employee_detail.html:50
+msgid "Edit"
+msgstr ""
+
+#: employees/templates/employee_detail.html:54
+msgid "Delete"
+msgstr ""
+
+#: employees/templates/employee_form.html:6
+#: employees/templates/employee_list.html:9
+msgid "Create"
+msgstr ""
+
+#: employees/templates/employee_form.html:13
+msgid "Save"
+msgstr ""
+
+#: employees/templates/employee_list.html:18
+msgid "Actions"
+msgstr ""
+
+#: employees/templates/employee_list.html:50
+#, fuzzy
+#| msgid "Employees"
+msgid "No employees"
+msgstr "Employees"
+
+#: home/templates/home.html:6 templates/nav.html:15
+msgid "Home"
+msgstr "Home"
+
+#: home/templates/home.html:13 projects/apps.py:7 projects/models.py:18
+#: projects/templates/projects_list.html:6 templates/nav.html:21
+msgid "Projects"
+msgstr "Projects"
+
+#: home/templates/home.html:17 home/templates/home.html:55
+#: home/templates/home.html:93
+msgid "Total"
+msgstr ""
+
+#: home/templates/home.html:23 home/templates/home.html:61
+#, fuzzy
+#| msgid "In Progress"
+msgid "In progress"
+msgstr "In Progress"
+
+#: home/templates/home.html:29 home/templates/home.html:67
+msgid "Overdue"
+msgstr ""
+
+#: home/templates/home.html:35 home/templates/home.html:73
+msgid "Completed"
+msgstr ""
+
+#: home/templates/home.html:42
+#, fuzzy
+#| msgid "Projects"
+msgid "Open projects"
+msgstr "Projects"
+
+#: home/templates/home.html:51 projects/models.py:51
+#: projects/templates/task_list.html:6 templates/nav.html:27
+msgid "Tasks"
+msgstr "Tasks"
+
+#: home/templates/home.html:80
+#, fuzzy
+#| msgid "Tasks"
+msgid "Open Tasks"
+msgstr "Tasks"
+
+#: home/templates/home.html:99
+msgid "Busy"
+msgstr ""
+
+#: home/templates/home.html:105
+msgid "Without tasks"
+msgstr ""
+
+#: home/templates/home.html:112
+#, fuzzy
+#| msgid "Employees"
+msgid "Open employees"
+msgstr "Employees"
 
 #: projects/models.py:8 projects/models.py:29
 msgid "Title"
@@ -61,10 +174,6 @@ msgstr "Is closed"
 #: projects/models.py:17
 msgid "Project"
 msgstr "Project"
-
-#: projects/models.py:18 templates/nav.html:14
-msgid "Projects"
-msgstr "Projects"
 
 #: projects/models.py:22
 msgid "New"
@@ -106,22 +215,14 @@ msgstr "Status"
 msgid "Task"
 msgstr "Task"
 
-#: projects/models.py:51 templates/nav.html:17
-msgid "Tasks"
-msgstr "Tasks"
-
-#: taskcamp/settings.py:153
+#: taskcamp/settings.py:154
 msgid "English"
 msgstr "English"
 
-#: taskcamp/settings.py:154
+#: taskcamp/settings.py:155
 msgid "Russian"
 msgstr "Russian"
 
-#: templates/nav.html:11
-msgid "Home"
-msgstr "Home"
-
-#: templates/nav.html:24 templates/nav.html:25
+#: templates/nav.html:37 templates/nav.html:39
 msgid "Search"
 msgstr "Search"

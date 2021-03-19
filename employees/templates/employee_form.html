@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block container %}
+    <h1>{% translate 'Create' %}</h1>
+    <hr>
+    <form method="post">{% csrf_token %}
+
+        {{ form.as_p }}
+
+        <input type="submit" class="btn btn-primary btn-lg"
+               value="{% translate 'Save' %}">
+        <a href="{% url 'employee-list' %}" class="btn btn-secondary btn-lg">
+            {% translate 'Cancel' %}
+        </a>
+
+    </form>
+
+{% endblock %}

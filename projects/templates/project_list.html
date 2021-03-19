@@ -1,43 +1,42 @@
 {% extends 'base.html' %}
 
 {% load i18n %}
-{% load l10n %}
 
 {% block container %}
-    <h1>{% translate 'Employees' %}</h1>
+    <h1>{% translate 'Projects' %}</h1>
     <hr>
-    <a href="{% url 'employee-create' %}" class="btn btn-primary mb-3">{% translate 'Create' %}</a>
-    {% if employee_list %}
+    <a href="{% url 'project-create' %}" class="btn btn-primary mb-3">{% translate 'Create' %}</a>
+    {% if project_list %}
         <table class="table table-hover table-stripped align-middle">
             <thead>
             <tr>
                 <th>#</th>
-                <th>{% translate 'Full name' %}</th>
-                <th>{% translate 'Email' %}</th>
-                <th>{% translate 'Birthdate' %}</th>
+                <th>{% translate 'Title' %}</th>
+                <th>{% translate 'Due date' %}</th>
+                <th>{% translate 'Closed' %}</th>
                 <th>{% translate 'Actions' %}</th>
             </tr>
             </thead>
             <tbody>
-            {% for employee in employee_list %}
+            {% for project in project_list %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>
-                        <a href="{% url 'employee-detail' employee.id %}"
+                        <a href="{% url 'project-detail' project.id %}"
                            class="link-primary">
-                            {{ employee.full_name }}
+                            {{ project.title }}
                         </a>
                     </td>
-                    <td>{{ employee.email }}</td>
+                    <td>{{ project.due_date }}</td>
                     <td>
-                        {{ employee.birthdate }}
+                        {{ project.is_closed }}
                     </td>
                     <td>
-                        <a href="{% url 'employee-edit' employee.id %}"
+                        <a href="{% url 'project-edit' project.id %}"
                            class="btn btn-primary btn-sm">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <a href="{% url 'employee-delete' employee.id %}"
+                        <a href="{% url 'project-delete' project.id %}"
                            class="btn btn-danger btn-sm">
                             <i class="bi bi-trash"></i>
                         </a>
@@ -47,6 +46,5 @@
             </tbody>
         </table>
     {% else %}
-        <p>{% translate 'No employees' %}</p>
-    {% endif %}
-{% endblock %}
+        <p>{% translate 'No projects' %}</p>
+    {% endif %}{% endblock %}
