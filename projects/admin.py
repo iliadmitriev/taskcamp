@@ -1,5 +1,29 @@
 from django.contrib import admin
 from .models import Project, Task
 
-admin.site.register(Project)
-admin.site.register(Task)
+
+class ProjectAdmin(admin.ModelAdmin):
+    readonly_fields = ['id']
+    fields = ['id', 'title', 'description', 'due_date', 'is_closed']
+    list_display = ['id', 'title', 'description', 'due_date', 'is_closed']
+    search_fields = ['title', 'description']
+    list_filter = ['due_date', 'is_closed']
+
+
+class TaskAdmin(admin.ModelAdmin):
+    readonly_fields = ['id']
+    fields = [
+        'id', 'title', 'description', 'start', 'end',
+        'author', 'assignee', 'status'
+    ]
+    list_display = [
+        'id', 'title', 'description', 'start', 'end',
+        'author', 'assignee', 'status'
+    ]
+    search_fields = ['title', 'description']
+    list_filter = ['status']
+    raw_id_fields = ['author', 'assignee']
+
+
+admin.site.register(Project, ProjectAdmin)
+admin.site.register(Task, TaskAdmin)
