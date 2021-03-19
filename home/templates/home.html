@@ -6,7 +6,7 @@
     <h1>{% translate 'Home' %}</h1>
     <hr>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">
@@ -38,14 +38,13 @@
                             </span>
                         </li>
                     </ul>
-                    <a href="{% url 'projects-list' %}" class="btn btn-primary">
+                    <a href="{% url 'projects-list' %}" class="btn btn-primary mt-3">
                         {% translate 'Open projects' %}
                     </a>
                 </div>
-
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">
@@ -54,7 +53,7 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             {% translate 'Total' %}
-                            <span class="badge rounded-pill  bg-info">
+                            <span class="badge rounded-pill bg-info">
                                 0
                             </span>
                         </li>
@@ -77,13 +76,13 @@
                             </span>
                         </li>
                     </ul>
-                    <a href="{% url 'projects-tasks-list' %}" class="btn btn-primary">
+                    <a href="{% url 'projects-tasks-list' %}" class="btn btn-primary mt-3">
                         {% translate 'Open Tasks' %}
                     </a>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">
@@ -109,7 +108,7 @@
                             </span>
                         </li>
                     </ul>
-                    <a href="{% url 'employee-list' %}" class="btn btn-primary">
+                    <a href="{% url 'employee-list' %}" class="btn btn-primary mt-3">
                         {% translate 'Open employees' %}
                     </a>
                 </div>
