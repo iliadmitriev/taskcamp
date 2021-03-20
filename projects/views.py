@@ -1,6 +1,11 @@
-from django.views.generic import ListView
+from django.views.generic import (
+    ListView, DetailView, DeleteView,
+    CreateView, UpdateView
+)
 from django.db.models import Q, F, Count, FloatField, Case, When
+from django.urls import reverse_lazy
 from .models import Project, Task, TaskStatus
+from .forms import ProjectModelForm
 
 
 class ProjectsListView(ListView):
@@ -20,6 +25,31 @@ class ProjectsListView(ListView):
                 output_field=FloatField()
             )
         )
+
+
+class ProjectDetailView(DetailView):
+    template_name = 'project_detail.html'
+    model = Project
+
+
+class ProjectCreateView(CreateView):
+    template_name = 'project_form.html'
+    model = Project
+    form_class = ProjectModelForm
+    success_url = reverse_lazy('project-list')
+
+
+class ProjectEditView(UpdateView):
+    template_name = 'project_form.html'
+    model = Project
+    form_class = ProjectModelForm
+    success_url = reverse_lazy('project-list')
+
+
+class ProjectDeleteView(DeleteView):
+    template_name = 'project_confirm_delete.html'
+    model = Project
+    success_url = reverse_lazy('project-list')
 
 
 class TaskListView(ListView):

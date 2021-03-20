@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block container %}
+    <h1>{{ project.title }}</h1>
+    <hr>
+    <a href="{% url 'project-list' %}" class="link-primary">
+        {% translate 'Back' %}
+    </a>
+
+    <div class="card mb-3 mt-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    {% translate 'Firstname' %}
+                </div>
+                <div class="col">
+                    {{ project.firstname }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% translate 'Surname' %}
+                </div>
+                <div class="col">
+                    {{ project.surname }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% translate 'Email' %}
+                </div>
+                <div class="col">
+                    {{ project.email }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% translate 'Birthdate' %}
+                </div>
+                <div class="col">
+                    {{ project.birthdate }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'project-edit' project.id %}" class="btn btn-primary btn-lg">
+        <i class="bi bi-pencil"></i>
+        {% translate 'Edit' %}
+    </a>
+    <a href="{% url 'project-delete' project.id %}" class="btn btn-danger btn-lg">
+        <i class="bi bi-trash"></i>
+        {% translate 'Delete' %}
+    </a>
+
+{% endblock %}
