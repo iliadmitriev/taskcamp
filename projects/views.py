@@ -15,7 +15,7 @@ class ProjectsListView(ListView):
             status_count=Count('task'),
             status_new=Count(
                 'task',
-                filter=Q(task__status__in=[
+                filter=~Q(task__status__in=[
                     TaskStatus.NEW,
                     TaskStatus.IN_PROGRESS
                 ])
@@ -43,7 +43,7 @@ class ProjectDetailView(DetailView):
 
         completed_data = tasks.aggregate(
             total=Count('id'),
-            done=Count('id', filter=Q(status__in=[TaskStatus.NEW, TaskStatus.IN_PROGRESS]))
+            done=Count('id', filter=~Q(status__in=[TaskStatus.NEW, TaskStatus.IN_PROGRESS]))
         )
         if completed_data.get('total'):
             context['completed'] = 100.0 * completed_data.get('done') / completed_data.get('total')
