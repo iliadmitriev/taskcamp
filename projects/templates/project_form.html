@@ -3,7 +3,11 @@
 {% load i18n %}
 
 {% block container %}
+    {% if project %}
+            <h1>{{ project.title }} #{{ project.id }}</h1>
+    {% else %}
     <h1>{% translate 'Create' %}</h1>
+    {% endif %}
     <hr>
     <form method="post">{% csrf_token %}
 
