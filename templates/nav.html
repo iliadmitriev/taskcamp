@@ -21,7 +21,7 @@
                         {% translate 'Projects' %}</a>
                 </li>
                 <li class="nav-item">
-                    {% url 'projects-tasks-list' as url %}
+                    {% url 'projects-task-list' as url %}
                     <a class="nav-link{% if request.path == url %} active{% endif %}"
                        href="{{ url }}">
                         {% translate 'Tasks' %}</a>

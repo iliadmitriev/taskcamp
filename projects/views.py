@@ -69,3 +69,22 @@ class ProjectDeleteView(DeleteView):
 class TaskListView(ListView):
     template_name = 'task_list.html'
     model = Task
+
+
+class TaskDetailView(DetailView):
+    model = Task
+
+
+class TaskCreateView(CreateView):
+    model = Task
+    success_url = reverse_lazy('task-list')
+
+
+class TaskUpdateView(UpdateView):
+    model = Task
+    success_url = reverse_lazy('task-list')
+
+
+class TaskDeleteView(DeleteView):
+    model = Task
+    success_url = reverse_lazy('task-list')
