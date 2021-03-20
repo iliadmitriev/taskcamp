@@ -46,6 +46,20 @@
             <div class="row">
                 <div class="col">
                     <h5>
+                        {% translate 'Closed' %}
+                    </h5>
+                </div>
+                <div class="col">
+                    {% if project.is_closed %}
+                        <i class="bi bi-check-circle"></i>
+                    {% else %}
+                        <i class="bi bi-x-circle"></i>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5>
                         {% translate 'Description' %}
                     </h5>
                 </div>
@@ -108,7 +122,7 @@
                             </td>
                             <td>{{ task.assignee.full_name }}</td>
                             <td>{{ task.start | date:"d.m.Y H:i" }}</td>
-                            <td>{{ task.end | date:"d.m.Y H:i"}}</td>
+                            <td>{{ task.end | date:"d.m.Y H:i" }}</td>
                             <td>{{ task.get_status_display }}</td>
                         </tr>
                     {% endfor %}

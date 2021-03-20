@@ -42,7 +42,11 @@
                         </div>
                     </td>
                     <td>
-                        {{ project.is_closed }}
+                        {% if project.is_closed %}
+                            <i class="bi bi-check-circle"></i>
+                        {% else %}
+                            <i class="bi bi-x-circle"></i>
+                        {% endif %}
                     </td>
                     <td>
                         <a href="{% url 'project-edit' project.id %}"
