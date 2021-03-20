@@ -5,7 +5,7 @@ from django.views.generic import (
 from django.db.models import Q, F, Count, FloatField, Case, When
 from django.urls import reverse_lazy
 from .models import Project, Task, TaskStatus
-from .forms import ProjectModelForm
+from .forms import ProjectModelForm, TaskModelForm
 
 
 class ProjectsListView(ListView):
@@ -72,19 +72,25 @@ class TaskListView(ListView):
 
 
 class TaskDetailView(DetailView):
+    template_name = 'task_detail.html'
     model = Task
 
 
 class TaskCreateView(CreateView):
+    template_name = 'task_form.html'
     model = Task
+    form_class = TaskModelForm
     success_url = reverse_lazy('task-list')
 
 
 class TaskUpdateView(UpdateView):
+    template_name = 'task_form.html'
     model = Task
+    form_class = TaskModelForm
     success_url = reverse_lazy('task-list')
 
 
 class TaskDeleteView(DeleteView):
+    template_name = 'task_confirm_delete.html'
     model = Task
     success_url = reverse_lazy('task-list')

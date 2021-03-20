@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project
+from .models import Project, Task
 
 
 class ProjectModelForm(forms.ModelForm):
@@ -13,3 +13,12 @@ class ProjectModelForm(forms.ModelForm):
             'is_closed': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
+
+class TaskModelForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = [
+            'project', 'title', 'description',
+            'author', 'assignee', 'start', 'end',
+            'status'
+        ]
