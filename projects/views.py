@@ -46,14 +46,18 @@ class ProjectCreateView(CreateView):
     template_name = 'project_form.html'
     model = Project
     form_class = ProjectModelForm
-    success_url = reverse_lazy('project-list')
+
+    def get_success_url(self):
+        return reverse_lazy('project-detail', kwargs={'pk': self.object.id})
 
 
 class ProjectEditView(UpdateView):
     template_name = 'project_form.html'
     model = Project
     form_class = ProjectModelForm
-    success_url = reverse_lazy('project-list')
+
+    def get_success_url(self):
+        return reverse_lazy('project-detail', kwargs={'pk': self.object.id})
 
 
 class ProjectDeleteView(DeleteView):
