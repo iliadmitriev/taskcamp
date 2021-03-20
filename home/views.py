@@ -38,6 +38,7 @@ class HomeView(TemplateView):
         )
         context['tasks'] = tasks
         employees = Employee.objects \
+            .values('id') \
             .annotate(
                 assigned_count=Count('assignee'),
                 assigned_today_count=Count(
