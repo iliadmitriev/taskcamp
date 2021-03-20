@@ -13,28 +13,28 @@
                         {% translate 'Projects' %}
                     </h5>
                     <ul class="list-group">
-                        <li class="list-group-item">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
                             {% translate 'Total' %}
                             <span class="badge rounded-pill  bg-info">
-                                0
+                                {{ projects.total }}
                             </span>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
                             {% translate 'In progress' %}
                             <span class="badge rounded-pill bg-primary">
-                                0
+                                {{ projects.in_progress }}
                             </span>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
                             {% translate 'Overdue' %}
                             <span class="badge rounded-pill bg-danger">
-                                0
+                                {{ projects.overdue }}
                             </span>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
                             {% translate 'Completed' %}
                             <span class="badge rounded-pill bg-success">
-                                0
+                                {{ projects.completed }}
                             </span>
                         </li>
                     </ul>
@@ -51,28 +51,28 @@
                         {% translate 'Tasks' %}
                     </h5>
                     <ul class="list-group">
-                        <li class="list-group-item">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
                             {% translate 'Total' %}
                             <span class="badge rounded-pill bg-info">
-                                0
+                                {{ tasks.total }}
                             </span>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
                             {% translate 'In progress' %}
                             <span class="badge rounded-pill bg-primary">
-                                0
+                                {{ tasks.in_progress }}
                             </span>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
                             {% translate 'Overdue' %}
                             <span class="badge rounded-pill bg-danger">
-                                0
+                                {{ tasks.overdue }}
                             </span>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
                             {% translate 'Completed' %}
                             <span class="badge rounded-pill bg-success">
-                                0
+                                {{ tasks.completed }}
                             </span>
                         </li>
                     </ul>
@@ -89,22 +89,22 @@
                         {% translate 'Employees' %}
                     </h5>
                     <ul class="list-group">
-                        <li class="list-group-item">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
                             {% translate 'Total' %}
                             <span class="badge rounded-pill  bg-info">
-                                0
+                                {{ employees.total }}
                             </span>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
                             {% translate 'Busy' %}
                             <span class="badge rounded-pill bg-success">
-                                0
+                                {{ employees.assigned_for_today }}
                             </span>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
                             {% translate 'Without tasks' %}
                             <span class="badge rounded-pill bg-danger">
-                                0
+                                {{ employees.not_assigned_for_today }}
                             </span>
                         </li>
                     </ul>
