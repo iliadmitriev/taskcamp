@@ -3,7 +3,11 @@
 {% load i18n %}
 
 {% block container %}
-    <h1>{{ task }}</h1>
+    {% if task %}
+        <h1>{{ task.title }} #{{ task.id }}</h1>
+    {% else %}
+        <h1>{% translate 'Create' %}</h1>
+    {% endif %}
     <hr>
     {% if request.META.HTTP_REFERER %}
         <a href="{{ request.META.HTTP_REFERER }}" class="link link-primary">
@@ -14,5 +18,22 @@
             {% translate 'Back' %}
         </a>
     {% endif %}
+    <form method="post">{% csrf_token %}
+
+        {{ form.as_p }}
+
+        <input type="submit" class="btn btn-primary btn-lg"
+               value="{% translate 'Save' %}">
+        {% if request.META.HTTP_REFERER %}
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary btn-lg">
+                {% translate 'Cancel' %}
+            </a>
+        {% else %}
+            <a href="{% url 'projects-task-list' %}" class="btn btn-secondary btn-lg">
+                {% translate 'Cancel' %}
+            </a>
+        {% endif %}
+
+    </form>
 
 {% endblock %}

@@ -18,7 +18,17 @@ class TaskModelForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = [
-            'project', 'title', 'description',
-            'author', 'assignee', 'start', 'end',
-            'status'
+            'project', 'title', 'author', 'assignee', 'start', 'end',
+            'status', 'description'
         ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'start': forms.DateTimeInput(attrs={'class': 'form-control'}),
+            'end': forms.DateTimeInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-select'}),
+            'project': forms.Select(attrs={'class': 'form-select'}),
+            'author': forms.Select(attrs={'class': 'form-select'}),
+            'assignee': forms.Select(attrs={'class': 'form-select'}),
+
+        }
