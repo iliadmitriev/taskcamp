@@ -32,8 +32,8 @@
                     </td>
                     <td>{{ task.author.full_name }}</td>
                     <td>{{ task.assignee.full_name }}</td>
-                    <td>{{ task.start }}</td>
-                    <td>{{ task.end }}</td>
+                    <td>{{ task.start | date:"d.m.Y H:i" }}</td>
+                    <td>{{ task.end | date:"d.m.Y H:i" }}</td>
                     <td>
                         {{ task.get_status_display }}
                     </td>

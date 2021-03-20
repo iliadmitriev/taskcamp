@@ -5,6 +5,14 @@
 {% block container %}
     <h1>{{ task }}</h1>
     <hr>
+    {% if request.META.HTTP_REFERER %}
+        <a href="{{ request.META.HTTP_REFERER }}" class="link link-primary">
+            {% translate 'Back' %}
+        </a>
+    {% else %}
+        <a href="{% url 'projects-task-list' %}" class="link link-primary">
+            {% translate 'Back' %}
+        </a>
+    {% endif %}
 
-    </ol>
 {% endblock %}
