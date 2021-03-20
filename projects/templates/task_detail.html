@@ -53,7 +53,7 @@
                     <h5>{% translate 'Start' %}</h5>
                 </div>
                 <div class="col">
-                    {{ task.start | date:"D, j F Y H:i" }}
+                    {{ task.start | date:"D, j E Y H:i:s" }}
                 </div>
             </div>
             <div class="row">
@@ -61,7 +61,7 @@
                     <h5>{% translate 'End' %}</h5>
                 </div>
                 <div class="col">
-                    {{ task.end | date:"D, j F Y H:i" }}
+                    {{ task.end | date:"D, j E Y H:i:s" }}
                 </div>
             </div>
             <div class="row">
