@@ -15,7 +15,10 @@ class ProjectsListView(ListView):
             status_count=Count('task'),
             status_new=Count(
                 'task',
-                filter=Q(task__status__in=[TaskStatus.NEW, TaskStatus.IN_PROGRESS])
+                filter=Q(task__status__in=[
+                    TaskStatus.NEW,
+                    TaskStatus.IN_PROGRESS
+                ])
             )
         )\
         .annotate(
@@ -30,6 +33,13 @@ class ProjectsListView(ListView):
 class ProjectDetailView(DetailView):
     template_name = 'project_detail.html'
     model = Project
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        project = kwargs.get('object')
+        tasks = Task.objects.filter(project=project).order_by('id')
+        context['task_list'] = tasks
+        return context
 
 
 class ProjectCreateView(CreateView):
