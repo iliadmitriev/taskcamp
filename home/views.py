@@ -10,14 +10,14 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        projects = Project.objects.aggregate(
+        projects = Project.objects.values('id').aggregate(
             total=Count('id'),
             in_progress=Count('id', filter=Q(is_closed=False)),
             completed=Count('id', filter=Q(is_closed=True)),
             overdue=Count('id', filter=Q(is_closed=False, due_date__lte=timezone.now()))
         )
         context['projects'] = projects
-        tasks = Task.objects.aggregate(
+        tasks = Task.objects.values('id').aggregate(
             total=Count('id'),
             in_progress=Count(
                 'id', filter=Q(
