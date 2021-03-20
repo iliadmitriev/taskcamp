@@ -5,9 +5,53 @@
 {% block container %}
     <h1>{% translate 'Tasks' %}</h1>
     <hr>
-    <ol>
-    {% for task in task_list %}
-        <li>{{ task.title }}</li>
-    {% endfor %}
-    </ol>
+    <a href="{% url 'projects-task-create' %}" class="btn btn-primary mb-3">{% translate 'Create' %}</a>
+    {% if task_list %}
+        <table class="table table-striped table-hover align-middle">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>{% translate 'Title' %}</th>
+                <th>{% translate 'Author' %}</th>
+                <th>{% translate 'Assignee' %}</th>
+                <th>{% translate 'Start' %}</th>
+                <th>{% translate 'End' %}</th>
+                <th>{% translate 'Status' %}</th>
+                <th>{% translate 'Actions' %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for task in task_list %}
+                <tr>
+                    <td>{{ task.id }}</td>
+                    <td>
+                        <a href="{% url 'projects-task-detail' task.id %}"
+                           class="link-primary">
+                            {{ task.title }}
+                        </a>
+                    </td>
+                    <td>{{ task.author.full_name }}</td>
+                    <td>{{ task.assignee.full_name }}</td>
+                    <td>{{ task.start }}</td>
+                    <td>{{ task.end }}</td>
+                    <td>
+                        {{ task.get_status_display }}
+                    </td>
+                    <td>
+                        <a href="{% url 'projects-task-edit' task.id %}"
+                           class="btn btn-primary btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'projects-task-delete' task.id %}"
+                           class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>{% translate 'No tasks' %}</p>
+    {% endif %}
 {% endblock %}
