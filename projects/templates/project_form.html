@@ -11,9 +11,16 @@
 
         <input type="submit" class="btn btn-primary btn-lg"
                value="{% translate 'Save' %}">
-        <a href="{% url 'project-list' %}" class="btn btn-secondary btn-lg">
-            {% translate 'Cancel' %}
-        </a>
+        {% if request.META.HTTP_REFERER %}
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary btn-lg">
+                {% translate 'Cancel' %}
+            </a>
+        {% else %}
+            <a href="{% url 'project-list' %}" class="btn btn-secondary btn-lg">
+                {% translate 'Cancel' %}
+            </a>
+        {% endif %}
+
 
     </form>
 
