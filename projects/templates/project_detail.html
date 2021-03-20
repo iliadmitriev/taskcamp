@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load i18n %}
+{% load markdown_processor %}
 
 {% block container %}
     <h1>{{ project.title }} #{{ project.id }}</h1>
@@ -21,6 +22,29 @@
             </div>
             <div class="row">
                 <div class="col">
+                    <h5>{% translate 'Tasks' %}</h5>
+                </div>
+                <div class="col">
+                    {{ total }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5>{% translate 'Completed' %}</h5>
+                </div>
+                <div class="col">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar"
+                             style="width:{{ completed | floatformat:0 }}%;"
+                             aria-valuenow="{{ completed| floatformat:0 }}"
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ completed | floatformat:0 }}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
                     <h5>
                         {% translate 'Description' %}
                     </h5>
@@ -28,7 +52,9 @@
             </div>
             <div class="row">
                 <div class="col">
-                    {{ project.description }}
+                    {% autoescape off %}
+                        {{ project.description|markdown }}
+                    {% endautoescape %}
                 </div>
             </div>
             <div class="row">

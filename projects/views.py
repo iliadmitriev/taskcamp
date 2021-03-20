@@ -36,9 +36,22 @@ class ProjectDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         project = kwargs.get('object')
         tasks = Task.objects.filter(project=project).order_by('id')
         context['task_list'] = tasks
+
+        completed_data = tasks.aggregate(
+            total=Count('id'),
+            done=Count('id', filter=Q(status__in=[TaskStatus.NEW, TaskStatus.IN_PROGRESS]))
+        )
+        if completed_data.get('total'):
+            context['completed'] = 100.0 * completed_data.get('done') / completed_data.get('total')
+            context['total'] = completed_data.get('total')
+        else:
+            context['completed'] = 0
+            context['total'] = 0
+
         return context
 
 
