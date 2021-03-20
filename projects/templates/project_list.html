@@ -22,7 +22,7 @@
             <tbody>
             {% for project in project_list %}
                 <tr>
-                    <td>{{ forloop.counter }}</td>
+                    <td>{{ project.id }}</td>
                     <td>
                         <a href="{% url 'project-detail' project.id %}"
                            class="link-primary">
