@@ -15,8 +15,8 @@ class ProjectsListView(ListView):
         )\
         .annotate(
             completed=Case(
-                When(status_count=0, then=None),
-                default=(1.0 * F('status_new') / F('status_count')),
+                When(status_count=0, then=0.0),
+                default=(100.0 * F('status_new') / F('status_count')),
                 output_field=FloatField()
             )
         )

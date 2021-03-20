@@ -32,11 +32,14 @@
                     <td>{{ project.due_date }}</td>
                     <td>{{ project.status_count }}</td>
                     <td>
-                        {% if project.status_count %}
-                            {{ project.completed | floatformat:3 }}
-                        {% else %}
-                            0
-                        {% endif %}
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar"
+                                 style="width:{{ project.completed | floatformat:0}}%;"
+                                 aria-valuenow="{{ project.completed| floatformat:0 }}"
+                                 aria-valuemin="0" aria-valuemax="100">
+                                {{ project.completed | floatformat:0 }}%
+                            </div>
+                        </div>
                     </td>
                     <td>
                         {{ project.is_closed }}
