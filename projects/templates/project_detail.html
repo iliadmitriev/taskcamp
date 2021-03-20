@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load markdown_processor %}
+{% load task_class %}
 
 {% block container %}
     <h1>{{ project.title }} #{{ project.id }}</h1>
@@ -111,7 +112,7 @@
                     </thead>
                     <tbody>
                     {% for task in task_list %}
-                        <tr>
+                        <tr class="{{ task | task_class }}">
                             <td>{{ task.id }}</td>
                             <td>
                                 <a href="{% url 'projects-task-detail' task.id %}"
