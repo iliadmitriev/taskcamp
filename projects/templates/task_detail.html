@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
 {% load i18n %}
+{% load markdown_processor %}
 
 {% block container %}
-    <h1>{{ task }}</h1>
+    <h1>{{ task.title }} #{{ task.id }}</h1>
     <hr>
     {% if request.META.HTTP_REFERER %}
         <a href="{{ request.META.HTTP_REFERER }}" class="link link-primary">
@@ -14,5 +15,89 @@
             {% translate 'Back' %}
         </a>
     {% endif %}
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <h5>{% translate 'Project' %}</h5>
+                </div>
+                <div class="col">
+                    <a href="{% url 'project-detail' task.project.id %}">
+                        # {{ task.project.id }}
+                        {{ task.project.title }}
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5>{% translate 'Author' %}</h5>
+                </div>
+                <div class="col">
+                    <a href="{% url 'employee-detail' task.project.id %}">
+                        {{ task.author.full_name }}
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5>{% translate 'Assignee' %}</h5>
+                </div>
+                <div class="col">
+                    <a href="{% url 'employee-detail' task.project.id %}">
+                        {{ task.assignee.full_name }}
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5>{% translate 'Start' %}</h5>
+                </div>
+                <div class="col">
+                    {{ task.start | date:"D, j F Y H:i" }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5>{% translate 'End' %}</h5>
+                </div>
+                <div class="col">
+                    {{ task.end | date:"D, j F Y H:i" }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5>{% translate 'Status' %}</h5>
+                </div>
+                <div class="col">
+                    {{ task.get_status_display }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5>{% translate 'Description' %}</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% autoescape off %}
+                        {{ task.description|markdown }}
+                    {% endautoescape %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a href="{% url 'projects-task-edit' task.id %}" class="btn btn-primary btn-lg">
+                        <i class="bi bi-pencil"></i>
+                        {% translate 'Edit' %}
+                    </a>
+                    <a href="{% url 'projects-task-delete' task.id %}" class="btn btn-danger btn-lg">
+                        <i class="bi bi-trash"></i>
+                        {% translate 'Delete' %}
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
