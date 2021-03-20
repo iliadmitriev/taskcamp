@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block container %}
-    <h1>{{ task }}</h1>
+    <h1>{{ task.title }}</h1>
     <hr>
     {% if request.META.HTTP_REFERER %}
         <a href="{{ request.META.HTTP_REFERER }}" class="link link-primary">
@@ -14,5 +14,22 @@
             {% translate 'Back' %}
         </a>
     {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="alert alert-danger mt-3">
+            {% translate 'You want to delete?' %}
+        </div>
+        <input type="submit" class="btn btn-danger btn-lg" value="{% translate 'Confirm' %}">
+        {% if request.META.HTTP_REFERER %}
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary btn-lg">
+                {% translate 'Cancel' %}
+            </a>
+        {% else %}
+            <a href="{% url 'projects-task-list' %}" class="btn btn-secondary btn-lg">
+                {% translate 'Cancel' %}
+            </a>
+        {% endif %}
+    </form>
+
 
 {% endblock %}
