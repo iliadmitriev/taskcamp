@@ -4,7 +4,7 @@ from django.views.generic import (
 )
 from django.db.models import Q, F, Count, FloatField, Case, When
 from django.urls import reverse_lazy
-from .models import Project, Task, TaskStatus
+from .models import Project, Task, TaskStatus, Comment
 from .forms import ProjectModelForm, TaskModelForm
 
 
@@ -38,7 +38,7 @@ class ProjectDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        project = kwargs.get('object')
+        project = self.get_object()
         tasks = Task.objects.filter(project=project).order_by('id')
         context['task_list'] = tasks
 
@@ -103,6 +103,13 @@ class TaskListView(ListView):
 class TaskDetailView(DetailView):
     template_name = 'task_detail.html'
     model = Task
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        task = self.get_object()
+        comments = Comment.objects.filter(task=task).order_by('created')
+        context['comments'] = comments
+        return context
 
 
 class TaskCreateView(CreateView):

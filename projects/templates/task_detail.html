@@ -102,4 +102,27 @@
         </div>
     </div>
 
+    {% for comment in comments %}
+        <div class="row mt-3">
+            <div class="col">
+                <div class="justify-content-between d-flex">
+                    <div>
+                        <a id="anchor{{ forloop.counter }}"></a>
+                        <small>{{ comment.created | date:"DATETIME_FORMAT" }}</small>
+                    </div>
+                    <div class="ml-auto">
+                        <a href="#anchor{{ forloop.counter }}">#{{ forloop.counter }}</a>
+                    </div>
+                </div>
+                <hr>
+                <p class="mb-3">
+                    {% if comment.description %}
+                        {% autoescape off %}
+                            {{ comment.description|markdown }}
+                        {% endautoescape %}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
