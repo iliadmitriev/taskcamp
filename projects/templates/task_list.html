@@ -56,8 +56,8 @@
                     </td>
                     <td>{{ task.author.full_name }}</td>
                     <td>{{ task.assignee.full_name }}</td>
-                    <td>{{ task.start | date:"d.m.Y H:i" }}</td>
-                    <td>{{ task.end | date:"d.m.Y H:i" }}</td>
+                    <td>{{ task.start | date:"SHORT_DATETIME_FORMAT" }}</td>
+                    <td>{{ task.end | date:"SHORT_DATETIME_FORMAT" }}</td>
                     <td>
                         {{ task.get_status_display }}
                     </td>

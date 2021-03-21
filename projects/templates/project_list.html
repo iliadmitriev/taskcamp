@@ -29,7 +29,7 @@
                             {{ project.title }}
                         </a>
                     </td>
-                    <td>{{ project.due_date }}</td>
+                    <td>{{ project.due_date | date:"SHORT_DATE_FORMAT" }}</td>
                     <td>{{ project.status_count }}</td>
                     <td>
                         <div class="progress">

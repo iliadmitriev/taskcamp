@@ -18,7 +18,7 @@
                     <h5>{% translate 'Due date' %}</h5>
                 </div>
                 <div class="col">
-                    {{ project.due_date | date:"D, j E Y" }}
+                    {{ project.due_date | date:"DATE_FORMAT" }}
                 </div>
             </div>
             <div class="row">
@@ -124,8 +124,8 @@
                                 </a>
                             </td>
                             <td>{{ task.assignee.full_name }}</td>
-                            <td>{{ task.start | date:"d.m.Y H:i" }}</td>
-                            <td>{{ task.end | date:"d.m.Y H:i" }}</td>
+                            <td>{{ task.start | date:"SHORT_DATETIME_FORMAT" }}</td>
+                            <td>{{ task.end | date:"SHORT_DATETIME_FORMAT" }}</td>
                             <td>{{ task.get_status_display }}</td>
                         </tr>
                     {% endfor %}
