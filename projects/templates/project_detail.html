@@ -58,20 +58,22 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <h5>
-                        {% translate 'Description' %}
-                    </h5>
+            {% if project.description %}
+                <div class="row">
+                    <div class="col">
+                        <h5>
+                            {% translate 'Description' %}
+                        </h5>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    {% autoescape off %}
-                        {{ project.description|markdown }}
-                    {% endautoescape %}
+                <div class="row">
+                    <div class="col">
+                        {% autoescape off %}
+                            {{ project.description|markdown }}
+                        {% endautoescape %}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
             <div class="row">
                 <div class="col">
                     <a href="{% url 'project-edit' project.id %}" class="btn btn-primary btn-lg">

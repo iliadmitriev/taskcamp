@@ -72,18 +72,20 @@
                     {{ task.get_status_display }}
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <h5>{% translate 'Description' %}</h5>
+            {% if task.description %}
+                <div class="row">
+                    <div class="col">
+                        <h5>{% translate 'Description' %}</h5>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    {% autoescape off %}
-                        {{ task.description|markdown }}
-                    {% endautoescape %}
+                <div class="row">
+                    <div class="col">
+                        {% autoescape off %}
+                            {{ task.description|markdown }}
+                        {% endautoescape %}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
             <div class="row">
                 <div class="col">
                     <a href="{% url 'projects-task-edit' task.id %}" class="btn btn-primary btn-lg">
