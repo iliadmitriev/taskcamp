@@ -53,7 +53,7 @@ class Task(models.Model):
 
 class Comment(models.Model):
     task = models.ForeignKey(Task, verbose_name=_('Task'), on_delete=models.CASCADE)
-    created = models.DateTimeField(verbose_name=_('Created'), auto_now=True)
+    created = models.DateTimeField(verbose_name=_('Created'), auto_now=True, db_index=True)
     description = models.CharField(verbose_name=_('Description'), max_length=5000)
 
     class Meta:
