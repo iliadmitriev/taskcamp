@@ -27,7 +27,8 @@ class ProjectsListView(ListView):
                 default=(100.0 * F('status_new') / F('status_count')),
                 output_field=FloatField()
             )
-        )
+        )\
+        .order_by('id')
 
 
 class ProjectDetailView(DetailView):
