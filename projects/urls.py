@@ -4,7 +4,8 @@ from .views import (
     ProjectCreateView, ProjectEditView,
     ProjectDeleteView,
     TaskListView, TaskDetailView, TaskCreateView,
-    TaskUpdateView, TaskDeleteView
+    TaskUpdateView, TaskDeleteView,
+    CommentCreate
 )
 
 
@@ -17,6 +18,7 @@ urlpatterns = [
     path('tasks/', TaskListView.as_view(), name='projects-task-list'),
     path('tasks/add/', TaskCreateView.as_view(), name='projects-task-create'),
     path('tasks/<int:pk>/', TaskDetailView.as_view(), name='projects-task-detail'),
+    path('tasks/<int:pk>/comment/', CommentCreate.as_view(), name='comment-post'),
     path('tasks/<int:pk>/edit/', TaskUpdateView.as_view(), name='projects-task-edit'),
     path('tasks/<int:pk>/delete/', TaskDeleteView.as_view(), name='projects-task-delete'),
 ]

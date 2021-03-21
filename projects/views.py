@@ -1,11 +1,12 @@
 from django.views.generic import (
     ListView, DetailView, DeleteView,
-    CreateView, UpdateView
+    CreateView, UpdateView, View
 )
 from django.db.models import Q, F, Count, FloatField, Case, When
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
 from .models import Project, Task, TaskStatus, Comment
-from .forms import ProjectModelForm, TaskModelForm
+from .forms import ProjectModelForm, TaskModelForm, CommentModelForm
 
 
 class ProjectsListView(ListView):
@@ -109,6 +110,7 @@ class TaskDetailView(DetailView):
         task = self.get_object()
         comments = Comment.objects.filter(task=task).order_by('created')
         context['comments'] = comments
+        context['comment_form'] = CommentModelForm
         return context
 
 
@@ -134,3 +136,12 @@ class TaskDeleteView(DeleteView):
     template_name = 'task_confirm_delete.html'
     model = Task
     success_url = reverse_lazy('projects-task-list')
+
+
+class CommentCreate(View):
+    def post(self, *args, **kwargs):
+        task_id = kwargs.get('pk')
+        description = self.request.POST.get('description')
+        comment = Comment(task_id=task_id, description=description)
+        comment.save()
+        return HttpResponseRedirect(reverse('projects-task-detail', kwargs=kwargs))

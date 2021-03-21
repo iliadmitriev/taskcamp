@@ -125,4 +125,20 @@
             </div>
         </div>
     {% endfor %}
+
+    <div class="row mt-3 mb-5">
+        <div class="row">
+            <form action="{% url 'comment-post' task.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="task" value="{{ task.id }}">
+                <div class="mb-3">
+                    {{ comment_form.description }}
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    {% translate 'Save' %}
+                </button>
+            </form>
+        </div>
+    </div>
+
 {% endblock %}

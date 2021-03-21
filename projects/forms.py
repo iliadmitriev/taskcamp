@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from .models import Project, Task, Comment
 
 
@@ -41,5 +42,11 @@ class CommentModelForm(forms.ModelForm):
             'description'
         ]
         widgets = {
-            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'rows': 8,
+                    'placeholder': _('Comment')
+                }
+            ),
         }
