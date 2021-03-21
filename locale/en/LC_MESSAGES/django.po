@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-20 18:36+0000\n"
+"POT-Creation-Date: 2021-03-21 08:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,14 +87,14 @@ msgid "Back"
 msgstr ""
 
 #: employees/templates/employee_detail.html:50
-#: projects/templates/project_detail.html:79
-#: projects/templates/task_detail.html:91
+#: projects/templates/project_detail.html:81
+#: projects/templates/task_detail.html:93
 msgid "Edit"
 msgstr ""
 
 #: employees/templates/employee_detail.html:54
-#: projects/templates/project_detail.html:83
-#: projects/templates/task_detail.html:95
+#: projects/templates/project_detail.html:85
+#: projects/templates/task_detail.html:97
 msgid "Delete"
 msgstr ""
 
@@ -102,7 +102,7 @@ msgstr ""
 #: employees/templates/employee_list.html:9
 #: projects/templates/project_form.html:9
 #: projects/templates/project_list.html:8 projects/templates/task_form.html:9
-#: projects/templates/task_list.html:9
+#: projects/templates/task_list.html:11
 msgid "Create"
 msgstr ""
 
@@ -112,7 +112,7 @@ msgid "Save"
 msgstr ""
 
 #: employees/templates/employee_list.html:18
-#: projects/templates/project_list.html:19 projects/templates/task_list.html:21
+#: projects/templates/project_list.html:19 projects/templates/task_list.html:44
 msgid "Actions"
 msgstr ""
 
@@ -160,8 +160,8 @@ msgstr "Projects"
 
 #: home/templates/home.html:51 projects/models.py:51
 #: projects/templates/project_detail.html:26
-#: projects/templates/project_detail.html:90
-#: projects/templates/project_list.html:16 projects/templates/task_list.html:7
+#: projects/templates/project_detail.html:92
+#: projects/templates/project_list.html:16 projects/templates/task_list.html:8
 #: templates/nav.html:27
 msgid "Tasks"
 msgstr "Tasks"
@@ -187,14 +187,14 @@ msgid "Open employees"
 msgstr "Employees"
 
 #: projects/models.py:7 projects/models.py:28
-#: projects/templates/project_detail.html:105
-#: projects/templates/project_list.html:14 projects/templates/task_list.html:15
+#: projects/templates/project_detail.html:107
+#: projects/templates/project_list.html:14 projects/templates/task_list.html:22
 msgid "Title"
 msgstr "Title"
 
-#: projects/models.py:8 projects/models.py:29
-#: projects/templates/project_detail.html:64
-#: projects/templates/task_detail.html:77
+#: projects/models.py:8 projects/models.py:29 projects/models.py:57
+#: projects/templates/project_detail.html:65
+#: projects/templates/task_detail.html:78
 msgid "Description"
 msgstr "Description"
 
@@ -238,35 +238,47 @@ msgid "End date"
 msgstr "End date"
 
 #: projects/models.py:34 projects/templates/task_detail.html:33
-#: projects/templates/task_list.html:16
+#: projects/templates/task_list.html:26
 msgid "Author"
 msgstr "Author"
 
-#: projects/models.py:38 projects/templates/project_detail.html:106
-#: projects/templates/task_detail.html:43 projects/templates/task_list.html:17
+#: projects/models.py:38 projects/templates/project_detail.html:108
+#: projects/templates/task_detail.html:43 projects/templates/task_list.html:30
 msgid "Assignee"
 msgstr "Assignee"
 
-#: projects/models.py:42 projects/templates/project_detail.html:109
-#: projects/templates/task_detail.html:69 projects/templates/task_list.html:20
+#: projects/models.py:42 projects/templates/project_detail.html:111
+#: projects/templates/task_detail.html:69 projects/templates/task_list.html:42
 msgid "Status"
 msgstr "Status"
 
-#: projects/models.py:50
+#: projects/models.py:50 projects/models.py:55
 msgid "Task"
 msgstr "Task"
 
-#: projects/templates/project_detail.html:97
+#: projects/models.py:56
+msgid "Created"
+msgstr ""
+
+#: projects/models.py:60
+msgid "Comment"
+msgstr ""
+
+#: projects/models.py:61
+msgid "Comments"
+msgstr ""
+
+#: projects/templates/project_detail.html:99
 msgid "Add"
 msgstr ""
 
-#: projects/templates/project_detail.html:107
-#: projects/templates/task_detail.html:53 projects/templates/task_list.html:18
+#: projects/templates/project_detail.html:109
+#: projects/templates/task_detail.html:53 projects/templates/task_list.html:34
 msgid "Start"
 msgstr "Start date"
 
-#: projects/templates/project_detail.html:108
-#: projects/templates/task_detail.html:61 projects/templates/task_list.html:19
+#: projects/templates/project_detail.html:110
+#: projects/templates/task_detail.html:61 projects/templates/task_list.html:38
 msgid "End"
 msgstr "End date"
 
@@ -274,16 +286,15 @@ msgstr "End date"
 msgid "No projects"
 msgstr "No Projects found, maybe you didn't create one"
 
-#: projects/templates/task_list.html:61 projects/templates/task_list.html:67
+#: projects/templates/task_list.html:85 projects/templates/task_list.html:91
 msgid "Previous"
 msgstr ""
 
-#: projects/templates/task_list.html:87 projects/templates/task_list.html:93
+#: projects/templates/task_list.html:111 projects/templates/task_list.html:117
 msgid "Next"
 msgstr ""
 
-#: projects/templates/task_list.html:102
-#| msgid "Tasks"
+#: projects/templates/task_list.html:126
 msgid "No tasks"
 msgstr "There is on Tasks, perhaps you should add some"
 
@@ -295,6 +306,6 @@ msgstr "English"
 msgid "Russian"
 msgstr "Russian"
 
-#: templates/nav.html:37 templates/nav.html:39
+#: templates/nav.html:39 templates/nav.html:42
 msgid "Search"
 msgstr "Search"

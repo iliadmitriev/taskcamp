@@ -49,3 +49,13 @@ class Task(models.Model):
     class Meta:
         verbose_name = _('Task')
         verbose_name_plural = _('Tasks')
+
+
+class Comment(models.Model):
+    task = models.ForeignKey(Task, verbose_name=_('Task'), on_delete=models.CASCADE)
+    created = models.DateTimeField(verbose_name=_('Created'), auto_now=True)
+    description = models.CharField(verbose_name=_('Description'), max_length=5000)
+
+    class Meta:
+        verbose_name = _('Comment')
+        verbose_name_plural = _('Comments')
