@@ -21,7 +21,7 @@
             <tbody>
             {% for employee in employee_list %}
                 <tr>
-                    <td>{{ forloop.counter }}</td>
+                    <td>{{ employee.id }}</td>
                     <td>
                         <a href="{% url 'employee-detail' employee.id %}"
                            class="link-primary">
