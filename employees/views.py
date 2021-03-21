@@ -10,6 +10,7 @@ from .forms import EmployeeModelForm
 class EmployeeListView(ListView):
     template_name = 'employee_list.html'
     model = Employee
+    ordering = 'id'
 
 
 class EmployeeDetailView(DetailView):
