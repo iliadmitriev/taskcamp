@@ -5,6 +5,7 @@ from django.views.generic import (
 from django.db.models import Q, F, Count, FloatField, Case, When
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
+from django.db import IntegrityError
 from .models import Project, Task, TaskStatus, Comment
 from .forms import ProjectModelForm, TaskModelForm, CommentModelForm
 
@@ -141,7 +142,11 @@ class TaskDeleteView(DeleteView):
 class CommentCreate(View):
     def post(self, *args, **kwargs):
         task_id = kwargs.get('pk')
-        description = self.request.POST.get('description')
-        comment = Comment(task_id=task_id, description=description)
-        comment.save()
+        try:
+            description = self.request.POST.get('description')
+            comment = Comment(task_id=task_id, description=description)
+            comment.save()
+        except IntegrityError:
+            pass
+
         return HttpResponseRedirect(reverse('projects-task-detail', kwargs=kwargs))
