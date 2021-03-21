@@ -34,9 +34,13 @@
                 </li>
             </ul>
             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="{% translate 'Search' %}"
+                <input class="form-control me-2" type="search"
+                       name="q" value="{{ request.GET.q }}"
+                       placeholder="{% translate 'Search' %}"
                        aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">{% translate 'Search' %}</button>
+                <button class="btn btn-outline-success" type="submit">
+                    {% translate 'Search' %}
+                </button>
             </form>
         </div>
     </div>

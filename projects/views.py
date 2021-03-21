@@ -76,12 +76,27 @@ class ProjectEditView(UpdateView):
 class ProjectDeleteView(DeleteView):
     template_name = 'project_confirm_delete.html'
     model = Project
+    ordering = 'id'
     success_url = reverse_lazy('project-list')
 
 
 class TaskListView(ListView):
     template_name = 'task_list.html'
     model = Task
+    ordering = 'id'
+    paginate_by = 10
+
+    def get_queryset(self):
+        tasks = Task.objects.all()
+        ordering = self.request.GET.get('order_by') or self.ordering
+        if self.request.GET.get('q'):
+            search = self.request.GET.get('q')
+            tasks = tasks.filter(
+                Q(title__icontains=search)
+                | Q(description__icontains=search)
+            )
+
+        return tasks.order_by(ordering)
 
 
 class TaskDetailView(DetailView):
