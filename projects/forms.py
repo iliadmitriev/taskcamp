@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project, Task
+from .models import Project, Task, Comment
 
 
 class ProjectModelForm(forms.ModelForm):
@@ -31,4 +31,15 @@ class TaskModelForm(forms.ModelForm):
             'author': forms.Select(attrs={'class': 'form-select'}),
             'assignee': forms.Select(attrs={'class': 'form-select'}),
 
+        }
+
+
+class CommentModelForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            'description'
+        ]
+        widgets = {
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
         }
