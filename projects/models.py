@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from employees.models import Employee
+from documents.models import Document
 
 
 class Project(models.Model):
@@ -51,6 +52,7 @@ class Task(models.Model):
         verbose_name=_('Status'), max_length=20,
         choices=TaskStatus.choices, default=TaskStatus.NEW
     )
+    documents = models.ManyToManyField(Document, verbose_name=_('Documents'))
 
     def __str__(self):
         return f'{self.id}: {self.title} ({self.status})'
