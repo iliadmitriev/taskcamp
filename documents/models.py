@@ -1,0 +1,25 @@
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from .helpers import document_upload_path
+
+
+class DocumentQuerySet(models.QuerySet):
+
+    def delete(self):
+        for obj in self:
+            obj.document.delete()
+        return super(DocumentQuerySet, self).delete()
+
+
+class Document(models.Model):
+
+    objects = DocumentQuerySet.as_manager()
+
+    uploaded = models.DateTimeField(verbose_name=_('Date and time uploaded'), auto_now_add=True)
+    document = models.FileField(verbose_name=_('Document'), upload_to=document_upload_path)
+    title = models.CharField(verbose_name=_('Title'), max_length=100, blank=True)
+    description = models.TextField(verbose_name=_('Description'), max_length=500, blank=True)
+
+    class Meta:
+        verbose_name = _('Document')
+        verbose_name_plural = _('Documents')
