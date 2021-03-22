@@ -72,6 +72,29 @@
                     {{ task.get_status_display }}
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
+                    <h5>{% translate 'Documents' %}</h5>
+                    <a href="#" class="btn btn-primary btn-sm mb-1">
+                        <i class="bi bi-plus"></i>
+                        {% translate 'Add' %}
+                    </a>
+                    {% for document in task.documents.all %}
+                        <div class="d-flex">
+                            <a href="{{ document.document.url }}" download>
+                                <i class="bi bi-paperclip"></i>
+                                {{ document.title }}
+                            </a>
+                            <p>&nbsp;</p>
+                            <p>{{ document.description }}</p>
+                            <p>&nbsp;</p>
+                            <p>({{ document.document.size | filesizeformat }})</p>
+                            <p>&nbsp;</p>
+                            <p>{{ document.uploaded | date:"DATETIME_FORMAT" }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
             {% if task.description %}
                 <div class="row">
                     <div class="col">
