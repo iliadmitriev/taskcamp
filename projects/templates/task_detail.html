@@ -75,7 +75,7 @@
             <div class="row">
                 <div class="col">
                     <h5>{% translate 'Documents' %}</h5>
-                    <a href="#" class="btn btn-primary btn-sm mb-1">
+                    <a href="{% url 'task-document-upload' task.id %}" class="btn btn-primary btn-sm mb-1">
                         <i class="bi bi-plus"></i>
                         {% translate 'Add' %}
                     </a>

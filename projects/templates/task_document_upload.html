@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block container %}
+    <h1>{{ task.title }}</h1>
+    <hr>
+    {% if request.META.HTTP_REFERER %}
+        <a href="{{ request.META.HTTP_REFERER }}" class="link link-primary">
+            {% translate 'Back' %}
+        </a>
+    {% else %}
+        <a href="{% url 'projects-task-list' %}" class="link link-primary">
+            {% translate 'Back' %}
+        </a>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <input type="submit" class="btn btn-danger btn-lg" value="{% translate 'Confirm' %}">
+        {% if request.META.HTTP_REFERER %}
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary btn-lg">
+                {% translate 'Cancel' %}
+            </a>
+        {% else %}
+            <a href="{% url 'projects-task-detail' %}" class="btn btn-secondary btn-lg">
+                {% translate 'Cancel' %}
+            </a>
+        {% endif %}
+    </form>
+
+
+{% endblock %}

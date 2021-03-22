@@ -4,10 +4,12 @@ from django.views.generic import (
 )
 from django.db.models import Q, F, Count, FloatField, Case, When
 from django.urls import reverse_lazy, reverse
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
 from .models import Project, Task, TaskStatus, Comment
 from .forms import ProjectModelForm, TaskModelForm, CommentModelForm
+from documents.forms import DocumentModeForm
 
 
 class ProjectsListView(ListView):
@@ -150,3 +152,23 @@ class CommentCreate(View):
             pass
 
         return HttpResponseRedirect(reverse('projects-task-detail', kwargs=kwargs))
+
+
+class DocumentUpload(View):
+    def get(self, *args, **kwargs):
+        task_id = kwargs.get('pk')
+        form = DocumentModeForm()
+        task = Task.objects.get(pk=task_id)
+        return render(self.request, 'task_document_upload.html', {
+            'task': task,
+            'form': form
+        })
+
+    def post(self, *args, **kwargs):
+        task_id = kwargs.get('pk')
+        form = DocumentModeForm(self.request.POST, self.request.FILES)
+        if form.is_valid():
+            return HttpResponseRedirect(reverse('projects-task-detail', kwargs=kwargs))
+
+        return HttpResponseRedirect(reverse('projects-task-detail', kwargs=kwargs))
+
