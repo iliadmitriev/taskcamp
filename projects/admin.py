@@ -14,6 +14,14 @@ class ProjectAdmin(admin.ModelAdmin):
         return reverse('project-detail', args=(obj.id,))
 
 
+class CommentInline(admin.TabularInline):
+    model = Comment
+    extra = 0
+    readonly_fields = ['id', 'created']
+    fields = ['id', 'created', 'task', 'description']
+    raw_id_fields = ['task']
+
+
 class TaskAdmin(admin.ModelAdmin):
     list_select_related = True
     readonly_fields = ['id']
@@ -28,6 +36,8 @@ class TaskAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description']
     list_filter = ['status']
     raw_id_fields = ['project', 'author', 'assignee']
+
+    inlines = [CommentInline]
 
     def get_view_on_site_url(self, obj=None):
         return reverse('projects-task-detail', args=(obj.id,))
