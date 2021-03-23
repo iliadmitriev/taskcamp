@@ -10,7 +10,7 @@ class EmployeeAdmin(admin.ModelAdmin):
     search_fields = ['email', 'firstname', 'surname']
 
     def get_view_on_site_url(self, obj=None):
-        return reverse('employee-detail', args=(obj.id,))
+        return reverse('employee-detail', args=(obj.id,)) if obj else None
 
 
 admin.site.register(Employee, EmployeeAdmin)

@@ -11,7 +11,7 @@ class ProjectAdmin(admin.ModelAdmin):
     list_filter = ['due_date', 'is_closed']
 
     def get_view_on_site_url(self, obj=None):
-        return reverse('project-detail', args=(obj.id,))
+        return reverse('project-detail', args=(obj.id,)) if obj else None
 
 
 class CommentInline(admin.TabularInline):
@@ -40,7 +40,7 @@ class TaskAdmin(admin.ModelAdmin):
     inlines = [CommentInline]
 
     def get_view_on_site_url(self, obj=None):
-        return reverse('projects-task-detail', args=(obj.id,))
+        return reverse('projects-task-detail', args=(obj.id,)) if obj else None
 
 
 class CommentAdmin(admin.ModelAdmin):
@@ -52,7 +52,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ['id', 'task', 'created', 'description']
 
     def get_view_on_site_url(self, obj=None):
-        return reverse('projects-task-detail', args=(obj.task.id,))
+        return reverse('projects-task-detail', args=(obj.task.id,)) if obj else None
 
 
 admin.site.register(Project, ProjectAdmin)
