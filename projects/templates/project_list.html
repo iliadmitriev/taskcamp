@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load i18n %}
+{% load query_builder %}
 
 {% block container %}
     <h1>{% translate 'Projects' %}</h1>
@@ -49,7 +50,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{% url 'project-edit' project.id %}"
+                        <a href="{% url 'project-edit' project.id %}{% query_builder request.GET next=request.path %}"
                            class="btn btn-primary btn-sm">
                             <i class="bi bi-pencil"></i>
                         </a>

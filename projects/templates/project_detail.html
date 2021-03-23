@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load markdown_processor %}
 {% load task_class %}
+{% load query_builder %}
 
 {% block container %}
     <h1>{{ project.title }} #{{ project.id }}</h1>
@@ -76,7 +77,7 @@
             {% endif %}
             <div class="row">
                 <div class="col">
-                    <a href="{% url 'project-edit' project.id %}" class="btn btn-primary btn-lg">
+                    <a href="{% url 'project-edit' project.id %}{% query_builder request.GET next=request.path %}" class="btn btn-primary btn-lg">
                         <i class="bi bi-pencil"></i>
                         {% translate 'Edit' %}
                     </a>

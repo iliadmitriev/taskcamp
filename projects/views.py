@@ -75,6 +75,8 @@ class ProjectEditView(UpdateView):
     form_class = ProjectModelForm
 
     def get_success_url(self):
+        if self.request.GET.get('next'):
+            return self.request.GET.get('next')
         return reverse_lazy('project-detail', kwargs={'pk': self.object.id})
 
 
