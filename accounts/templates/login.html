@@ -1,0 +1,39 @@
+{% extends 'empty.html' %}
+
+{% load html_attributes %}
+
+{% block container %}
+    <div class="card mt-5 mb-5 mx-auto" style="max-width: 600px">
+        <div class="card-body">
+
+            <form method="post" action="{% url 'accounts:login' %}">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <p>Your username and password didn't match. Please try again.</p>
+                {% endif %}
+
+                {% if next %}
+                    {% if user.is_authenticated %}
+                        <p>Your account doesn't have access to this page. To proceed,
+                            please login with an account that has access.</p>
+                    {% else %}
+                        <p>Please login to see this page.</p>
+                    {% endif %}
+                {% endif %}
+
+                <div>{{ form.username.label }}</div>
+                <div>{{ form.username | class:'form-control' }}</div>
+
+                <div>{{ form.password.label }}</div>
+                <div>{{ form.password | class:'form-control' }}</div>
+
+
+                <input type="submit" value="login" class="btn btn-primary form-control">
+                <input type="hidden" name="next" value="{{ next }}">
+
+            </form>
+            <p><a href="#">Lost password?</a></p>
+        </div>
+    </div>
+
+{% endblock %}
