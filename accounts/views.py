@@ -3,8 +3,6 @@ from django.contrib.auth import authenticate, login
 from django.views.generic import FormView
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import get_user_model
-
-
 from .forms import RegisterForm
 
 
@@ -40,3 +38,6 @@ class AccountsLoginView(auth_views.LoginView):
         url = self.get_redirect_url()
         return url or reverse('home')
 
+
+class AccountLogout(auth_views.LogoutView):
+    next_page = reverse_lazy('accounts:login')
