@@ -32,6 +32,40 @@
                        href="{{ url }}">
                         {% translate 'Employees' %}</a>
                 </li>
+
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person"></i>
+                        {% translate 'Account' %}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
+                        aria-labelledby="navbarDropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="bi bi-gear"></i>
+                                {% translate 'Profile' %}
+                            </a>
+                        </li>
+                        {% if user.is_staff %}
+                            <li><a class="dropdown-item" href="{% url 'admin:index' %}">
+                                <i class="bi bi-tools"></i>
+                                {% translate 'Admin' %}
+                            </a></li>
+                        {% endif %}
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'accounts:logout' %}">
+                                <i class="bi bi-box-arrow-right"></i>
+                                {% translate 'Logout' %}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search"
@@ -42,6 +76,8 @@
                     {% translate 'Search' %}
                 </button>
             </form>
+
+
         </div>
     </div>
 </nav>
