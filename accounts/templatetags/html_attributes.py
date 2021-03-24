@@ -3,7 +3,8 @@ register = template.Library()
 
 
 @register.filter(name='add_attr')
-def add_attr(field, attrs):
+def add_attr(field, extra_attr):
+    attrs = field.field.widget.attrs | extra_attr
     return field.as_widget(attrs=attrs)
 
 
