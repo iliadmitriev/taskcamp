@@ -30,6 +30,8 @@ DEBUG = env.get('DJANGO_DEBUG', False) == 'True'
 
 ALLOWED_HOSTS = ['*']
 
+# Auth user model
+AUTH_USER_MODEL = 'accounts.User'
 
 # Application definition
 

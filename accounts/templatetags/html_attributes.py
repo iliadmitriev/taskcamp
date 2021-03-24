@@ -2,6 +2,11 @@ from django import template
 register = template.Library()
 
 
-@register.filter(name='class')
-def add_class(field, value):
-    return field.as_widget(attrs={'class': value})
+@register.filter(name='add_attr')
+def add_attr(field, attrs):
+    return field.as_widget(attrs=attrs)
+
+
+@register.simple_tag
+def attr(**kwargs):
+    return kwargs
