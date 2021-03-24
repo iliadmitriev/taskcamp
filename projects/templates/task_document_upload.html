@@ -26,7 +26,7 @@
                 {% translate 'Cancel' %}
             </a>
         {% else %}
-            <a href="{% url 'projects-task-detail' %}" class="btn btn-secondary btn-lg">
+            <a href="{% url 'projects-task-detail' task.id %}" class="btn btn-secondary btn-lg">
                 {% translate 'Cancel' %}
             </a>
         {% endif %}
