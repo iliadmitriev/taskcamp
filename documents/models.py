@@ -4,7 +4,11 @@ from .helpers import document_upload_path
 
 
 class DocumentQuerySet(models.QuerySet):
-
+    """ queryset for Document model.
+     it's only purpose to override default delete operation.
+     It deletes uploaded files associated with document instances
+     when deleting instance from db.
+     """
     def delete(self):
         for obj in self:
             obj.document.delete()
