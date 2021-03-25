@@ -8,7 +8,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth import get_user_model
 from .forms import RegisterForm
 
@@ -110,7 +110,7 @@ class AccountsRegisterActivate(View):
             except user_model.DoesNotExist:
                 pass
 
-        return HttpResponse(b'hash is not found or expired')
+        return HttpResponseBadRequest(b'hash is not found or expired')
 
 
 class AccountsLoginView(auth_views.LoginView):
