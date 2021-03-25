@@ -4,6 +4,7 @@ from .models import Project, Task, Comment
 
 
 class ProjectModelForm(forms.ModelForm):
+
     class Meta:
         model = Project
         fields = ['title', 'description', 'due_date', 'is_closed']
@@ -16,6 +17,7 @@ class ProjectModelForm(forms.ModelForm):
 
 
 class TaskModelForm(forms.ModelForm):
+
     class Meta:
         model = Task
         fields = [

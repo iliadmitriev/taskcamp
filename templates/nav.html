@@ -47,7 +47,7 @@
                                 {% translate 'Profile' %}
                             </a>
                         </li>
-                        {% if user.is_staff %}
+                        {% if user.is_staff or user.is_superuser %}
                             <li><a class="dropdown-item" href="{% url 'admin:index' %}">
                                 <i class="bi bi-tools"></i>
                                 {% translate 'Admin' %}
