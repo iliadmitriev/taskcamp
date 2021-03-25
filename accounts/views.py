@@ -2,9 +2,12 @@ import uuid
 from django.core.cache import cache
 from django.conf import settings
 from django.contrib.auth import views as auth_views
-from django.contrib.auth import authenticate, login
-from django.views.generic import FormView, View
+from django.contrib.auth import login
+from django.views.generic import FormView, View, TemplateView
+from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import get_user_model
 from .forms import RegisterForm
@@ -13,10 +16,9 @@ from .forms import RegisterForm
 class AccountsRegisterView(FormView):
     template_name = 'register.html'
     form_class = RegisterForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('accounts:register-done')
 
     def form_valid(self, form):
-
         user_model = get_user_model()
 
         user = user_model.objects.create_user(
@@ -25,6 +27,14 @@ class AccountsRegisterView(FormView):
             is_active=False
         )
 
+        user_hash, token = self.generate_user_hash_and_token(user.id)
+
+        self.send_register_activation_email(user.email, user_hash, token)
+
+        return super().form_valid(form)
+
+
+    def generate_user_hash_and_token(self, user_id):
         user_hash = uuid.uuid4().hex
         token = uuid.uuid4().hex
 
@@ -32,14 +42,45 @@ class AccountsRegisterView(FormView):
             user_hash,
             {
                 'token': token,
-                'user_id': user.id
+                'user_id': user_id
             },
             settings.ACCOUNT_ACTIVATION_LINK_EXPIRE
         )
+        return user_hash, token
 
-        print(reverse('accounts:activate', args=(user_hash, token,)))
+    def send_register_activation_email(self, email, user_hash, token):
+        url_link = '{}://{}{}'.format(
+            self.request.scheme,
+            get_current_site(self.request),
+            reverse('accounts:activate', args=(user_hash, token,))
+        )
 
-        return super().form_valid(form)
+        subject = 'Your account activation'
+
+        html_message = render_to_string(
+            'email/register_activate.html',
+            {'url_link': url_link}
+        )
+
+        txt_message = render_to_string(
+            'email/register_activate.txt',
+            {'url_link': url_link}
+        )
+
+        message = EmailMultiAlternatives(
+            subject,
+            txt_message,
+            settings.DEFAULT_FROM_EMAIL,
+            [email]
+        )
+
+        message.attach_alternative(html_message, 'text/html')
+
+        return message.send()
+
+
+class AccountsRegisterDoneView(TemplateView):
+    template_name = 'register_done.html'
 
 
 class AccountsRegisterActivate(View):

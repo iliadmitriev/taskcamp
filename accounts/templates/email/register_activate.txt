@@ -1,0 +1,7 @@
+Account activation link
+To activate your account follow this link
+
+{{ url_link }}
+
+Best,
+Taskcamp team

@@ -1,0 +1,20 @@
+{% load i18n %}
+{% get_current_language as LANG %}
+<!DOCTYPE html>
+<html lang="{{ LANG }}">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>Account activation link</h1>
+<hr>
+<p>To activate your account follow this link</p>
+
+<a href="{{ url_link }}">Activate</a>
+
+<p>Best,
+Taskcamp team
+</p>
+</body>
+</html>

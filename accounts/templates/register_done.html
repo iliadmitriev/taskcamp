@@ -1,0 +1,17 @@
+{% extends 'empty.html' %}
+
+{% load i18n %}
+
+{% block container %}
+    <div class="card mt-5 mb-5 mx-auto" style="max-width: 600px">
+        <div class="card-body">
+            <h3 class="card-title mb-3">{% translate 'Register' %}</h3>
+            <p class="card-text">
+                {% translate 'Registration is almost completed' %}
+            </p>
+            <p class="card-text">
+                {% translate 'To finish registrations you have to go check your email address and follow link we have sent you' %}
+            </p>
+        </div>
+    </div>
+{% endblock %}
