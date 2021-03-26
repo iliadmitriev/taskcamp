@@ -7,7 +7,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth import get_user_model
 from .forms import RegisterForm
-from .helpers import generate_user_hash_and_token, send_register_activation_email
+from .helpers import generate_user_hash_and_token
+from worker.tasks.email import send_activation_email
+from worker.app import app
 
 
 class AccountsRegisterView(FormView):
@@ -32,13 +34,17 @@ class AccountsRegisterView(FormView):
             reverse('accounts:activate', args=(user_hash, token,))
         )
 
-        send_register_activation_email(user.email, url_link)
+        send_activation_email.delay(user.email, url_link)
 
         return super().form_valid(form)
 
 
 class AccountsRegisterDoneView(TemplateView):
     template_name = 'register_done.html'
+
+    def get_context_data(self, **kwargs):
+        print(app.conf.task_routes)
+        return {}
 
 
 class AccountsRegisterActivate(View):
