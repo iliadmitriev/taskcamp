@@ -1,16 +1,13 @@
-import uuid
 from django.core.cache import cache
-from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import login
 from django.views.generic import FormView, View, TemplateView
-from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth import get_user_model
 from .forms import RegisterForm
+from .helpers import generate_user_hash_and_token, send_register_activation_email
 
 
 class AccountsRegisterView(FormView):
@@ -27,56 +24,17 @@ class AccountsRegisterView(FormView):
             is_active=False
         )
 
-        user_hash, token = self.generate_user_hash_and_token(user.id)
+        user_hash, token = generate_user_hash_and_token(user.id)
 
-        self.send_register_activation_email(user.email, user_hash, token)
-
-        return super().form_valid(form)
-
-
-    def generate_user_hash_and_token(self, user_id):
-        user_hash = uuid.uuid4().hex
-        token = uuid.uuid4().hex
-
-        cache.set(
-            user_hash,
-            {
-                'token': token,
-                'user_id': user_id
-            },
-            settings.ACCOUNT_ACTIVATION_LINK_EXPIRE
-        )
-        return user_hash, token
-
-    def send_register_activation_email(self, email, user_hash, token):
         url_link = '{}://{}{}'.format(
             self.request.scheme,
             get_current_site(self.request),
             reverse('accounts:activate', args=(user_hash, token,))
         )
 
-        subject = 'Your account activation'
+        send_register_activation_email(user.email, url_link)
 
-        html_message = render_to_string(
-            'email/register_activate.html',
-            {'url_link': url_link}
-        )
-
-        txt_message = render_to_string(
-            'email/register_activate.txt',
-            {'url_link': url_link}
-        )
-
-        message = EmailMultiAlternatives(
-            subject,
-            txt_message,
-            settings.DEFAULT_FROM_EMAIL,
-            [email]
-        )
-
-        message.attach_alternative(html_message, 'text/html')
-
-        return message.send()
+        return super().form_valid(form)
 
 
 class AccountsRegisterDoneView(TemplateView):
