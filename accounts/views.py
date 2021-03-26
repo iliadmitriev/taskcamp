@@ -42,10 +42,6 @@ class AccountsRegisterView(FormView):
 class AccountsRegisterDoneView(TemplateView):
     template_name = 'register_done.html'
 
-    def get_context_data(self, **kwargs):
-        print(app.conf.task_routes)
-        return {}
-
 
 class AccountsRegisterActivate(View):
 

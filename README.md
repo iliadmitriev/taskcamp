@@ -100,6 +100,24 @@ python3 manage.py compilemessages -i venv
 python3 manage.py runserver 0:8000
 ```
 
+5. run celery for emails and other async tasks
+```shell
+python3 -m celery -A worker.app worker
+# or
+celery -A worker.app worker
+```
+
+5. run celery for emails and other async tasks
+```shell
+python3 -m celery -A worker.app worker
+# or
+celery -A worker.app worker
+```
+with log level and queue
+```shell
+celery -A worker.app worker -l INFO -Q activation_email
+```
+
 # testing
 
 ## run tests 
