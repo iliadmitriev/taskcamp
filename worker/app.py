@@ -7,6 +7,8 @@ app = Celery('tasks')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
+app.config_from_object('worker.config')
+
 print(app.conf.broker_url)
 
 app.autodiscover_tasks()
