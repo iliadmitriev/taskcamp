@@ -18,3 +18,8 @@ if RABBIT_HOST and RABBIT_PORT \
                     f'{RABBIT_HOST}:{RABBIT_PORT}/{RABBIT_VHOST}'
 
 
+task_serializer = 'json'
+result_serializer = 'json'
+accept_content = ['json']
+timezone = 'Europe/Moscow'
+enable_utc = True
