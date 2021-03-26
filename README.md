@@ -23,11 +23,18 @@ echo DJANGO_SECRET_KEY=test_secret_key  >> .env
 4. add connection data to `.env` file
 ```shell
 >>.env << __EOF__
+RABBITMQ_HOST=192.168.10.1
+RABBITMQ_PORT=5673
+RABBITMQ_DEFAULT_USER=admin
+RABBITMQ_DEFAULT_PASS=adminsecret
+RABBITMQ_DEFAULT_VHOST=celery
+
 POSTGRES_HOST=192.168.10.1
 POSTGRES_PORT=5434
 POSTGRES_DB=taskcamp
 POSTGRES_USER=taskcamp
 POSTGRES_PASSWORD=secret
+
 MEMCACHED_LOCATION=192.168.10.1:11214
 __EOF__
 ```
@@ -37,12 +44,19 @@ if you need a debug to be enabled
 DJANGO_DEBUG=True
 __EOF__
 ```
-5. create and run postgresql and memcached instance (if needed)
+5. create and run postgresql, memcached, mailcatcher and rabbitmq instance (if needed)
 ```shell
 docker run -d --name taskcamp-postgres --hostname taskcamp-postgres \
     -p 5434:5432 --env-file .env postgres:13-alpine
     
 docker run -d -p 11214:11211 --name taskcamp-memcached memcached:alpine
+
+docker run -d -p 15673:15672 -p 5673:5672 \
+  --name taskcamp-rabbit --hostname taskcamp-rabbit \
+  --env-file .env rabbitmq:3.8.14-management-alpine
+
+docker run -d -p 1080:1080 -p 1025:1025 \
+ --name taskcamp-mailcatcher mailcatcher
 ```
 5. export variables from .env file
 ```shell
@@ -50,11 +64,11 @@ export $(cat .env | xargs)
 ```
 6. create a db (run migrations)
 ```shell
-python3 manage.py migrate
+python3 manage.py migrate --no-input
 ```
 7. compile messages
 ```shell
-python3 manage.py compilemessages
+python3 manage.py compilemessages -i venv --no-input
 ```
 8. create superuser
 ```shell
@@ -77,8 +91,8 @@ python3 manage.py migrate
 
 3. make messages
 ```shell
-python3 manage.py makemessages -a
-python3 manage.py compilemessages
+python3 manage.py makemessages -a -i venv
+python3 manage.py compilemessages -i venv
 ```
 
 4. run
