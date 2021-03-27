@@ -160,3 +160,6 @@ class TaskDocumentUpload(DocumentUpload):
     def get_success_url(self, *args, **kwargs):
         task_id = self.kwargs.get('pk')
         return reverse('projects-task-detail', args=(task_id,))
+    
+    def form_valid(self, form):
+        return super(TaskDocumentUpload, self).form_valid(form)

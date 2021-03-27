@@ -21,8 +21,8 @@ class Document(models.Model):
 
     uploaded = models.DateTimeField(verbose_name=_('Date and time uploaded'), auto_now_add=True)
     document = models.FileField(verbose_name=_('Document'), upload_to=document_upload_path)
-    title = models.CharField(verbose_name=_('Title'), max_length=100, blank=True)
-    description = models.TextField(verbose_name=_('Description'), max_length=500, blank=True)
+    title = models.CharField(verbose_name=_('Title'), max_length=100, blank=True, null=True)
+    description = models.TextField(verbose_name=_('Description'), max_length=500, blank=True, null=True)
 
     def __str__(self):
         return f'{self.id} {self.title}'

@@ -8,6 +8,7 @@ class DocumentUpload(FormView):
     form_class = DocumentModeForm
 
     def form_valid(self, form):
+        form.save()
         return HttpResponseRedirect(self.get_success_url())
 
 
