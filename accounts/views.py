@@ -8,8 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth import get_user_model
 from .forms import RegisterForm
 from .helpers import generate_user_hash_and_token
-from worker.tasks.email import send_activation_email
-from worker.app import app
+from worker.email.tasks import send_activation_email
 
 
 class AccountsRegisterView(FormView):

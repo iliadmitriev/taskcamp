@@ -113,20 +113,20 @@ python3 manage.py runserver 0:8000
 
 5. run celery for emails and other async tasks
 ```shell
-python3 -m celery -A worker.app worker
+python3 -m celery -A worker worker
 # or
-celery -A worker.app worker
+celery -A worker worker
 ```
 
 5. run celery for emails and other async tasks
 ```shell
-python3 -m celery -A worker.app worker
+python3 -m celery -A worker worker
 # or
-celery -A worker.app worker
+celery -A worker worker
 ```
 with log level and queue
 ```shell
-celery -A worker.app worker -l INFO -Q activation_email
+celery -A worker worker -l INFO -Q email
 ```
 
 # testing
