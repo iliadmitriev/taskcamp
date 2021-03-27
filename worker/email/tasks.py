@@ -4,7 +4,11 @@ from django.template.loader import render_to_string
 from worker.app import app
 
 
-@app.task
+@app.task(
+    max_retries=5,
+    default_retry_delay=60,
+    autoretry_for=(ConnectionRefusedError,)
+    )
 def send_activation_email(email, url_link):
     subject = 'Your taskcamp account activation'
 
