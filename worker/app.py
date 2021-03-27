@@ -33,5 +33,6 @@ app.config_from_object(config)
 
 app.autodiscover_tasks(['worker.email'])
 
-app.select_queues(['celery', 'email'])
+queue_names_list = map(lambda x: x.name, config.task_queue)
 
+app.select_queues(queue_names_list)
