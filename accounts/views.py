@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth import get_user_model
 from .forms import RegisterForm
 from .helpers import generate_user_hash_and_token
-from worker.email.tasks import send_activation_email
+from worker.email.tasks import send_activation_email, send_welcome_message
 
 
 class AccountsRegisterView(FormView):
@@ -63,6 +63,14 @@ class AccountsRegisterActivate(View):
                 login(self.request, user)
 
                 cache.delete(user_hash)
+
+                tour_link = '{}://{}{}'.format(
+                    self.request.scheme,
+                    get_current_site(self.request),
+                    reverse('home')
+                )
+
+                send_welcome_message.delay(user.email, tour_link)
 
                 return HttpResponseRedirect(reverse('home'))
 

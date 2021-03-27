@@ -1,0 +1,9 @@
+Taskcamp team welcomes you.
+And we wish you a productive work.
+
+To help you achieve productivity take a tour
+
+{{ tour_link }}
+
+Best,
+Taskcamp team
