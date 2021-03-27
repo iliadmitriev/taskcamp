@@ -33,3 +33,5 @@ app.config_from_object(config)
 
 app.autodiscover_tasks(['worker.email'])
 
+app.select_queues(['celery', 'email'])
+
