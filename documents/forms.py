@@ -2,7 +2,7 @@ from django import forms
 from .models import Document
 
 
-class DocumentModeForm(forms.ModelForm):
+class DocumentModelForm(forms.ModelForm):
     class Meta:
         model = Document
         fields = ['document', 'description', 'title']
@@ -13,7 +13,7 @@ class DocumentModeForm(forms.ModelForm):
         }
 
     def save(self, commit=True):
-        instance = super(DocumentModeForm, self).save(False)
+        instance = super(DocumentModelForm, self).save(False)
         instance.title = instance.document.name
         if commit:
             instance.save()

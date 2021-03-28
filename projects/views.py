@@ -5,7 +5,6 @@ from django.views.generic import (
 from django.db.models import Q, F, Count, FloatField, Case, When
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
-from django.db import IntegrityError
 from .models import Project, Task, TaskStatus, Comment
 from .forms import ProjectModelForm, TaskModelForm, CommentModelForm
 from documents.views import DocumentUpload
@@ -156,40 +155,20 @@ class CommentCreate(View):
 
 
 class TaskDocumentUpload(DocumentUpload):
+    model = Task
+    model_field = 'documents'
 
     def get_success_url(self, *args, **kwargs):
         task_id = self.kwargs.get('pk')
         return reverse('projects-task-detail', args=(task_id,))
-    
-    def form_valid(self, form):
-
-        response = super(TaskDocumentUpload, self).form_valid(form)
-
-        try:
-            task_id = self.kwargs.get('pk')
-            task = Task.objects.get(pk=task_id)
-            task.documents.add(form.instance)
-        except IntegrityError:
-            pass
-
-        return response
 
 
 class ProjectDocumentUpload(DocumentUpload):
+    model = Project
+    model_field = 'documents'
+
     def get_success_url(self):
         project_id = self.kwargs.get('pk')
         return reverse('project-detail', args=(project_id,))
 
-    def form_valid(self, form):
 
-        response = super(ProjectDocumentUpload, self).form_valid(form)
-
-        try:
-            project_id = self.kwargs.get('pk')
-            project = Project.objects.get(pk=project_id)
-            project.documents.add(form.instance)
-
-        except IntegrityError:
-            pass
-
-        return response
