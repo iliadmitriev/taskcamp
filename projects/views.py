@@ -93,7 +93,7 @@ class TaskListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        tasks = Task.objects.all()
+        tasks = Task.objects.all().select_related('author', 'assignee')
         ordering = self.request.GET.get('order_by') or self.ordering
         if self.request.GET.get('q'):
             search = self.request.GET.get('q')
