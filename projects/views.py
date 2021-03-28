@@ -173,3 +173,23 @@ class TaskDocumentUpload(DocumentUpload):
             pass
 
         return response
+
+
+class ProjectDocumentUpload(DocumentUpload):
+    def get_success_url(self):
+        project_id = self.kwargs.get('pk')
+        return reverse('project-detail', args=(project_id,))
+
+    def form_valid(self, form):
+
+        response = super(ProjectDocumentUpload, self).form_valid(form)
+
+        try:
+            project_id = self.kwargs.get('pk')
+            project = Project.objects.get(pk=project_id)
+            project.documents.add(form.instance)
+
+        except IntegrityError:
+            pass
+
+        return response

@@ -5,15 +5,16 @@ from .views import (
     ProjectDeleteView,
     TaskListView, TaskDetailView, TaskCreateView,
     TaskUpdateView, TaskDeleteView,
-    CommentCreate, TaskDocumentUpload
+    CommentCreate, TaskDocumentUpload,
+    ProjectDocumentUpload
 )
-
 
 urlpatterns = [
     path('', ProjectsListView.as_view(), name='project-list'),
     path('add/', ProjectCreateView.as_view(), name='project-create'),
     path('<int:pk>/', ProjectDetailView.as_view(), name='project-detail'),
     path('<int:pk>/edit/', ProjectEditView.as_view(), name='project-edit'),
+    path('<int:pk>/documnt_upload/', ProjectDocumentUpload.as_view(), name='project-document-upload'),
     path('<int:pk>/delete/', ProjectDeleteView.as_view(), name='project-delete'),
     path('tasks/', TaskListView.as_view(), name='projects-task-list'),
     path('tasks/add/', TaskCreateView.as_view(), name='projects-task-create'),

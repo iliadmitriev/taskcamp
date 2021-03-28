@@ -59,6 +59,32 @@
                     {% endif %}
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col">
+                    <h5>{% translate 'Documents' %}</h5>
+                    <a href="{% url 'project-document-upload' project.id %}" class="btn btn-primary btn-sm mb-1">
+                        <i class="bi bi-plus"></i>
+                        {% translate 'Add' %}
+                    </a>
+                    {% for document in project.documents.all %}
+                        <div class="d-flex">
+                            <a href="{{ document.document.url }}" download>
+                                <i class="bi bi-paperclip"></i>
+                                {{ document.title }}
+                            </a>
+                            <p>&nbsp;</p>
+                            <p>{{ document.description }}</p>
+                            <p>&nbsp;</p>
+                            <p>({{ document.document.size | filesizeformat }})</p>
+                            <p>&nbsp;</p>
+                            <p>{{ document.uploaded | date:"DATETIME_FORMAT" }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+
             {% if project.description %}
                 <div class="row">
                     <div class="col">
@@ -77,7 +103,8 @@
             {% endif %}
             <div class="row">
                 <div class="col">
-                    <a href="{% url 'project-edit' project.id %}{% query_builder request.GET next=request.path %}" class="btn btn-primary btn-lg">
+                    <a href="{% url 'project-edit' project.id %}{% query_builder request.GET next=request.path %}"
+                       class="btn btn-primary btn-lg">
                         <i class="bi bi-pencil"></i>
                         {% translate 'Edit' %}
                     </a>

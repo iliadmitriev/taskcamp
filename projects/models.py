@@ -13,6 +13,8 @@ class Project(models.Model):
     due_date = models.DateField(verbose_name=_('Due date'), null=True, blank=True)
     is_closed = models.BooleanField(verbose_name=_('Is closed'), default=False)
 
+    documents = models.ManyToManyField(Document, verbose_name=_('Documents'))
+
     def __str__(self):
         return f'{self.id}: {self.title} ({self.is_closed})'
 
