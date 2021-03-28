@@ -39,6 +39,11 @@ class TaskAdmin(admin.ModelAdmin):
 
     inlines = [CommentInline]
 
+    def get_queryset(self, request):
+        return super(TaskAdmin, self).get_queryset(request)\
+            .select_related('author', 'assignee')\
+            .select_related('project')
+
     def get_view_on_site_url(self, obj=None):
         return reverse('projects-task-detail', args=(obj.id,)) if obj else None
 
