@@ -41,8 +41,8 @@ class ProjectDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        project = self.get_object()
-        tasks = Task.objects.filter(project=project).order_by('id')
+        project_id = self.kwargs.get('pk')
+        tasks = Task.objects.filter(project_id=project_id).order_by('id').select_related('assignee')
         context['task_list'] = tasks
 
         completed_data = tasks.aggregate(
