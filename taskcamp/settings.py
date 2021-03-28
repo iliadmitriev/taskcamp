@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 from os import environ as env
 from django.utils.translation import gettext_lazy as _
+import pkgutil
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -177,3 +178,9 @@ EMAIL_SUBJECT_PREFIX = ''
 
 ACCOUNT_ACTIVATION_LINK_EXPIRE = 86400 * 3
 
+
+if DEBUG and pkgutil.find_loader('debug_toolbar'):
+    import debug_toolbar
+    INSTALLED_APPS += ['debug_toolbar']
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+    INTERNAL_IPS = ['127.0.0.1', '192.168.10.1']
