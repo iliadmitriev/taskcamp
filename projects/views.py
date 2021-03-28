@@ -162,4 +162,14 @@ class TaskDocumentUpload(DocumentUpload):
         return reverse('projects-task-detail', args=(task_id,))
     
     def form_valid(self, form):
-        return super(TaskDocumentUpload, self).form_valid(form)
+
+        response = super(TaskDocumentUpload, self).form_valid(form)
+
+        try:
+            task_id = self.kwargs.get('pk')
+            task = Task.objects.get(pk=task_id)
+            task.documents.add(form.instance)
+        except IntegrityError:
+            pass
+
+        return response
