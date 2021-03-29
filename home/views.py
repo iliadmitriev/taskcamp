@@ -1,11 +1,14 @@
 from django.views.generic import TemplateView
-from django.db.models import Count, Q, Sum
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count, Q
 from django.utils import timezone
+from django.urls import reverse_lazy
 from projects.models import Project, Task, TaskStatus
 from employees.models import Employee
 
 
-class HomeView(TemplateView):
+class HomeView(LoginRequiredMixin, TemplateView):
+    login_url = reverse_lazy('accounts:login')
     template_name = 'home.html'
 
     def get_context_data(self, **kwargs):
