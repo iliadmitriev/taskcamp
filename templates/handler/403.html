@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block container %}
+    <h1>{% translate 'Unauthorized' %}</h1>
+    <hr>
+    <a href="{{ request.META.HTTP_REFERER }}">{% translate 'Back' %}</a>
+    <p>
+        {% translate 'You dont have enough permission to perform action' %}
+    </p>
+{% endblock %}
