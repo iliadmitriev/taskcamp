@@ -2,7 +2,7 @@ from django.views.generic import (
     ListView, DetailView, DeleteView,
     CreateView, UpdateView, View
 )
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Q, F, Count, FloatField, Case, When
 from django.db import IntegrityError
 from django.urls import reverse_lazy, reverse
@@ -62,8 +62,9 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class ProjectCreateView(LoginRequiredMixin, CreateView):
+class ProjectCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     login_url = reverse_lazy('accounts:login')
+    permission_required = ['projects.add_project']
     template_name = 'project_form.html'
     model = Project
     form_class = ProjectModelForm
@@ -72,8 +73,9 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
         return reverse_lazy('project-detail', kwargs={'pk': self.object.id})
 
 
-class ProjectEditView(LoginRequiredMixin, UpdateView):
+class ProjectEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     login_url = reverse_lazy('accounts:login')
+    permission_required = ['projects.change_project']
     template_name = 'project_form.html'
     model = Project
     form_class = ProjectModelForm
@@ -84,8 +86,9 @@ class ProjectEditView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('project-detail', kwargs={'pk': self.object.id})
 
 
-class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     login_url = reverse_lazy('accounts:login')
+    permission_required = ['projects.delete_project']
     template_name = 'project_confirm_delete.html'
     model = Project
     ordering = 'id'
