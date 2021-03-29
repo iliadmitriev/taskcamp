@@ -14,6 +14,10 @@ urlpatterns = [
 ]
 
 
+handler404 = 'taskcamp.views.http_404'
+handler403 = 'taskcamp.views.http_403'
+handler500 = 'taskcamp.views.http_500'
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
