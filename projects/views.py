@@ -2,7 +2,9 @@ from django.views.generic import (
     ListView, DetailView, DeleteView,
     CreateView, UpdateView, View
 )
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, F, Count, FloatField, Case, When
+from django.db import IntegrityError
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from .models import Project, Task, TaskStatus, Comment
@@ -10,7 +12,8 @@ from .forms import ProjectModelForm, TaskModelForm, CommentModelForm
 from documents.views import DocumentUpload
 
 
-class ProjectsListView(ListView):
+class ProjectsListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('accounts:login')
     template_name = 'project_list.html'
     queryset = Project.objects \
         .annotate(
@@ -33,7 +36,8 @@ class ProjectsListView(ListView):
         .order_by('id')
 
 
-class ProjectDetailView(DetailView):
+class ProjectDetailView(LoginRequiredMixin, DetailView):
+    login_url = reverse_lazy('accounts:login')
     template_name = 'project_detail.html'
     model = Project
 
@@ -58,7 +62,8 @@ class ProjectDetailView(DetailView):
         return context
 
 
-class ProjectCreateView(CreateView):
+class ProjectCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('accounts:login')
     template_name = 'project_form.html'
     model = Project
     form_class = ProjectModelForm
@@ -67,7 +72,8 @@ class ProjectCreateView(CreateView):
         return reverse_lazy('project-detail', kwargs={'pk': self.object.id})
 
 
-class ProjectEditView(UpdateView):
+class ProjectEditView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy('accounts:login')
     template_name = 'project_form.html'
     model = Project
     form_class = ProjectModelForm
@@ -78,14 +84,16 @@ class ProjectEditView(UpdateView):
         return reverse_lazy('project-detail', kwargs={'pk': self.object.id})
 
 
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('accounts:login')
     template_name = 'project_confirm_delete.html'
     model = Project
     ordering = 'id'
     success_url = reverse_lazy('project-list')
 
 
-class TaskListView(ListView):
+class TaskListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('accounts:login')
     template_name = 'task_list.html'
     model = Task
     ordering = 'id'
@@ -104,7 +112,8 @@ class TaskListView(ListView):
         return tasks.order_by(ordering)
 
 
-class TaskDetailView(DetailView):
+class TaskDetailView(LoginRequiredMixin, DetailView):
+    login_url = reverse_lazy('accounts:login')
     template_name = 'task_detail.html'
     model = Task
 
@@ -117,7 +126,8 @@ class TaskDetailView(DetailView):
         return context
 
 
-class TaskCreateView(CreateView):
+class TaskCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('accounts:login')
     template_name = 'task_form.html'
     model = Task
     form_class = TaskModelForm
@@ -126,7 +136,8 @@ class TaskCreateView(CreateView):
         return reverse_lazy('projects-task-detail', kwargs={'pk': self.object.id})
 
 
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy('accounts:login')
     template_name = 'task_form.html'
     model = Task
     form_class = TaskModelForm
@@ -135,13 +146,16 @@ class TaskUpdateView(UpdateView):
         return reverse_lazy('projects-task-detail', kwargs={'pk': self.object.id})
 
 
-class TaskDeleteView(DeleteView):
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('accounts:login')
     template_name = 'task_confirm_delete.html'
     model = Task
     success_url = reverse_lazy('projects-task-list')
 
 
-class CommentCreate(View):
+class CommentCreate(LoginRequiredMixin, View):
+    login_url = reverse_lazy('accounts:login')
+
     def post(self, *args, **kwargs):
         task_id = kwargs.get('pk')
         try:
@@ -154,7 +168,8 @@ class CommentCreate(View):
         return HttpResponseRedirect(reverse('projects-task-detail', kwargs=kwargs))
 
 
-class TaskDocumentUpload(DocumentUpload):
+class TaskDocumentUpload(LoginRequiredMixin, DocumentUpload):
+    login_url = reverse_lazy('accounts:login')
     model = Task
     model_field = 'documents'
 
@@ -163,7 +178,8 @@ class TaskDocumentUpload(DocumentUpload):
         return reverse('projects-task-detail', args=(task_id,))
 
 
-class ProjectDocumentUpload(DocumentUpload):
+class ProjectDocumentUpload(LoginRequiredMixin, DocumentUpload):
+    login_url = reverse_lazy('accounts:login')
     model = Project
     model_field = 'documents'
 
