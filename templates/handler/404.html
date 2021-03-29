@@ -1,0 +1,10 @@
+{% extends user.is_authenticated|yesno:'base.html,empty.html' %}
+{% load i18n %}
+{% block container %}
+    <h1>{% translate 'Not found' %}</h1>
+    <hr>
+    <a href="{{ request.META.HTTP_REFERER }}">{% translate 'Back' %}</a>
+    <p>
+        {% translate 'Page or object you are requested is not found' %}
+    </p>
+{% endblock %}
