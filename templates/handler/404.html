@@ -3,7 +3,9 @@
 {% block container %}
     <h1>{% translate 'Not found' %}</h1>
     <hr>
-    <a href="{{ request.META.HTTP_REFERER }}">{% translate 'Back' %}</a>
+    {% if request.META.HTTP_REFERER %}
+        <a href="{{ request.META.HTTP_REFERER }}">{% translate 'Back' %}</a>
+    {% endif %}
     <p>
         {% translate 'Page or object you are requested is not found' %}
     </p>

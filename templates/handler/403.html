@@ -3,7 +3,9 @@
 {% block container %}
     <h1>{% translate 'Unauthorized' %}</h1>
     <hr>
-    <a href="{{ request.META.HTTP_REFERER }}">{% translate 'Back' %}</a>
+    {% if request.META.HTTP_REFERER %}
+        <a href="{{ request.META.HTTP_REFERER }}">{% translate 'Back' %}</a>
+    {% endif %}
     <p>
         {% translate 'You dont have enough permission to perform action' %}
     </p>
