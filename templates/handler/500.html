@@ -1,0 +1,12 @@
+{% extends user.is_authenticated|yesno:'base.html,empty.html' %}
+{% load i18n %}
+{% block container %}
+    <h1>{% translate 'Internal server error' %}</h1>
+    <hr>
+    {% if request.META.HTTP_REFERER %}
+        <a href="{{ request.META.HTTP_REFERER }}">{% translate 'Back' %}</a>
+    {% endif %}
+    <p>
+        {% translate 'The server encountered error during preparing respose to your request' %}
+    </p>
+{% endblock %}
