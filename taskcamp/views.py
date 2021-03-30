@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponseForbidden
 
 
 def http_404(request, exception):
