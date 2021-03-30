@@ -3,7 +3,8 @@ from django.views.generic import (
     CreateView, UpdateView, View
 )
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.db.models import Q, F, Count, FloatField, Case, When
+from django.db.models import Q, F, Count, FloatField, Case, When, Sum, Avg
+from django.db.models.functions import Cast
 from django.db import IntegrityError
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
@@ -17,22 +18,22 @@ class ProjectsListView(LoginRequiredMixin, ListView):
     template_name = 'project_list.html'
     queryset = Project.objects \
         .annotate(
-            status_count=Count('task'),
-            status_new=Count(
-                'task',
-                filter=~Q(task__status__in=[
-                    TaskStatus.NEW,
-                    TaskStatus.IN_PROGRESS
-                ])
-            )
-        )\
+        status_count=Count('task'),
+        status_new=Count(
+            'task',
+            filter=~Q(task__status__in=[
+                TaskStatus.NEW,
+                TaskStatus.IN_PROGRESS
+            ])
+        )
+    ) \
         .annotate(
-            completed=Case(
-                When(status_count=0, then=0.0),
-                default=(100.0 * F('status_new') / F('status_count')),
-                output_field=FloatField()
-            )
-        )\
+        completed=Case(
+            When(status_count=0, then=0.0),
+            default=(100.0 * F('status_new') / F('status_count')),
+            output_field=FloatField()
+        )
+    ) \
         .order_by('id')
 
 
@@ -50,14 +51,19 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
 
         completed_data = tasks.aggregate(
             total=Count('id'),
-            done=Count('id', filter=~Q(status__in=[TaskStatus.NEW, TaskStatus.IN_PROGRESS]))
+            completed=Case(
+                When(total=0, then=0.0),
+                default=
+                100.0 * Cast(
+                    Count('id', filter=~Q(status__in=[TaskStatus.NEW, TaskStatus.IN_PROGRESS])),
+                    output_field=FloatField()
+                ) / Cast(
+                    Count('id'), output_field=FloatField()
+                ))
         )
-        if completed_data.get('total'):
-            context['completed'] = 100.0 * completed_data.get('done') / completed_data.get('total')
-            context['total'] = completed_data.get('total')
-        else:
-            context['completed'] = 0
-            context['total'] = 0
+
+        context['completed'] = completed_data.get('completed')
+        context['total'] = completed_data.get('total')
 
         return context
 
@@ -189,5 +195,3 @@ class ProjectDocumentUpload(LoginRequiredMixin, DocumentUpload):
     def get_success_url(self):
         project_id = self.kwargs.get('pk')
         return reverse('project-detail', args=(project_id,))
-
-
