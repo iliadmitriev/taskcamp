@@ -88,5 +88,9 @@ class AccountsLoginView(auth_views.LoginView):
         return url or reverse('home')
 
 
-class AccountLogout(auth_views.LogoutView):
+class AccountsLogout(auth_views.LogoutView):
     next_page = reverse_lazy('accounts:login')
+
+
+class AccountsPasswordResetView(auth_views.PasswordResetView):
+    template_name = 'password_reset.html'
