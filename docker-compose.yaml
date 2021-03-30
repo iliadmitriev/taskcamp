@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  redis:
+    image: library/redis:alpine
+    ports:
+    - 6380:6379
+
+  memcached:
+    image: library/memcached:alpine
+    ports:
+    - 11214:11211
+
+  postgres:
+    image: library/postgres:13-alpine
+    env_file:
+      - .env
+    volumes:
+    - pgdata:/var/lib/postgresql/data
+    ports:
+    - 5434:5432
+
+  rabbitmq:
+    image: library/rabbitmq:3.8.14-management-alpine
+    env_file:
+      - .env
+    ports:
+    - 15673:15672
+    - 5673:5672
+
+  mailcatcher:
+    image: mailcatcher
+    ports:
+    - 1080:1080
+    - 1025:1025
+
+volumes:
+  pgdata:
