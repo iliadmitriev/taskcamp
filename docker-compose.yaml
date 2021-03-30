@@ -2,17 +2,17 @@ version: "3.9"
 
 services:
   redis:
-    image: library/redis:alpine
+    image: library/redis:6.2.1-alpine
     ports:
     - 6380:6379
 
   memcached:
-    image: library/memcached:alpine
+    image: library/memcached:1.6.9-alpine
     ports:
     - 11214:11211
 
   postgres:
-    image: library/postgres:13-alpine
+    image: library/postgres:13.2-alpine
     env_file:
       - .env
     volumes:
