@@ -14,7 +14,7 @@ class DocumentUpload(FormView):
     def get_object(self):
         if self.model is None:
             raise ImproperlyConfigured(
-                'No object to connect document to. Provide a model '
+                'No object to connect document to. Provide a model attribute '
                 'with many to many field documents to Documents'
             )
 
@@ -36,9 +36,9 @@ class DocumentUpload(FormView):
 
         except AttributeError:
             raise AttributeError(
-                f'There is no many to many field {self.model_field} '
-                f'in model {self.model.__name__}\n'
-                f'Perhaps you should specify model_field property'
+                f'There is no many to many attribute '
+                f'{self.model.__name__}.{self.model_field} '
+                f'Perhaps you should specify {self.model.__name__}.model_field attribute'
             )
 
         return HttpResponseRedirect(self.get_success_url())
