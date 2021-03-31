@@ -6,7 +6,7 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth import get_user_model
-from .forms import RegisterForm
+from .forms import RegisterForm, AccountsPasswordResetForm
 from .helpers import generate_user_hash_and_token
 from worker.email.tasks import send_activation_email, send_welcome_message
 
@@ -94,3 +94,22 @@ class AccountsLogout(auth_views.LogoutView):
 
 class AccountsPasswordResetView(auth_views.PasswordResetView):
     template_name = 'password_reset.html'
+    success_url = reverse_lazy('accounts:password-reset-done')
+    form_class = AccountsPasswordResetForm
+    email_template_name = 'email/password_reset_email.html'
+    html_email_template_name = 'email/password_reset_email_html.html'
+    subject_template_name = 'email/password_reset_email_subj.txt'
+
+
+class AccountsPasswordResetDoneView(auth_views.PasswordResetDoneView):
+    template_name = 'password_reset_done.html'
+    success_url = reverse_lazy('accounts:password-reset-confirm')
+
+
+class AccountsPasswordResetConfirm(auth_views.PasswordResetConfirmView):
+    template_name = 'password_reset_confirm.html'
+    success_url = reverse_lazy('accounts:password-reset-complete')
+
+
+class AccountsPasswordResetComplete(auth_views.PasswordResetCompleteView):
+    template_name = 'password_reset_complete.html'
