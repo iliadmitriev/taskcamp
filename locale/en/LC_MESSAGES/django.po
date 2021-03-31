@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-23 16:26+0000\n"
+"POT-Creation-Date: 2021-03-30 17:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,48 +18,201 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: accounts/admin.py:12
+msgid "Personal info"
+msgstr ""
+
+#: accounts/admin.py:13
+msgid "Permissions"
+msgstr ""
+
+#: accounts/admin.py:15
+#, fuzzy
+#| msgid "Start date"
+msgid "Important dates"
+msgstr "Start date"
+
 #: accounts/apps.py:7
 msgid "Accounts"
 msgstr ""
 
-#: accounts/templates/login.html:18
-msgctxt "login"
-msgid "You don't have access to requested resource"
+#: accounts/models.py:42
+msgid "email address"
 msgstr ""
 
-#: accounts/templates/login.html:20
-msgctxt "login"
-msgid "Please login to see this page"
-msgstr ""
+#: accounts/models.py:44 employees/models.py:9
+#: employees/templates/employee_detail.html:40
+#: employees/templates/employee_list.html:17
+msgid "Birthdate"
+msgstr "Birthdate"
 
-#: accounts/templates/login.html:41
+#: accounts/templates/login.html:9 accounts/templates/login.html:42
 msgid "Login"
 msgstr ""
 
-#: documents/apps.py:7 documents/models.py:28 projects/models.py:55
+#: accounts/templates/login.html:19
+msgctxt "accounts"
+msgid "You don't have access to requested resource"
+msgstr ""
+
+#: accounts/templates/login.html:21
+msgctxt "accounts"
+msgid "Please login to see this page"
+msgstr ""
+
+#: accounts/templates/login.html:50 accounts/templates/password_reset.html:33
+msgctxt "accounts"
+msgid "Do not have an account?"
+msgstr ""
+
+#: accounts/templates/login.html:52 accounts/templates/password_reset.html:35
+msgctxt "accounts"
+msgid "Register"
+msgstr ""
+
+#: accounts/templates/login.html:59
+msgctxt "accounts"
+msgid "Lost password?"
+msgstr ""
+
+#: accounts/templates/login.html:61
+msgctxt "accounts"
+msgid "Recover"
+msgstr ""
+
+#: accounts/templates/password_reset.html:8
+#: accounts/templates/password_reset_complete.html:7
+#: accounts/templates/password_reset_confirm.html:8
+#: accounts/templates/password_reset_done.html:7
+msgid "Reset password"
+msgstr ""
+
+#: accounts/templates/password_reset.html:25
+msgid "Reset"
+msgstr ""
+
+#: accounts/templates/password_reset.html:42
+#: accounts/templates/register.html:71
+msgctxt "accounts"
+msgid "Already have an account?"
+msgstr ""
+
+#: accounts/templates/password_reset.html:44
+#: accounts/templates/register.html:73
+msgctxt "accounts"
+msgid "Login"
+msgstr ""
+
+#: accounts/templates/password_reset_complete.html:9
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr ""
+
+#: accounts/templates/password_reset_complete.html:11
+msgid "Log in"
+msgstr ""
+
+#: accounts/templates/password_reset_confirm.html:12
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+
+#: accounts/templates/password_reset_confirm.html:27
+msgid "Change my password"
+msgstr ""
+
+#: accounts/templates/password_reset_confirm.html:33
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+
+#: accounts/templates/password_reset_done.html:9
+msgid ""
+"We’ve emailed you instructions for setting your password, if an account "
+"exists with the email you entered. You should receive them shortly."
+msgstr ""
+
+#: accounts/templates/password_reset_done.html:11
+msgid ""
+"If you don’t receive an email, please make sure you’ve entered the address "
+"you registered with, and check your spam folder."
+msgstr ""
+
+#: accounts/templates/register.html:9 accounts/templates/register.html:63
+#: accounts/templates/register_done.html:8
+msgid "Register"
+msgstr ""
+
+#: accounts/templates/register_done.html:10
+msgid "Registration is almost completed"
+msgstr ""
+
+#: accounts/templates/register_done.html:13
+msgid ""
+"To finish registrations you have to go check your email address and follow "
+"link we have sent you"
+msgstr ""
+
+#: documents/apps.py:7 documents/models.py:32 projects/models.py:16
+#: projects/models.py:57 projects/templates/project_detail.html:65
 #: projects/templates/task_detail.html:77
 msgid "Documents"
 msgstr ""
 
-#: documents/models.py:18
+#: documents/models.py:22
 msgid "Date and time uploaded"
 msgstr ""
 
-#: documents/models.py:19 documents/models.py:27
+#: documents/models.py:23 documents/models.py:31
 msgid "Document"
 msgstr ""
 
-#: documents/models.py:20 projects/models.py:8 projects/models.py:32
-#: projects/templates/project_detail.html:108
+#: documents/models.py:24 projects/models.py:8 projects/models.py:34
+#: projects/templates/project_detail.html:135
 #: projects/templates/project_list.html:15 projects/templates/task_list.html:22
 msgid "Title"
 msgstr "Title"
 
-#: documents/models.py:21 projects/models.py:10 projects/models.py:34
-#: projects/models.py:69 projects/templates/project_detail.html:66
+#: documents/models.py:25 projects/models.py:10 projects/models.py:36
+#: projects/models.py:71 projects/templates/project_detail.html:92
 #: projects/templates/task_detail.html:101
 msgid "Description"
 msgstr "Description"
+
+#: documents/templates/document_form.html:10
+#: documents/templates/document_form.html:14
+#: employees/templates/employee_detail.html:9
+#: projects/templates/project_detail.html:12
+#: projects/templates/task_confirm_delete.html:10
+#: projects/templates/task_confirm_delete.html:14
+#: projects/templates/task_detail.html:11
+#: projects/templates/task_detail.html:15 projects/templates/task_form.html:14
+#: projects/templates/task_form.html:18 templates/handler/403.html:7
+#: templates/handler/404.html:7 templates/handler/500.html:7
+msgid "Back"
+msgstr ""
+
+#: documents/templates/document_form.html:23
+#: employees/templates/employee_confirm_delete.html:13
+#: projects/templates/project_confirm_delete.html:13
+#: projects/templates/task_confirm_delete.html:22
+msgid "Confirm"
+msgstr ""
+
+#: documents/templates/document_form.html:26
+#: documents/templates/document_form.html:30
+#: employees/templates/employee_confirm_delete.html:15
+#: employees/templates/employee_form.html:19
+#: projects/templates/project_confirm_delete.html:16
+#: projects/templates/project_confirm_delete.html:20
+#: projects/templates/project_form.html:20
+#: projects/templates/project_form.html:24
+#: projects/templates/task_confirm_delete.html:25
+#: projects/templates/task_confirm_delete.html:29
+#: projects/templates/task_form.html:29 projects/templates/task_form.html:33
+msgid "Cancel"
+msgstr ""
 
 #: employees/apps.py:7 employees/models.py:20
 #: employees/templates/employee_list.html:7 home/templates/home.html:89
@@ -80,11 +233,6 @@ msgstr "Surname"
 msgid "Email"
 msgstr "Email"
 
-#: employees/models.py:9 employees/templates/employee_detail.html:40
-#: employees/templates/employee_list.html:17
-msgid "Birthdate"
-msgstr "Birthdate"
-
 #: employees/models.py:16 employees/templates/employee_list.html:15
 #, fuzzy
 #| msgid "Surname"
@@ -101,47 +249,14 @@ msgstr "Employee"
 msgid "You want to delete?"
 msgstr ""
 
-#: employees/templates/employee_confirm_delete.html:13
-#: projects/templates/project_confirm_delete.html:13
-#: projects/templates/task_confirm_delete.html:22
-#: projects/templates/task_document_upload.html:23
-msgid "Confirm"
-msgstr ""
-
-#: employees/templates/employee_confirm_delete.html:15
-#: employees/templates/employee_form.html:19
-#: projects/templates/project_confirm_delete.html:16
-#: projects/templates/project_confirm_delete.html:20
-#: projects/templates/project_form.html:20
-#: projects/templates/project_form.html:24
-#: projects/templates/task_confirm_delete.html:25
-#: projects/templates/task_confirm_delete.html:29
-#: projects/templates/task_document_upload.html:26
-#: projects/templates/task_document_upload.html:30
-#: projects/templates/task_form.html:29 projects/templates/task_form.html:33
-msgid "Cancel"
-msgstr ""
-
-#: employees/templates/employee_detail.html:9
-#: projects/templates/project_detail.html:12
-#: projects/templates/task_confirm_delete.html:10
-#: projects/templates/task_confirm_delete.html:14
-#: projects/templates/task_detail.html:11
-#: projects/templates/task_detail.html:15
-#: projects/templates/task_document_upload.html:10
-#: projects/templates/task_document_upload.html:14
-#: projects/templates/task_form.html:14 projects/templates/task_form.html:18
-msgid "Back"
-msgstr ""
-
 #: employees/templates/employee_detail.html:50
-#: projects/templates/project_detail.html:82
+#: projects/templates/project_detail.html:109
 #: projects/templates/task_detail.html:116
 msgid "Edit"
 msgstr ""
 
 #: employees/templates/employee_detail.html:54
-#: projects/templates/project_detail.html:86
+#: projects/templates/project_detail.html:113
 #: projects/templates/task_detail.html:120
 msgid "Delete"
 msgstr ""
@@ -175,7 +290,7 @@ msgstr "Employees"
 msgid "Home"
 msgstr "Home"
 
-#: home/templates/home.html:13 projects/apps.py:7 projects/models.py:21
+#: home/templates/home.html:13 projects/apps.py:7 projects/models.py:23
 #: projects/templates/project_list.html:7 templates/nav.html:21
 msgid "Projects"
 msgstr "Projects"
@@ -207,9 +322,9 @@ msgstr ""
 msgid "Open projects"
 msgstr "Projects"
 
-#: home/templates/home.html:51 projects/models.py:62
+#: home/templates/home.html:51 projects/models.py:64
 #: projects/templates/project_detail.html:27
-#: projects/templates/project_detail.html:93
+#: projects/templates/project_detail.html:120
 #: projects/templates/project_list.html:17 projects/templates/task_list.html:8
 #: templates/nav.html:27
 msgid "Tasks"
@@ -235,7 +350,7 @@ msgstr ""
 msgid "Open employees"
 msgstr "Employees"
 
-#: projects/forms.py:49 projects/models.py:73
+#: projects/forms.py:51 projects/models.py:75
 msgid "Comment"
 msgstr ""
 
@@ -249,73 +364,74 @@ msgstr "Due date"
 msgid "Is closed"
 msgstr "Is closed"
 
-#: projects/models.py:20 projects/models.py:38
+#: projects/models.py:22 projects/models.py:40
 #: projects/templates/task_detail.html:22
 msgid "Project"
 msgstr "Project"
 
-#: projects/models.py:25
+#: projects/models.py:27
 msgid "New"
 msgstr "New"
 
-#: projects/models.py:26
+#: projects/models.py:28
 msgid "In Progress"
 msgstr "In Progress"
 
-#: projects/models.py:27
+#: projects/models.py:29
 msgid "Done"
 msgstr "Done"
 
-#: projects/models.py:28
+#: projects/models.py:30
 msgid "Closed"
 msgstr "Closed"
 
-#: projects/models.py:41
+#: projects/models.py:43
 msgid "Start date"
 msgstr "Start date"
 
-#: projects/models.py:42
+#: projects/models.py:44
 msgid "End date"
 msgstr "End date"
 
-#: projects/models.py:44 projects/templates/task_detail.html:33
+#: projects/models.py:46 projects/templates/task_detail.html:33
 #: projects/templates/task_list.html:26
 msgid "Author"
 msgstr "Author"
 
-#: projects/models.py:48 projects/templates/project_detail.html:109
+#: projects/models.py:50 projects/templates/project_detail.html:136
 #: projects/templates/task_detail.html:43 projects/templates/task_list.html:30
 msgid "Assignee"
 msgstr "Assignee"
 
-#: projects/models.py:52 projects/templates/project_detail.html:112
+#: projects/models.py:54 projects/templates/project_detail.html:139
 #: projects/templates/task_detail.html:69 projects/templates/task_list.html:42
 msgid "Status"
 msgstr "Status"
 
-#: projects/models.py:61 projects/models.py:66
+#: projects/models.py:63 projects/models.py:68
 msgid "Task"
 msgstr "Task"
 
-#: projects/models.py:67
+#: projects/models.py:69
 msgid "Created"
 msgstr ""
 
-#: projects/models.py:74
+#: projects/models.py:76
 msgid "Comments"
 msgstr ""
 
-#: projects/templates/project_detail.html:100
+#: projects/templates/project_detail.html:68
+#: projects/templates/project_detail.html:127
 #: projects/templates/task_detail.html:80
 msgid "Add"
 msgstr ""
 
-#: projects/templates/project_detail.html:110
+#: projects/templates/project_detail.html:137
 #: projects/templates/task_detail.html:53 projects/templates/task_list.html:34
 msgid "Start"
 msgstr "Start date"
 
-#: projects/templates/project_detail.html:111
+#: projects/templates/project_detail.html:138
 #: projects/templates/task_detail.html:61 projects/templates/task_list.html:38
 msgid "End"
 msgstr "End date"
@@ -336,14 +452,54 @@ msgstr ""
 msgid "No tasks"
 msgstr "There is on Tasks, perhaps you should add some"
 
-#: taskcamp/settings.py:161
+#: taskcamp/settings.py:164
 msgid "English"
 msgstr "English"
 
-#: taskcamp/settings.py:162
+#: taskcamp/settings.py:165
 msgid "Russian"
 msgstr "Russian"
 
-#: templates/nav.html:39 templates/nav.html:42
+#: templates/handler/403.html:4
+msgid "Unauthorized"
+msgstr ""
+
+#: templates/handler/403.html:10
+msgid "You dont have enough permission to perform action"
+msgstr ""
+
+#: templates/handler/404.html:4
+msgid "Not found"
+msgstr ""
+
+#: templates/handler/404.html:10
+msgid "Page or object you are requested is not found"
+msgstr ""
+
+#: templates/handler/500.html:4
+msgid "Internal server error"
+msgstr ""
+
+#: templates/handler/500.html:10
+msgid "The server encountered error during preparing respose to your request"
+msgstr ""
+
+#: templates/nav.html:40
+msgid "Account"
+msgstr ""
+
+#: templates/nav.html:47
+msgid "Profile"
+msgstr ""
+
+#: templates/nav.html:53
+msgid "Admin"
+msgstr ""
+
+#: templates/nav.html:62
+msgid "Logout"
+msgstr ""
+
+#: templates/nav.html:73 templates/nav.html:76
 msgid "Search"
 msgstr "Search"
