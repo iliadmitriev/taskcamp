@@ -1,0 +1,12 @@
+__pycache__/
+/venv
+/.idea
+/.env
+/db.sqlite3
+/locale/en/LC_MESSAGES/django.mo
+/locale/ru/LC_MESSAGES/django.mo
+/static
+/.coverage
+/htmlcov
+/data.json
+/media/
