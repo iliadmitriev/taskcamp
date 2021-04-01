@@ -44,5 +44,19 @@ services:
     restart:
       always
 
+
+  uwsgi:
+    image: taskcamp-django
+    env_file:
+      - .env
+    ports:
+    - 8000:8000
+
+  celery:
+    image: taskcamp-django
+    env_file:
+      - .env
+    command: celery -A worker worker -c 20
+
 volumes:
   pgdata:

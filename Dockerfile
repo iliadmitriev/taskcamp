@@ -34,4 +34,6 @@ RUN coverage run manage.py test --verbosity 2 \
 
 EXPOSE 8000
 
+STOPSIGNAL SIGINT
+
 CMD exec uwsgi --ini uwsgi.ini
