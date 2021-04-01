@@ -3,7 +3,8 @@ from .views import (
     AccountsLoginView, AccountsRegisterView, AccountsLogout,
     AccountsRegisterActivate, AccountsRegisterDoneView,
     AccountsPasswordResetView, AccountsPasswordResetDoneView,
-    AccountsPasswordResetConfirm, AccountsPasswordResetComplete
+    AccountsPasswordResetConfirm, AccountsPasswordResetComplete,
+    AccountsProfile
 )
 
 app_name = 'accounts'
@@ -20,5 +21,6 @@ urlpatterns = [
     path('password_reset_confirm/<str:uidb64>/<str:token>/',
          AccountsPasswordResetConfirm.as_view(), name='password-reset-confirm'),
     path('password_reset_complete/', AccountsPasswordResetComplete.as_view(),
-         name='password-reset-complete')
+         name='password-reset-complete'),
+    path('profile/', AccountsProfile.as_view(), name='profile')
 ]

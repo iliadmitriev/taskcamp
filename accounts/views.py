@@ -1,12 +1,13 @@
 from django.core.cache import cache
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import login
-from django.views.generic import FormView, View, TemplateView
+from django.views.generic import FormView, View, TemplateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth import get_user_model
-from .forms import RegisterForm, AccountsPasswordResetForm
+from .forms import RegisterForm, AccountsPasswordResetForm, AccountProfileForm
 from .helpers import generate_user_hash_and_token
 from worker.email.tasks import send_activation_email, send_welcome_message
 
@@ -113,3 +114,17 @@ class AccountsPasswordResetConfirm(auth_views.PasswordResetConfirmView):
 
 class AccountsPasswordResetComplete(auth_views.PasswordResetCompleteView):
     template_name = 'password_reset_complete.html'
+
+
+class AccountsProfile(LoginRequiredMixin, UpdateView):
+    template_name = 'account_profile.html'
+    form_class = AccountProfileForm
+
+    success_url = reverse_lazy('accounts:profile')
+
+    def get_object(self, queryset=None):
+        user_model = get_user_model()
+        user_id = self.request.user.id
+        return user_model.objects.get(pk=user_id)
+
+
