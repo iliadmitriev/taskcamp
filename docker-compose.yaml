@@ -5,15 +5,11 @@ services:
     image: library/redis:6.2.1-alpine
     ports:
     - 6380:6379
-    restart:
-      always
 
   memcached:
     image: library/memcached:1.6.9-alpine
     ports:
     - 11214:11211
-    restart:
-      always
 
   postgres:
     image: library/postgres:13.2-alpine
@@ -23,8 +19,6 @@ services:
     - pgdata:/var/lib/postgresql/data
     ports:
     - 5434:5432
-    restart:
-      always
 
   rabbitmq:
     image: library/rabbitmq:3.8.14-management-alpine
@@ -33,30 +27,35 @@ services:
     ports:
     - 15673:15672
     - 5673:5672
-    restart:
-      always
 
   mailcatcher:
     image: mailcatcher
     ports:
     - 1080:1080
     - 1025:1025
-    restart:
-      always
-
 
   uwsgi:
+    build:
+      context: ./
+      dockerfile: Dockerfile
     image: taskcamp-django
     env_file:
       - .env
     ports:
     - 8000:8000
+    volumes:
+      - type: bind
+        source: ./media
+        target: /app/media
 
   celery:
+    build:
+      context: ./
+      dockerfile: Dockerfile
     image: taskcamp-django
     env_file:
       - .env
     command: celery -A worker worker -c 20
 
 volumes:
-  pgdata:
+  pgdata: {}
