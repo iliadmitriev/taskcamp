@@ -93,6 +93,7 @@ if env.get('POSTGRES_HOST'):
             'PASSWORD': env.get('POSTGRES_PASSWORD'),
             'HOST': env.get('POSTGRES_HOST'),
             'PORT': env.get('POSTGRES_PORT'),
+            'CONN_MAX_AGE': None,
         }
     }
 else:
