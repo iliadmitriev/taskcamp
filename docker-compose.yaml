@@ -27,6 +27,11 @@ services:
     ports:
     - 15673:15672
     - 5673:5672
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   mailcatcher:
     image: mailcatcher
@@ -56,6 +61,9 @@ services:
     env_file:
       - .env
     command: celery -A worker worker -c 20
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
 
 volumes:
   pgdata: {}
