@@ -19,6 +19,12 @@ services:
     - pgdata:/var/lib/postgresql/data
     ports:
     - 5434:5432
+    healthcheck:
+      test: pg_isready -U taskcamp
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
 
   rabbitmq:
     image: library/rabbitmq:3.8.14-management-alpine
@@ -52,6 +58,11 @@ services:
       - type: bind
         source: ./media
         target: /app/media
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
 
   celery:
     build:
@@ -63,6 +74,8 @@ services:
     command: celery -A worker worker -c 20
     depends_on:
       rabbitmq:
+        condition: service_healthy
+      postgres:
         condition: service_healthy
 
 volumes:
