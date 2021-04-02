@@ -40,7 +40,7 @@ services:
       retries: 3
 
   mailcatcher:
-    image: mailcatcher
+    image: iliadmitriev/mailcatcher
     ports:
     - 1080:1080
     - 1025:1025
