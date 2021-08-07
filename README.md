@@ -1,3 +1,22 @@
+# taskcamp
+
+[![Build docker and push](https://github.com/iliadmitriev/taskcamp/actions/workflows/docker-build-and-push.yml/badge.svg)](https://github.com/iliadmitriev/taskcamp/actions/workflows/docker-build-and-push.yml)
+
+This software is used for educational purposes.
+It's a project management software
+It has functions:
+* Authentication (login/registration/recover password)
+* Permissions and Groups
+* Simple CRUD views
+* Hierarchical views
+* Views with file uploading
+* Master-Detail views
+* Statistics views
+* Admin page
+* Different layouts (authorized, not authorized)
+* Async workers
+
+
 # install
 
 ---
