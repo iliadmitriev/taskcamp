@@ -28,9 +28,6 @@ class AccountsRegisterView(FormView):
 
         user_hash, token = generate_user_hash_and_token(user.id)
 
-        print(user_hash, token)
-        print(self.request.scheme, get_current_site(self.request))
-
         url_link = '{}://{}{}'.format(
             self.request.scheme,
             get_current_site(self.request),
