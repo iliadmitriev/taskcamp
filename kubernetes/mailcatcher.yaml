@@ -26,3 +26,23 @@ spec:
   selector:
     run: mailcatcher
   type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: mailcatcher
+  name: mailcatcher
+spec:
+  ports:
+  - name: mail-web
+    port: 1080
+    protocol: TCP
+    targetPort: 1080
+  - name: mail-smtp
+    port: 1025
+    protocol: TCP
+    targetPort: 1025
+  selector:
+    run: mailcatcher
+  type: NodePort
