@@ -11,15 +11,35 @@ kubectl apply -f postgres.yaml
 ```
 wait for pods to start
 
+and check cluster health
+```shell
+kubectl exec -ti pg-etcd-0 -- /opt/etcd/etcdctl member list
+kubectl exec -ti pg-postgres-0 -- patronictl list
+```
+
+you don't need to do it, but in case your kubernetes cluster malfunction
+you have to set label role=master manually
+```shell
+kubectl label pod pg-postgres-0 role=master
+```
+
 create database
 ```shell
 kubectl exec -ti pg-postgres-0 -- sh
-psql # ...
+psql -U postgres -d postgres -h localhost -p 5432
+psql -U postgres -d postgres -h localhost -p 5432 \
+  -c "create user taskcamp with password 'secret' superuser;"
+psql -U taskcamp -d postgres -h localhost -p 5432 -c "create database taskcamp;"
 ```
 
 create rabbitmq cluster
 ```shell
 kubectl apply -f rmq.yaml
+```
+
+check logs 
+```shell
+kubectl logs -f rmq-taskcamp-server-0
 ```
 
 create mailcatcher service
@@ -42,6 +62,11 @@ kubectl apply -f taskcamp-secret.yaml
 deploy web application and celery
 ```shell
 kubectl apply -f taskcamp-deploy.yaml
+```
+
+migrate database
+```shell
+kubectl exec -ti taskcamp-64558cf845-bm8fr -- sh
 ```
 
 # expose
@@ -72,7 +97,7 @@ kubectl create ingress mail-taskcamp-ingress \
   --rule="mail.taskcamp.info/*=mailcatcher-node-port:1080,tls=mail-taskcamp-tls"
 
 # for rabbitmq https://rmq.taskcamp.info/
-kubectl create ingress taskcamp-ingress \
+kubectl create ingress rmq-taskcamp-ingress \
   --default-backend=rmq-management-nodeport:15672 \
   --rule="rmq.taskcamp.info/*=rmq-management-nodeport:15672,tls=rmq-taskcamp-tls"                   
     
