@@ -1,0 +1,36 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  labels:
+    app: rmq-taskcamp
+  annotations:
+    some: annotation
+  name: rmq-taskcamp
+spec:
+  replicas: 2
+  image: rabbitmq:3.9.1-management-alpine
+  rabbitmq:
+    additionalConfig: |
+      default_user = guest 
+      default_pass = guest
+      default_vhost = guest
+      default_user_tags.administrator = true
+  resources:
+    requests:
+      cpu: 500m
+      memory: 500Mi
+    limits:
+      cpu: 500m
+      memory: 500Mi
+  persistence:
+    storage: 2Gi
+  override:
+    statefulSet:
+      spec:
+        template:
+          spec:
+            containers: []
+            securityContext: {}
+            initContainers:
+            - name: setup-container
+              securityContext: {}

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: memcached
+  name: memcached
+spec:
+  containers:
+  - image: memcached:1.6.10-alpine3.14
+    name: memcached
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: memcached
+  name: memcached
+spec:
+  ports:
+  - port: 11211
+    protocol: TCP
+    targetPort: 11211
+  selector:
+    run: memcached

@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: taskcamp
+  name: taskcamp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: taskcamp
+  template:
+    metadata:
+      labels:
+        app: taskcamp
+    spec:
+      containers:
+      - image: iliadmitriev/taskcamp
+        imagePullPolicy: Always
+        name: taskcamp
+        ports:
+        - containerPort: 8000
+        resources: {}
+        envFrom:
+        - secretRef:
+            name: taskcamp-secret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: taskcamp-celery
+  name: taskcamp-celery
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: taskcamp-celery
+  template:
+    metadata:
+      labels:
+        app: taskcamp-celery
+    spec:
+      containers:
+      - image: iliadmitriev/taskcamp
+        imagePullPolicy: Always
+        name: taskcamp-celery
+        command: ["python3"]
+        args: ["-m", "celery", "-A", "worker", "worker"]
+        ports:
+        - containerPort: 8000
+        resources: {}
+        envFrom:
+        - secretRef:
+            name: taskcamp-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: taskcamp
+  name: taskcamp
+spec:
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: taskcamp
+  type: NodePort
