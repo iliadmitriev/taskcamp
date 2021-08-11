@@ -99,10 +99,10 @@ kubectl create ingress mail-taskcamp-ingress \
 # for rabbitmq https://rmq.taskcamp.info/
 kubectl create ingress rmq-taskcamp-ingress \
   --default-backend=rmq-management-nodeport:15672 \
-  --rule="rmq.taskcamp.info/*=rmq-management-nodeport:15672,tls=rmq-taskcamp-tls"                   
+  --rule="rmq.taskcamp.info/*=rmq-management-nodeport:15672,tls=rmq-taskcamp-tls"
     
 # for web UI https://taskcamp.info/
 kubectl create ingress taskcamp-ingress \
   --default-backend=taskcamp:8080 \
-  --rule="taskcamp.info/*=taskcamp:8000,tls=taskcamp-tls"                   
+  --rule="taskcamp.info/*=taskcamp:8000,tls=taskcamp-tls"
 ```
