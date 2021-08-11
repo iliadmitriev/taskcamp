@@ -49,18 +49,18 @@ kubectl apply -f taskcamp-deploy.yaml
 create secrets
 ```shell
 # for email web interface
-kubectl create secret tls mail-taskcamp-tls \ 
+kubectl create secret tls mail-taskcamp-tls \
   --key mail.taskcamp.info.key \
   --cert mail.taskcamp.info.pem
 
 # for rabbitmq web interface
-kubectl create secret tls rmq-taskcamp-tls \ 
-  --key rmq.taskcamp.info.key \ 
+kubectl create secret tls rmq-taskcamp-tls \
+  --key rmq.taskcamp.info.key \
   --cert rmq.taskcamp.info.pem 
 
 # for taskcamp UI
-kubectl create secret tls taskcamp-tls \    
-  --cert taskcamp.info.pem \       
+kubectl create secret tls taskcamp-tls \
+  --cert taskcamp.info.pem \
   --key taskcamp.info.key                                
 ```
 
@@ -72,12 +72,12 @@ kubectl create ingress mail-taskcamp-ingress \
   --rule="mail.taskcamp.info/*=mailcatcher-node-port:1080,tls=mail-taskcamp-tls"
 
 # for rabbitmq https://rmq.taskcamp.info/
-kubectl create ingress taskcamp-ingress \   
-  --default-backend=rmq-management-nodeport:15672 \            
+kubectl create ingress taskcamp-ingress \
+  --default-backend=rmq-management-nodeport:15672 \
   --rule="rmq.taskcamp.info/*=rmq-management-nodeport:15672,tls=rmq-taskcamp-tls"                   
     
 # for web UI https://taskcamp.info/
-kubectl create ingress taskcamp-ingress \   
-  --default-backend=taskcamp:8080 \            
+kubectl create ingress taskcamp-ingress \
+  --default-backend=taskcamp:8080 \
   --rule="taskcamp.info/*=taskcamp:8000,tls=taskcamp-tls"                   
 ```
