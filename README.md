@@ -15,7 +15,8 @@ It has functions:
 * Admin page
 * Different layouts (authorized, not authorized)
 * Async workers
-
+* Docker and docker-compose use
+* kubernetes deploy
 
 # install
 
