@@ -34,3 +34,24 @@ spec:
             initContainers:
             - name: setup-container
               securityContext: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    some: annotation
+  labels:
+    app: rmq-taskcamp
+    app.kubernetes.io/component: rabbitmq
+    app.kubernetes.io/name: rmq-taskcamp
+    app.kubernetes.io/part-of: rabbitmq
+  name: rmq-management-nodeport
+spec:
+  ports:
+  - name: management
+    port: 15672
+    protocol: TCP
+    targetPort: 15672
+  selector:
+    app.kubernetes.io/name: rmq-taskcamp
+  type: NodePort
