@@ -36,6 +36,9 @@ POSTGRES_USER=taskcamp
 POSTGRES_PASSWORD=secret
 
 MEMCACHED_LOCATION=192.168.10.1:11214
+
+EMAIL_HOST=192.168.10.1
+EMAIL_PORT=1025
 __EOF__
 ```
 if you need a debug to be enabled
