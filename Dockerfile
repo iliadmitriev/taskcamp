@@ -6,7 +6,7 @@ ENV APP_HOME /app
 
 ENV USER web-user
 
-RUN addgroup -S $USER && adduser -S $USER -G $USER
+RUN addgroup -S $USER -g 1000 && adduser -S $USER -G $USER -u 1000
 
 WORKDIR $APP_HOME
 
