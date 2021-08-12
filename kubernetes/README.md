@@ -29,6 +29,11 @@ python3 manage.py migrate
 python3 manage.py createsuperuser
 ```
 
+load data from fixture file `data.json`
+```shell
+cat data.json | kubectl exec -i deploy/taskcamp -- python3 manage.py loaddata --format=json -
+```
+
 # expose
 
 create secrets
