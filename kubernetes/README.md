@@ -69,6 +69,7 @@ kubectl create ingress rmq-taskcamp-ingress \
 # for web UI https://taskcamp.info/
 kubectl create ingress taskcamp-ingress \
   --default-backend=taskcamp:8080 \
+  --annotation='nginx.ingress.kubernetes.io/proxy-body-size=8m' \
   --rule="taskcamp.info/*=taskcamp:8000,tls=taskcamp-tls"
 ```
 
