@@ -1,4 +1,11 @@
-# deploy to kubernetes
+# minikube
+
+create and start 3 node minikube installation with ingress, dashboard and metrics server
+```shell
+minikube start --nodes=3 --addons=ingress,dashboard,metrics-server
+```
+
+# deploy
 
 apply rabbimq cluster operator service and custom resource
 ```shell
@@ -7,66 +14,19 @@ kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/d
 
 apply postgres database
 ```shell
-kubectl apply -f postgres.yaml
+kubectl apply -f kubernetes
 ```
 wait for pods to start
 
-and check cluster health
 ```shell
-kubectl exec -ti pg-etcd-0 -- /opt/etcd/etcdctl member list
-kubectl exec -ti pg-postgres-0 -- patronictl list
+kubectl get pods -w
 ```
 
-you don't need to do it, but in case your kubernetes cluster malfunction
-you have to set label role=master manually
+migrate database and create superuser
 ```shell
-kubectl label pod pg-postgres-0 role=master
-```
-
-create database
-```shell
-kubectl exec -ti pg-postgres-0 -- sh
-psql -U postgres -d postgres -h localhost -p 5432
-psql -U postgres -d postgres -h localhost -p 5432 \
-  -c "create user taskcamp with password 'secret' superuser;"
-psql -U taskcamp -d postgres -h localhost -p 5432 -c "create database taskcamp;"
-```
-
-create rabbitmq cluster
-```shell
-kubectl apply -f rmq.yaml
-```
-
-check logs 
-```shell
-kubectl logs -f rmq-taskcamp-server-0
-```
-
-create mailcatcher service
-```shell
-kubectl apply -f mailcatcher.yaml
-```
-
-create memcached service
-```shell
-kubectl apply -f memcached.yaml
-```
-
-# deploy application
-
-create taskcamp secret config
-```shell
-kubectl apply -f taskcamp-secret.yaml
-```
-
-deploy web application and celery
-```shell
-kubectl apply -f taskcamp-deploy.yaml
-```
-
-migrate database
-```shell
-kubectl exec -ti taskcamp-64558cf845-bm8fr -- sh
+kubectl exec -ti deployment/taskcamp -- sh
+python3 manage.py migrate
+python3 manage.py createsuperuser
 ```
 
 # expose
@@ -105,4 +65,10 @@ kubectl create ingress rmq-taskcamp-ingress \
 kubectl create ingress taskcamp-ingress \
   --default-backend=taskcamp:8080 \
   --rule="taskcamp.info/*=taskcamp:8000,tls=taskcamp-tls"
+```
+
+minikube tunnel
+```shell
+minikube tunnel
+# ask for user password (for tcp port binding < 1024)
 ```

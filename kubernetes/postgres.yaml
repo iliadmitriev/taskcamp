@@ -2,103 +2,39 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: pg-etcd
-  name: pg-etcd
+    # should match with labels of deployment and pods
+    app: pg-postgres
+    cluster-name: main
+  name: postgres-taskcamp # .namespace.svc.cluster.local
 spec:
   selector:
-    app: pg-etcd
+    # should match with labels of deployment and pods
+    app: pg-postgres
+    cluster-name: main
   ports:
-    - name: client-port
-      protocol: TCP
-      port: 2379
-      targetPort: 2379
-    - name: peer-port
-      protocol: TCP
-      port: 2380
-      targetPort: 2380
-  type: ClusterIP
----
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: pg-etcd
-spec:
-  selector:
-    matchLabels:
-      app: pg-etcd
-  serviceName: pg-etcd
-  replicas: 3
-  template:
-    metadata:
-      labels:
-        app: pg-etcd
-    spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 5
-              podAffinityTerm:
-                topologyKey: "kubernetes.io/hostname"
-                labelSelector:
-                  matchLabels:
-                    app: pg-etcd
-      containers:
-      - name: pg-etcd
-        imagePullPolicy: Always
-        image: iliadmitriev/etcd-cluster
-        readinessProbe:
-          httpGet:
-            scheme: HTTP
-            path: /v2/keys/
-            port: 2379
-          initialDelaySeconds: 3
-          periodSeconds: 10
-          timeoutSeconds: 5
-          successThreshold: 1
-          failureThreshold: 3
-        ports:
-        - containerPort: 2379
-          name: client-port
-        - containerPort: 2380
-          name: peer-port
-        volumeMounts:
-        - name: pg-etcd-pvc
-          mountPath: /data
-        env:
-          - name: ETCD_CLUSTER_IP
-            value: pg-etcd
-          - name: HOSTNAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: HOST_IP
-            valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
-          - name: ETCD_INITIAL_CLUSTER_TOKEN
-            value: secret_token_for_etcd
-  volumeClaimTemplates:
-  - metadata:
-      name: pg-etcd-pvc
-      labels:
-        app: pg-etcd
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 10Gi
+    - name: pg
+      port: 5432
+      targetPort: 5432
+    - name: pgbouncer
+      port: 6432
+      targetPort: 6432
+    - name: patroni
+      port: 8008
+      targetPort: 8008
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    # should match with labels of deployment and pods
     app: pg-postgres
-  name: pg-postgres # .namespace.svc.cluster.local
+    cluster-name: main
+    role: master
+  name: postgres-taskcamp-master
 spec:
   selector:
-    # should match with labels of deployment and pods
     app: pg-postgres
+    cluster-name: main
+    role: master
   ports:
     - name: pg
       port: 5432
@@ -113,18 +49,25 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: pg-postgres # postgres-0.postgres-db.namespace.svc.cluster.local
+  name: postgres-taskcamp # postgres-0.postgres-db.namespace.svc.cluster.local
 spec:
   selector:
     matchLabels:
       app: pg-postgres
+      cluster-name: main
   serviceName: pg-postgres # should match .metadata.name of headless service
   replicas: 3
   template:
     metadata:
       labels:
         app: pg-postgres
+        cluster-name: main
     spec:
+      securityContext:
+        runAsUser: 70
+        fsGroup: 70
+        runAsGroup: 70
+        fsGroupChangePolicy: Always
       serviceAccountName: pg-service-account
       affinity:
         podAntiAffinity:
@@ -135,10 +78,23 @@ spec:
                 labelSelector:
                   matchLabels:
                     app: pg-postgres
+      initContainers:
+        - name: volume-mount-hack
+          image: busybox
+          command: ['sh', '-c', "chown -R 70:70 /data"]
+          securityContext:
+            runAsGroup: 0
+            runAsUser: 0
+          volumeMounts:
+          - name: postgres-pvc
+            mountPath: /data
       containers:
       - name: pg-postgres-pod
         imagePullPolicy: Always
         image: iliadmitriev/postgres-cluster
+        securityContext:
+          runAsUser: 70
+          runAsGroup: 70
         readinessProbe:
           httpGet:
             scheme: HTTP
@@ -162,11 +118,23 @@ spec:
         ports:
           - name: pg
             containerPort: 5432
-          - name: pgbouncer
-            containerPort: 6432
           - name: patroni
             containerPort: 8008
         env:
+          - name: POSTGRES_USER
+            value: "taskcamp"
+          - name: POSTGRES_PASSWORD
+            value: "secret"
+          - name: POSTGRES_DB
+            value: "taskcamp"
+          - name: PATRONI_KUBERNETES_LABELS
+            value: "{app: pg-postgres, cluster-name: main}"
+          - name: PATRONI_SCOPE
+            value: main
+          - name: PATRONI_KUBERNETES_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
           - name: POD_NAME
             valueFrom:
               fieldRef:
@@ -179,10 +147,6 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
-          - name: PATRONI_ETCD_HOST
-            value: pg-etcd:2379
-          - name: PATRONI_SCOPE
-            value: main
           - name: PATRONI_POSTGRESQL_CONNECT_ADDRESS
             value: "$(POD_IP):5432"
           - name: PATRONI_RESTAPI_CONNECT_ADDRESS
@@ -190,11 +154,11 @@ spec:
           - name: PATRONI_POSTGRESQL_DATA_DIR
             value: /data/postgres/data
         volumeMounts:
-        - name: pg-postgres-pvc
+        - name: postgres-pvc
           mountPath: /data
   volumeClaimTemplates:
   - metadata:
-      name: pg-postgres-pvc
+      name: postgres-pvc
       labels:
         app: pg-postgres
     spec:
@@ -202,28 +166,6 @@ spec:
       resources:
         requests:
           storage: 10Gi
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: pg-postgres
-    role: master
-  name: pg-postgres-master
-spec:
-  selector:
-    app: pg-postgres
-    role: master
-  ports:
-    - name: pg
-      port: 5432
-      targetPort: 5432
-    - name: pgbouncer
-      port: 6432
-      targetPort: 6432
-    - name: patroni
-      port: 8008
-      targetPort: 8008
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -238,10 +180,32 @@ rules:
 - apiGroups:
   - ""
   resources:
-  - pods
+  - configmaps
+  verbs:
+  - create
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
   verbs:
   - get
   - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - list
+  - patch
+  - update
+  - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
