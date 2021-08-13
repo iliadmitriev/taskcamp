@@ -1,5 +1,6 @@
 # taskcamp
 
+[![Unittests with coverage](https://github.com/iliadmitriev/taskcamp/actions/workflows/django.yml/badge.svg)](https://github.com/iliadmitriev/taskcamp/actions/workflows/django.yml)
 [![Build docker and push](https://github.com/iliadmitriev/taskcamp/actions/workflows/docker-build-and-push.yml/badge.svg)](https://github.com/iliadmitriev/taskcamp/actions/workflows/docker-build-and-push.yml)
 
 This software is used for educational and demonstrative purposes.
