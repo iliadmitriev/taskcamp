@@ -4,6 +4,7 @@ from django.http import QueryDict
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 from projects.models import Project, Task, TaskStatus
+from django.db.models import Q
 
 
 class TestCaseWithUser(TestCase):
@@ -282,4 +283,57 @@ class ProjectCreateViewTestCase(TestCaseWithUser):
             status_code=302,
             target_status_code=200,
             fetch_redirect_response=True
+        )
+
+
+class TaskListViewTestCase(TestCaseWithUser):
+    def setUp(self) -> None:
+        self.client = Client(HTTP_ACCEPT_LANGUAGE='ru')
+        self.client.login(email='test_project@example.com', password='password')
+
+    def test_task_list_view_unauthorized_302(self):
+        self.client.logout()
+        self.view_unauthorized_302(source_page='projects-task-list')
+
+    def test_task_list_view_200_OK(self):
+        project1 = Project.objects.create(
+            title='Test project for tasks',
+            description='Test project for tasks',
+            due_date='2020-01-01',
+            is_closed=False
+        )
+        task1 = Task.objects.create(
+            title='Task 1 #searchtag', description='Task 1',
+            project=project1, status=TaskStatus.NEW
+        )
+        task2 = Task.objects.create(
+            title='Task 2', description='Task 2',
+            project=project1, status=TaskStatus.DONE
+        )
+
+        response = self.client.get(reverse('projects-task-list'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name='task_list.html')
+        self.assertQuerysetEqual(
+            response.context['task_list'],
+            Task.objects.all().order_by('id'),
+            transform=lambda x: x
+        )
+
+        q = QueryDict(mutable=True)
+        q['order_by'] = 'id'
+        q['q'] = '#searchtag'
+        response = self.client.get("{}?{}".format(
+            reverse('projects-task-list'),
+            q.urlencode()
+            ))
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerysetEqual(
+            response.context['task_list'],
+            Task.objects.all().filter(
+                Q(title__icontains='#searchtag')
+                | Q(description__icontains='#searchtag')
+            ).order_by('id'),
+            transform=lambda x: x
         )
