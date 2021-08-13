@@ -118,7 +118,7 @@ elif env.get('MASTER_POSTGRES_HOST') and env.get('REPLICA_POSTGRES_HOST'):
             'CONN_MAX_AGE': None,
         }
     }
-    DATABASE_ROUTERS = ['taskcamp.SimpleDBRouter']
+    DATABASE_ROUTERS = ['taskcamp.dbrouter.SimpleDBRouter']
 else:
     DATABASES = {
         'default': {
