@@ -105,7 +105,7 @@ docker run -d -p 15673:15672 -p 5673:5672 \
   --env-file .env rabbitmq:3.8.14-management-alpine
 
 docker run -d -p 1080:1080 -p 1025:1025 \
- --name taskcamp-mailcatcher mailcatcher
+ --name taskcamp-mailcatcher iliadmitriev/mailcatcher
 ```
 if you need to store celery results
 ```shell
@@ -123,7 +123,7 @@ python3 manage.py migrate --no-input
 ```
 7. compile messages
 ```shell
-python3 manage.py compilemessages -i venv --no-input
+python3 manage.py compilemessages -i venv
 ```
 8. create superuser
 ```shell
@@ -194,7 +194,7 @@ python3 manage.py test --verbosity=2
 
 1. run with coverage
 ```shell
-coverage run manage.py test
+coverage run manage.py test --verbosity=2
 ```
 2. print report with missing lines and fail with error in case it's not fully covered
 ```shell

@@ -3,6 +3,7 @@ source = .
 branch = True
 omit = 
 	venv/*
+	*/migrations/*.py
 	taskcamp/asgi.py
 	taskcamp/wsgi.py
 	taskcamp/settings.py
