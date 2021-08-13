@@ -2,26 +2,42 @@
 
 [![Build docker and push](https://github.com/iliadmitriev/taskcamp/actions/workflows/docker-build-and-push.yml/badge.svg)](https://github.com/iliadmitriev/taskcamp/actions/workflows/docker-build-and-push.yml)
 
-This software is used for educational purposes.
-It's a simple project management tool
+This software is used for educational and demonstrative purposes.
+It's a simple project management tool powered by [Django Framework](https://www.djangoproject.com)
 
 Features:
-* Authentication (login/registration/recover password)
-* Permissions and Groups
-* Simple CRUD views
-* Hierarchical views
-* Views with file uploading
-* Master-Detail views
-* Statistics views
-* Admin page
-* Different layouts (authorized, not authorized)
+* Class-Based Views approach
+* Login, Sign Up, Recover (LoginView, FormView, UserCreationForm, PasswordResetForm, LogoutView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView)
+* Custom Extended User model (AbstractUser, BaseUserManager, UserManager)
+* Permissions and Groups (LoginRequiredMixin, PermissionRequiredMixin)
+* Simple CRUD views (ListView, DetailView, CreateView, UpdateView, DeleteView)
+* File uploading
+* Statistics (TemplateView, View, Q, F, Count, FloatField, Cast, Case, When, Sum, Avg)
+* Forms (Form, ModelForm)
+* Admin page (ModelAdmin, TabularInline)
+* Template and layouts (include templates, blocks, custom 500, 404, 403 handlers)
+* Router urls (include, namespace, params)
+* Caching (memcached)
 * Async workers with celery
-* Localization and translation
+* Localization and internationalization (with pluralization)
+* Timezone support (pytz)
+* Markdown syntax, Status highlight (Template tags)
 * DB router (master, slave)
 * Unittests with coverage
 * Uwsgi (with static and media serving)
-* Docker and docker-compose use
+* Docker and docker-compose
 * kubernetes deploy
+
+Components:
+* Database [PostgreSQL](https://www.postgresql.org)
+* Cache [memcached](https://memcached.org)
+* Application server [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/)
+* Task queue [Celery](https://docs.celeryproject.org/en/stable/)
+* Message Broker [RabbitMQ](https://www.rabbitmq.com)
+* Localization [gettext](https://www.gnu.org/software/gettext/)
+* Markup language [Markdown](https://python-markdown.github.io)
+* Template Engine [Jinja2](https://jinja.palletsprojects.com/)
+* Debugging, profiling and optimizing [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/)
 
 # install
 
