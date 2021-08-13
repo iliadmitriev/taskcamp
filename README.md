@@ -1,6 +1,8 @@
 # taskcamp
 
+[![Unittests with coverage](https://github.com/iliadmitriev/taskcamp/actions/workflows/django.yml/badge.svg)](https://github.com/iliadmitriev/taskcamp/actions/workflows/django.yml)
 [![Build docker and push](https://github.com/iliadmitriev/taskcamp/actions/workflows/docker-build-and-push.yml/badge.svg)](https://github.com/iliadmitriev/taskcamp/actions/workflows/docker-build-and-push.yml)
+[![codecov](https://codecov.io/gh/iliadmitriev/taskcamp/branch/master/graph/badge.svg?token=5YUABNBEZ5)](https://codecov.io/gh/iliadmitriev/taskcamp)
 
 This software is used for educational and demonstrative purposes.
 It's a simple project management tool powered by [Django Framework](https://www.djangoproject.com)
