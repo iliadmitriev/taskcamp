@@ -3,7 +3,7 @@ from django.shortcuts import reverse
 from django.http import QueryDict
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
-from projects.models import Project, Task, TaskStatus
+from projects.models import Project, Task, TaskStatus, Comment
 from django.db.models import Q
 
 
@@ -327,7 +327,7 @@ class TaskListViewTestCase(TestCaseWithUser):
         response = self.client.get("{}?{}".format(
             reverse('projects-task-list'),
             q.urlencode()
-            ))
+        ))
         self.assertEqual(response.status_code, 200)
         self.assertQuerysetEqual(
             response.context['task_list'],
@@ -337,3 +337,73 @@ class TaskListViewTestCase(TestCaseWithUser):
             ).order_by('id'),
             transform=lambda x: x
         )
+
+
+class TaskListDetailTestCase(TestCaseWithUser):
+    def setUp(self) -> None:
+        self.client = Client(HTTP_ACCEPT_LANGUAGE='ru')
+        self.client.login(email='test_project@example.com', password='password')
+
+    def test_task_detail_view_unauthorized_302(self):
+        self.client.logout()
+        self.view_unauthorized_302(source_page='projects-task-detail', kwargs={'pk': 1})
+
+    def test_task_detail_view_404(self):
+        response = self.client.get(reverse('projects-task-detail', kwargs={'pk': 1000}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_task_detail_view_OK_empty_comment(self):
+        task1 = Task.objects.create(
+            title='Test task 1',
+            description='Test task 1',
+            project=Project.objects.create(
+                title='Test project 1'
+            )
+        )
+        comment = Comment.objects.create(
+            description='test comment description',
+            task=task1
+        )
+
+        response = self.client.get(reverse('projects-task-detail', kwargs={'pk': task1.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name='task_detail.html')
+        self.assertQuerysetEqual(
+            response.context['comments'],
+            Comment.objects.filter(task=task1),
+            transform=lambda x: x
+        )
+        self.assertTrue('comments' in response.context)
+        self.assertTrue('comment_form' in response.context)
+
+    def test_task_detail_view_OK_no_comment_permission(self):
+        self.client.logout()
+        user = get_user_model().objects.create_user(
+            email='myuser1@example.com',
+            password='password',
+            is_active=True
+        )
+
+        self.client.login(email='myuser1@example.com', password='password')
+        perms = Permission.objects \
+            .filter(codename__in=['view_project', 'view_task'])
+
+        user.user_permissions.add(*perms)
+
+        self.client.login(
+            email='myuser1@example.com',
+            password='password'
+        )
+        task1 = Task.objects.create(
+            title='Test task 1',
+            description='Test task 1',
+            project=Project.objects.create(
+                title='Test project 1'
+            )
+        )
+
+        response = self.client.get(reverse('projects-task-detail', kwargs={'pk': task1.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name='task_detail.html')
+        self.assertFalse('comments' in response.context)
+        self.assertFalse('comment_form' in response.context)
