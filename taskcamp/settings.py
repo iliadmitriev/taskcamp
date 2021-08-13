@@ -96,6 +96,29 @@ if env.get('POSTGRES_HOST'):
             'CONN_MAX_AGE': None,
         }
     }
+elif env.get('MASTER_POSTGRES_HOST') and env.get('REPLICA_POSTGRES_HOST'):
+    DATABASES = {
+        'default': {},
+        'master': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env.get('MASTER_POSTGRES_HOST'),
+            'USER': env.get('POSTGRES_USER'),
+            'PASSWORD': env.get('POSTGRES_PASSWORD'),
+            'HOST': env.get('POSTGRES_HOST'),
+            'PORT': env.get('POSTGRES_PORT'),
+            'CONN_MAX_AGE': None,
+        },
+        'replica': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env.get('REPLICA_POSTGRES_HOST'),
+            'USER': env.get('POSTGRES_USER'),
+            'PASSWORD': env.get('POSTGRES_PASSWORD'),
+            'HOST': env.get('POSTGRES_HOST'),
+            'PORT': env.get('POSTGRES_PORT'),
+            'CONN_MAX_AGE': None,
+        }
+    }
+    DATABASE_ROUTERS = ['taskcamp.SimpleDBRouter']
 else:
     DATABASES = {
         'default': {
