@@ -2,11 +2,15 @@ from django.http import HttpResponseRedirect
 from django.views.generic import FormView
 from django.core.exceptions import ImproperlyConfigured
 from django.db import IntegrityError
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.utils.translation import gettext_lazy
 from documents.forms import DocumentModelForm
 
 
-class DocumentUpload(FormView):
+class DocumentUpload(PermissionRequiredMixin, FormView):
     template_name = 'document_form.html'
+    permission_required = 'documents.add_document'
+    permission_denied_message = gettext_lazy('You have no permission to view Projects')
     form_class = DocumentModelForm
     model = None
     model_field = 'documents'

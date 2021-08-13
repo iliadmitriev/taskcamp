@@ -7,15 +7,18 @@ from django.db.models import Q, F, Count, FloatField, Case, When, Sum, Avg
 from django.db.models.functions import Cast
 from django.db import IntegrityError
 from django.urls import reverse_lazy, reverse
+from django.utils.translation import gettext_lazy
 from django.http import HttpResponseRedirect
 from .models import Project, Task, TaskStatus, Comment
 from .forms import ProjectModelForm, TaskModelForm, CommentModelForm
 from documents.views import DocumentUpload
 
 
-class ProjectsListView(LoginRequiredMixin, ListView):
+class ProjectsListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = reverse_lazy('accounts:login')
     template_name = 'project_list.html'
+    permission_required = 'projects.view_project'
+    permission_denied_message = gettext_lazy('You have no permission to view Projects')
     queryset = Project.objects \
         .annotate(
         status_count=Count('task'),
@@ -37,8 +40,10 @@ class ProjectsListView(LoginRequiredMixin, ListView):
         .order_by('id')
 
 
-class ProjectDetailView(LoginRequiredMixin, DetailView):
+class ProjectDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     login_url = reverse_lazy('accounts:login')
+    permission_required = ['projects.view_project']
+    permission_denied_message = gettext_lazy('You have no permission to view Projects')
     template_name = 'project_detail.html'
     model = Project
 
@@ -46,8 +51,11 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
 
         project_id = self.kwargs.get('pk')
-        tasks = Task.objects.filter(project_id=project_id).order_by('id').select_related('assignee')
-        context['task_list'] = tasks
+        tasks = Task.objects.filter(project_id=project_id) \
+            .order_by('id') \
+            .select_related('assignee')
+        if self.request.user.has_perm('projects.view_task'):
+            context['task_list'] = tasks
 
         completed_data = tasks.aggregate(
             total=Count('id'),
@@ -71,6 +79,7 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
 class ProjectCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     login_url = reverse_lazy('accounts:login')
     permission_required = ['projects.add_project']
+    permission_denied_message = gettext_lazy('You have no permission to create Projects')
     template_name = 'project_form.html'
     model = Project
     form_class = ProjectModelForm
@@ -82,6 +91,7 @@ class ProjectCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
 class ProjectEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     login_url = reverse_lazy('accounts:login')
     permission_required = ['projects.change_project']
+    permission_denied_message = gettext_lazy('You have no permission to edit Projects')
     template_name = 'project_form.html'
     model = Project
     form_class = ProjectModelForm
@@ -95,14 +105,17 @@ class ProjectEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 class ProjectDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     login_url = reverse_lazy('accounts:login')
     permission_required = ['projects.delete_project']
+    permission_denied_message = gettext_lazy('You have no permission to delete Projects')
     template_name = 'project_confirm_delete.html'
     model = Project
     ordering = 'id'
     success_url = reverse_lazy('project-list')
 
 
-class TaskListView(LoginRequiredMixin, ListView):
+class TaskListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = reverse_lazy('accounts:login')
+    permission_required = ['projects.view_task']
+    permission_denied_message = gettext_lazy('You have no permission to view Tasks')
     template_name = 'task_list.html'
     model = Task
     ordering = 'id'
@@ -121,8 +134,10 @@ class TaskListView(LoginRequiredMixin, ListView):
         return tasks.order_by(ordering)
 
 
-class TaskDetailView(LoginRequiredMixin, DetailView):
+class TaskDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     login_url = reverse_lazy('accounts:login')
+    permission_required = ['projects.view_task']
+    permission_denied_message = gettext_lazy('You have no permission to view Tasks')
     template_name = 'task_detail.html'
     model = Task
 
@@ -130,13 +145,17 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         task = self.get_object()
         comments = Comment.objects.filter(task=task).order_by('created')
-        context['comments'] = comments
-        context['comment_form'] = CommentModelForm
+        if self.request.user.has_perm('projects.view_comment'):
+            context['comments'] = comments
+        if self.request.user.has_perm('projects.add_comment'):
+            context['comment_form'] = CommentModelForm
         return context
 
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     login_url = reverse_lazy('accounts:login')
+    permission_required = ['projects.add_task']
+    permission_denied_message = gettext_lazy('You have no permission to view Tasks')
     template_name = 'task_form.html'
     model = Task
     form_class = TaskModelForm
@@ -145,8 +164,10 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         return reverse_lazy('projects-task-detail', kwargs={'pk': self.object.id})
 
 
-class TaskUpdateView(LoginRequiredMixin, UpdateView):
+class TaskUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     login_url = reverse_lazy('accounts:login')
+    permission_required = ['projects.edit_task']
+    permission_denied_message = gettext_lazy('You have no permission to edit Tasks')
     template_name = 'task_form.html'
     model = Task
     form_class = TaskModelForm
@@ -155,15 +176,19 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('projects-task-detail', kwargs={'pk': self.object.id})
 
 
-class TaskDeleteView(LoginRequiredMixin, DeleteView):
+class TaskDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     login_url = reverse_lazy('accounts:login')
+    permission_required = ['projects.delete_task']
+    permission_denied_message = gettext_lazy('You have no permission to delete Tasks')
     template_name = 'task_confirm_delete.html'
     model = Task
     success_url = reverse_lazy('projects-task-list')
 
 
-class CommentCreate(LoginRequiredMixin, View):
+class CommentCreate(LoginRequiredMixin, PermissionRequiredMixin, View):
     login_url = reverse_lazy('accounts:login')
+    permission_required = ['projects.add_comment']
+    permission_denied_message = gettext_lazy('You have no permission to add Comment')
 
     def post(self, *args, **kwargs):
         task_id = kwargs.get('pk')

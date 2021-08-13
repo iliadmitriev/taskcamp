@@ -10,6 +10,7 @@ from django.contrib.auth import get_user_model
 from .forms import RegisterForm, AccountsPasswordResetForm, AccountProfileForm
 from .helpers import generate_user_hash_and_token
 from worker.email.tasks import send_activation_email, send_welcome_message
+from django.contrib.auth.models import Group
 
 
 class AccountsRegisterView(FormView):
@@ -25,6 +26,12 @@ class AccountsRegisterView(FormView):
             form.cleaned_data.get('password1'),
             is_active=False
         )
+
+        try:
+            group_public = Group.objects.get(name='public')
+            user.groups.add(group_public)
+        except Group.DoesNotExist:
+            pass
 
         user_hash, token = generate_user_hash_and_token(user.id)
 

@@ -67,20 +67,22 @@
                         <i class="bi bi-plus"></i>
                         {% translate 'Add' %}
                     </a>
-                    {% for document in project.documents.all %}
-                        <div class="d-flex">
-                            <a href="{{ document.document.url }}" download>
-                                <i class="bi bi-paperclip"></i>
-                                {{ document.title }}
-                            </a>
-                            <p>&nbsp;</p>
-                            <p>{{ document.description }}</p>
-                            <p>&nbsp;</p>
-                            <p>({{ document.document.size | filesizeformat }})</p>
-                            <p>&nbsp;</p>
-                            <p>{{ document.uploaded | date:"DATETIME_FORMAT" }}</p>
-                        </div>
-                    {% endfor %}
+                    {% if perms.documents.view_document %}
+                        {% for document in project.documents.all %}
+                            <div class="d-flex">
+                                <a href="{{ document.document.url }}" download>
+                                    <i class="bi bi-paperclip"></i>
+                                    {{ document.title }}
+                                </a>
+                                <p>&nbsp;</p>
+                                <p>{{ document.description }}</p>
+                                <p>&nbsp;</p>
+                                <p>({{ document.document.size | filesizeformat }})</p>
+                                <p>&nbsp;</p>
+                                <p>{{ document.uploaded | date:"DATETIME_FORMAT" }}</p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
 
