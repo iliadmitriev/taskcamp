@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 from projects.models import Project, Task, TaskStatus, Comment
 from django.db.models import Q
+from django.db.models import Max
+from django.db import IntegrityError
 
 
 class TestCaseWithUser(TestCase):
@@ -233,9 +235,11 @@ class ProjectCreateViewTestCase(TestCaseWithUser):
                 'description': 'Created test project description'
             }
         )
+        import re
+        result_id = re.search(r'/projects/(\d+)/', response.url)
         self.assertRedirects(
             response,
-            reverse('project-detail', kwargs={'pk': 1}),
+            reverse('project-detail', kwargs={'pk': result_id[1]}),
             status_code=302,
             target_status_code=200,
             fetch_redirect_response=True
@@ -435,12 +439,113 @@ class TaskCreateTestCase(TestCaseWithUser):
             }
         )
 
+        import re
+        result_id = re.search(r'/projects/tasks/(\d+)/', response.url)
+
         self.assertRedirects(
             response,
-            reverse('projects-task-detail', kwargs={'pk': 1}),
+            reverse('projects-task-detail', kwargs={'pk': result_id[1]}),
             status_code=302,
             target_status_code=200,
             fetch_redirect_response=True
         )
 
 
+class TaskEditTestCase(TestCaseWithUser):
+    def setUp(self) -> None:
+        self.client = Client(HTTP_ACCEPT_LANGUAGE='en')
+        self.client.login(email='test_user_edit@example.com', password='password')
+
+    def test_task_update_view_success(self):
+        task = Task.objects.create(
+            title='Test task',
+            project=Project.objects.create(
+                title='Test project'
+            )
+        )
+        response = self.client.post(
+            reverse('projects-task-edit', kwargs={'pk': task.id}),
+            data={
+                'title': 'Test task title',
+                'project': task.project.id,
+                'status': TaskStatus.IN_PROGRESS
+            }
+        )
+
+        self.assertRedirects(
+            response,
+            reverse('projects-task-detail', kwargs={'pk': task.id}),
+            status_code=302,
+            target_status_code=200,
+            fetch_redirect_response=True
+        )
+
+
+class CommentCreateTestCase(TestCaseWithUser):
+    def setUp(self) -> None:
+        self.client = Client(HTTP_ACCEPT_LANGUAGE='ru')
+        self.client.login(email='test_project@example.com', password='password')
+
+    def test_view_comments_in_task(self):
+        task = Task.objects.create(
+            title='Test task',
+            project=Project.objects.create(
+                title='Test project'
+            )
+        )
+        comment1 = Comment.objects.create(
+            task=task,
+            description='test comment 1'
+        )
+        comment2 = Comment.objects.create(
+            task=task,
+            description='test comment 2'
+        )
+        response = self.client.get(reverse('projects-task-detail', kwargs={'pk': task.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerysetEqual(
+            response.context['comments'],
+            Comment.objects.filter(task=task),
+            transform=lambda x: x
+        )
+        self.assertTrue('comments' in response.context)
+        self.assertTrue('comment_form' in response.context)
+        self.assertEqual(len(response.context['comments']), 2)
+
+    def test_comment_post_success(self):
+        task = Task.objects.create(
+            title='Test task',
+            project=Project.objects.create(
+                title='Test project'
+            )
+        )
+        response = self.client.post(
+            reverse('comment-post', kwargs={'pk': task.id}),
+            data={
+                'description': 'New comment'
+            }
+        )
+        self.assertRedirects(
+            response,
+            reverse('projects-task-detail', kwargs={'pk': task.id}),
+            status_code=302,
+            target_status_code=200,
+            fetch_redirect_response=True
+        )
+
+    # def test_comment_post_fail(self):
+    #     with self.assertRaises(IntegrityError):
+    #         response = self.client.post(
+    #             reverse('comment-post', kwargs={'pk': 100}),
+    #             data={
+    #                 'description': 'New comment'
+    #             }
+    #         )
+    #
+    #     # self.assertRedirects(
+    #     #     response,
+    #     #     reverse('projects-task-list'),
+    #     #     status_code=302,
+    #     #     target_status_code=200,
+    #     #     fetch_redirect_response=True
+    #     # )

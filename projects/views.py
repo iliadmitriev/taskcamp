@@ -166,7 +166,7 @@ class TaskCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 class TaskUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     login_url = reverse_lazy('accounts:login')
-    permission_required = ['projects.edit_task']
+    permission_required = ['projects.change_task']
     permission_denied_message = gettext_lazy('You have no permission to edit Tasks')
     template_name = 'task_form.html'
     model = Task
@@ -197,7 +197,7 @@ class CommentCreate(LoginRequiredMixin, PermissionRequiredMixin, View):
             comment = Comment(task_id=task_id, description=description)
             comment.save()
         except IntegrityError:
-            pass
+            return HttpResponseRedirect(reverse('projects-task-list'))
 
         return HttpResponseRedirect(reverse('projects-task-detail', kwargs=kwargs))
 
