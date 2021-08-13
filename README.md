@@ -3,8 +3,8 @@
 [![Build docker and push](https://github.com/iliadmitriev/taskcamp/actions/workflows/docker-build-and-push.yml/badge.svg)](https://github.com/iliadmitriev/taskcamp/actions/workflows/docker-build-and-push.yml)
 
 This software is used for educational purposes.
-It's a project management software
-It has functions:
+It's a simple management tool
+Features:
 * Authentication (login/registration/recover password)
 * Permissions and Groups
 * Simple CRUD views
@@ -14,7 +14,11 @@ It has functions:
 * Statistics views
 * Admin page
 * Different layouts (authorized, not authorized)
-* Async workers
+* Async workers with celery
+* Localization and translation
+* DB router (master, slave)
+* Unittests with coverage
+* Uwsgi (with static and media serving)
 * Docker and docker-compose use
 * kubernetes deploy
 
