@@ -101,19 +101,19 @@ elif env.get('MASTER_POSTGRES_HOST') and env.get('REPLICA_POSTGRES_HOST'):
         'default': {},
         'master': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env.get('MASTER_POSTGRES_HOST'),
+            'NAME': env.get('POSTGRES_DB'),
             'USER': env.get('POSTGRES_USER'),
             'PASSWORD': env.get('POSTGRES_PASSWORD'),
-            'HOST': env.get('POSTGRES_HOST'),
+            'HOST': env.get('POSTGRES_MASTER_HOST'),
             'PORT': env.get('POSTGRES_PORT'),
             'CONN_MAX_AGE': None,
         },
         'replica': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env.get('REPLICA_POSTGRES_HOST'),
+            'NAME': env.get('POSTGRES_DB'),
             'USER': env.get('POSTGRES_USER'),
             'PASSWORD': env.get('POSTGRES_PASSWORD'),
-            'HOST': env.get('POSTGRES_HOST'),
+            'HOST': env.get('POSTGRES_REPLICA_HOST'),
             'PORT': env.get('POSTGRES_PORT'),
             'CONN_MAX_AGE': None,
         }
