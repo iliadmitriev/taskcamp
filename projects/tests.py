@@ -407,3 +407,40 @@ class TaskListDetailTestCase(TestCaseWithUser):
         self.assertTemplateUsed(response, template_name='task_detail.html')
         self.assertFalse('comments' in response.context)
         self.assertFalse('comment_form' in response.context)
+
+
+class TaskCreateTestCase(TestCaseWithUser):
+    def setUp(self) -> None:
+        self.client = Client(HTTP_ACCEPT_LANGUAGE='ru')
+        self.client.login(email='test_project@example.com', password='password')
+
+    def test_task_create_view_unauthorized_302(self):
+        self.client.logout()
+        self.view_unauthorized_302(source_page='projects-task-detail', kwargs={'pk': 1})
+
+    def test_project_create_view_403_no_permissions(self):
+        response = self.client.get(reverse('projects-task-create'))
+        self.assertEqual(response.status_code, 403)
+
+    def test_task_create_view_OK(self):
+        self.client.logout()
+        self.client.login(email='test_user_edit@example.com', password='password')
+        project = Project.objects.create(title='Test project')
+        response = self.client.post(
+            reverse('projects-task-create'),
+            data={
+                'title': 'Test task title',
+                'project': project.id,
+                'status': TaskStatus.NEW
+            }
+        )
+
+        self.assertRedirects(
+            response,
+            reverse('projects-task-detail', kwargs={'pk': 1}),
+            status_code=302,
+            target_status_code=200,
+            fetch_redirect_response=True
+        )
+
+
