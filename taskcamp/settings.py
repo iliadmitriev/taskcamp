@@ -96,7 +96,7 @@ if env.get('POSTGRES_HOST'):
             'CONN_MAX_AGE': None,
         }
     }
-elif env.get('MASTER_POSTGRES_HOST') and env.get('REPLICA_POSTGRES_HOST'):
+elif env.get('POSTGRES_MASTER_HOST') and env.get('POSTGRES_REPLICA_HOST'):
     DATABASES = {
         'default': {},
         'master': {
