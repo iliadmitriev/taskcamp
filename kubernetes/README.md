@@ -7,7 +7,7 @@ minikube start --nodes=3 --addons=ingress,dashboard,metrics-server
 
 # deploy
 
-apply rabbimq cluster operator service and custom resource
+apply rabbimq cluster operator service and create custom resource (with role, role binding, etc.)
 ```shell
 kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
 ```
@@ -24,9 +24,8 @@ kubectl get pods -w
 
 migrate database and create superuser
 ```shell
-kubectl exec -ti deployment/taskcamp -- sh
-python3 manage.py migrate
-python3 manage.py createsuperuser
+kubectl exec -ti deployment/taskcamp -- python3 manage.py migrate
+kubectl exec -ti deployment/taskcamp -- python3 manage.py createsuperuser
 ```
 
 load data from fixture file `data.json`
@@ -77,4 +76,14 @@ minikube tunnel
 ```shell
 minikube tunnel
 # ask for user password (for tcp port binding < 1024)
+```
+
+# cleanup
+
+```shell
+kubectl delete -f kubernetes
+kubectl delete cm main-config main-failover main-leader
+kubectl delete secret mail-taskcamp-tls rmq-taskcamp-tls taskcamp-tls
+kubectl delete $(kubectl get pvc -l app=pg-postgres,cluster-name=main -o name)
+kubectl delete ing mail-taskcamp-ingress rmq-taskcamp-ingress taskcamp-ingress
 ```
