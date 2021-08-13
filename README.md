@@ -4,6 +4,7 @@
 
 This software is used for educational purposes.
 It's a simple project management tool
+
 Features:
 * Authentication (login/registration/recover password)
 * Permissions and Groups
