@@ -107,3 +107,42 @@ class AccountsRegisterActivateViewTestCase(TestCase):
             self.assertEqual(self.mock_send_welcome_message.call_count, 0)
 
 
+class AccountsLoginViewTestCase(TestCase):
+    def setUp(self) -> None:
+        self.client = Client(HTTP_ACCEPT_LANGUAGE='en', enforce_csrf_checks=True)
+
+    def test_login_success(self):
+        user = get_user_model().objects.create_user(
+            email='test_login_email@example.com',
+            password='password',
+            is_active=True
+        )
+        get = self.client.get(reverse('accounts:login'))
+        self.assertEqual(get.status_code, 200)
+        self.assertIn('csrf_token', get.context)
+        self.assertIn('form', get.context)
+        self.assertTemplateUsed('login.html')
+        self.assertTrue(get.csrf_cookie_set)
+        csrf_token = get.context['csrf_token']
+        response = self.client.post(
+            reverse('accounts:login'),
+            data={
+                'username': 'test_login_email@example.com',
+                'password': 'password',
+                'csrfmiddlewaretoken': csrf_token,
+                'next': '/'
+            },
+            cookies=get.cookies,
+            HTTP_REFERER=reverse('accounts:login')
+        )
+        self.assertRedirects(
+            response,
+            reverse('home'),
+            status_code=302,
+            target_status_code=200,
+            fetch_redirect_response=True
+        )
+        uid = self.client.session.get('_auth_user_id')
+        logged_user = get_user_model().objects.get(pk=uid)
+        self.assertEqual(logged_user, user)
+
