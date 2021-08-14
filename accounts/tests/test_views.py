@@ -104,7 +104,7 @@ class AccountsRegisterActivateViewTestCase(TestCase):
 
 class AccountsLoginViewTestCase(TestCase):
     def setUp(self) -> None:
-        self.client = Client(HTTP_ACCEPT_LANGUAGE='en', enforce_csrf_checks=True)
+        self.client = Client(HTTP_ACCEPT_LANGUAGE='ru', enforce_csrf_checks=True)
 
     def test_login_success(self):
         user = get_user_model().objects.create_user(
@@ -140,4 +140,21 @@ class AccountsLoginViewTestCase(TestCase):
         uid = self.client.session.get('_auth_user_id')
         logged_user = get_user_model().objects.get(pk=uid)
         self.assertEqual(logged_user, user)
+
+
+class AccountsProfileTestCase(TestCase):
+    def setUp(self) -> None:
+        self.client = Client(HTTP_ACCEPT_LANGUAGE='ru')
+
+    def test_get_profile_success(self):
+        user = get_user_model().objects.create_user(
+            email='test_login_email@example.com',
+            password='password',
+            is_active=True
+        )
+        self.client.force_login(user)
+        response = self.client.get(reverse('accounts:profile'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('account_profile.html')
+        self.assertIn('form', response.context)
 
