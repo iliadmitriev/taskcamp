@@ -1,12 +1,12 @@
-from django.test import TestCase, Client
-from django.shortcuts import reverse
-from django.http import QueryDict
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
-from projects.models import Project, Task, TaskStatus, Comment
 from django.db.models import Q
-from django.db.models import Max
-from django.db import IntegrityError
+from django.http import QueryDict
+from django.shortcuts import reverse
+from django.test import TestCase, Client
+from django.core.files.uploadedfile import SimpleUploadedFile
+
+from projects.models import Project, Task, TaskStatus, Comment
 
 
 class TestCaseWithUser(TestCase):
@@ -25,11 +25,8 @@ class TestCaseWithUser(TestCase):
             password='password',
             is_active=True
         )
-        try:
-            group_public = Group.objects.get(name='public')
-            user.groups.add(group_public)
-        except Group.DoesNotExist:
-            pass
+        group_public = Group.objects.get(name='public')
+        user.groups.add(group_public)
         cls.user = user
 
         # user with edit permissions
@@ -533,19 +530,71 @@ class CommentCreateTestCase(TestCaseWithUser):
             fetch_redirect_response=True
         )
 
-    # def test_comment_post_fail(self):
-    #     with self.assertRaises(IntegrityError):
-    #         response = self.client.post(
-    #             reverse('comment-post', kwargs={'pk': 100}),
-    #             data={
-    #                 'description': 'New comment'
-    #             }
-    #         )
-    #
-    #     # self.assertRedirects(
-    #     #     response,
-    #     #     reverse('projects-task-list'),
-    #     #     status_code=302,
-    #     #     target_status_code=200,
-    #     #     fetch_redirect_response=True
-    #     # )
+    def test_comment_post_fail(self):
+        response = self.client.post(
+            reverse('comment-post', kwargs={'pk': 100}),
+            data={
+                'description': 'New comment'
+            }
+        )
+
+        self.assertRedirects(
+            response,
+            reverse('projects-task-list'),
+            status_code=302,
+            target_status_code=200,
+            fetch_redirect_response=True
+        )
+
+
+class TaskDocumentUploadTestCase(TestCaseWithUser):
+    def setUp(self) -> None:
+        self.client = Client(HTTP_ACCEPT_LANGUAGE='ru')
+        self.client.login(email='test_user_edit@example.com', password='password')
+
+    def test_task_document_upload(self):
+        task = Task.objects.create(
+            title='Test task',
+            project=Project.objects.create(title='Test project')
+        )
+        text_file = SimpleUploadedFile("file.txt", b"file content", content_type="text/plain")
+        response = self.client.post(
+            reverse('task-document-upload', kwargs={'pk': task.id}),
+            data={
+                'document': text_file
+            }
+        )
+        self.assertRedirects(
+            response,
+            reverse('projects-task-detail', kwargs={'pk': task.id}),
+            status_code=302,
+            target_status_code=200,
+            fetch_redirect_response=True
+        )
+        self.assertEqual(task.documents.count(), 1)
+        self.assertEqual(task.documents.first().document.size, text_file.size)
+
+
+class ProjectDocumentUploadTestCase(TestCaseWithUser):
+    def setUp(self) -> None:
+        self.client = Client(HTTP_ACCEPT_LANGUAGE='ru')
+        self.client.login(email='test_user_edit@example.com', password='password')
+
+    def test_task_document_upload(self):
+        project=Project.objects.create(title='Test project')
+        text_file = SimpleUploadedFile("file.txt", b"project file content", content_type="text/plain")
+        response = self.client.post(
+            reverse('project-document-upload', kwargs={'pk': project.id}),
+            data={
+                'document': text_file
+            }
+        )
+        self.assertRedirects(
+            response,
+            reverse('project-detail', kwargs={'pk': project.id}),
+            status_code=302,
+            target_status_code=200,
+            fetch_redirect_response=True
+        )
+        self.assertEqual(project.documents.count(), 1)
+        self.assertEqual(project.documents.first().document.size, text_file.size)

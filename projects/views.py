@@ -1,17 +1,17 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.db.models import Q, F, Count, FloatField, Case, When
+from django.db.models.functions import Cast
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy, reverse
+from django.utils.translation import gettext_lazy
 from django.views.generic import (
     ListView, DetailView, DeleteView,
     CreateView, UpdateView, View
 )
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.db.models import Q, F, Count, FloatField, Case, When, Sum, Avg
-from django.db.models.functions import Cast
-from django.db import IntegrityError
-from django.urls import reverse_lazy, reverse
-from django.utils.translation import gettext_lazy
-from django.http import HttpResponseRedirect
-from .models import Project, Task, TaskStatus, Comment
-from .forms import ProjectModelForm, TaskModelForm, CommentModelForm
+
 from documents.views import DocumentUpload
+from .forms import ProjectModelForm, TaskModelForm, CommentModelForm
+from .models import Project, Task, TaskStatus, Comment
 
 
 class ProjectsListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -193,10 +193,10 @@ class CommentCreate(LoginRequiredMixin, PermissionRequiredMixin, View):
     def post(self, *args, **kwargs):
         task_id = kwargs.get('pk')
         try:
+            task = Task.objects.get(pk=task_id)
             description = self.request.POST.get('description')
-            comment = Comment(task_id=task_id, description=description)
-            comment.save()
-        except IntegrityError:
+            comment = Comment.objects.create(task=task, description=description)
+        except Task.DoesNotExist:
             return HttpResponseRedirect(reverse('projects-task-list'))
 
         return HttpResponseRedirect(reverse('projects-task-detail', kwargs=kwargs))
