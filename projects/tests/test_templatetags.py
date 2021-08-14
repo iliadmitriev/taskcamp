@@ -1,11 +1,10 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase, Client
 from django.shortcuts import reverse
-from projects.views import TaskListView
+from django.test import TestCase, Client
 
 
 class TaskListTestCase(TestCase):
-    fixtures = ['data.json']
+    fixtures = ['test-tasks.json']
 
     def setUp(self) -> None:
         self.client = Client(HTTP_ACCEPT_LANGUAGE='ru')
