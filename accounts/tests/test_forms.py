@@ -24,5 +24,11 @@ class AccountsPasswordResetFormTestCase(TestCase):
                     'email': self.user.email
                 }
             )
-            print(response.context)
             self.send_reset_email.assert_called_once()
+            self.assertRedirects(
+                response,
+                reverse('accounts:password-reset-done'),
+                status_code=302,
+                target_status_code=200,
+                fetch_redirect_response=True
+            )
