@@ -1,0 +1,438 @@
+[
+{
+    "model": "projects.project",
+    "pk": 1,
+    "fields": {
+        "title": "Покрасить заборы",
+        "description": "Нужно покрасить все заборы",
+        "due_date": "2021-03-25",
+        "is_closed": false
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 2,
+    "fields": {
+        "title": "Построить крышу",
+        "description": "# заголовок 1\r\n## заголовок 2\r\n### заголовок 3\r\n---\r\n\r\nКод:\r\n\r\n```\r\npython3 manage.py makemessages -a -i venv\r\n```\r\n\r\nМаркированный список:\r\n\r\n* элемент A\r\n* элемент B\r\n* элемент C\r\n\r\nНумерованный список:\r\n\r\n1. Элемент\r\n1. Элемент\r\n1. Элемент\r\n1. Элемент\r\n\r\nМногоуровневый список:\r\n\r\n1. Элемент\r\n    * Элемент\r\n    * Элемент\r\n1. Элемент\r\n    * Элемент\r\n        * Элемент\r\n    * Элемент\r\n1. Элемент\r\n1. Элемент",
+        "due_date": "2021-04-05",
+        "is_closed": false
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 6,
+    "fields": {
+        "title": "Выкосить траву",
+        "description": "Выкосить траву",
+        "due_date": "2021-03-05",
+        "is_closed": true
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 7,
+    "fields": {
+        "title": "Установить окна на 2-м этаже",
+        "description": "Проект установки окон на 2-м этаже\r\n\r\n* Организовать доставку окон\r\n* Снять опалубку и заглушки\r\n* Смонтировать окна\r\n* Сделать откосы\r\n* Установить внешние подоконники",
+        "due_date": "2021-03-19",
+        "is_closed": false
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 1,
+    "fields": {
+        "title": "Подобрать краску",
+        "description": "Подборать краску",
+        "project": 1,
+        "start": "2021-03-19T12:00:00Z",
+        "end": "2021-03-22T13:00:00Z",
+        "author": 1,
+        "assignee": 2,
+        "status": "done",
+        "documents": []
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 2,
+    "fields": {
+        "title": "Покрасить забор",
+        "description": "# Покрасить забор",
+        "project": 1,
+        "start": "2021-03-20T12:00:00Z",
+        "end": "2021-03-20T12:00:00Z",
+        "author": 1,
+        "assignee": 2,
+        "status": "new",
+        "documents": []
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 3,
+    "fields": {
+        "title": "Покрасить ворота",
+        "description": "Покрасить ворота",
+        "project": 1,
+        "start": "2021-03-20T12:00:00Z",
+        "end": "2021-03-21T12:00:00Z",
+        "author": 1,
+        "assignee": 2,
+        "status": "new",
+        "documents": []
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 5,
+    "fields": {
+        "title": "Спроектировать крышу",
+        "description": "## Результаты проектирования\r\n---\r\n\r\n1. Точные измерения размера каркаса\r\n2. Продольные лаги\r\n3. Стропила\r\n4. Конек",
+        "project": 2,
+        "start": "2021-03-25T12:00:00Z",
+        "end": "2021-03-26T12:00:00Z",
+        "author": 3,
+        "assignee": 9,
+        "status": "done",
+        "documents": []
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 6,
+    "fields": {
+        "title": "Закупить материалы",
+        "description": "1. Произвести расчет бюджета\r\n2. Сравнить цены по рынку поставщиков\r\n3. Выбрать поставщика\r\n4. Сделать закупку\r\n5. Организовать доставку",
+        "project": 2,
+        "start": "2021-03-27T12:00:00Z",
+        "end": "2021-03-30T12:00:00Z",
+        "author": 9,
+        "assignee": 3,
+        "status": "new",
+        "documents": []
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 7,
+    "fields": {
+        "title": "Монтаж каркаса",
+        "description": "Монтаж каркаса",
+        "project": 2,
+        "start": "2021-03-30T12:00:00Z",
+        "end": "2021-04-07T12:00:00Z",
+        "author": 9,
+        "assignee": 2,
+        "status": "new",
+        "documents": []
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 8,
+    "fields": {
+        "title": "Монтаж рейки",
+        "description": "Монтаж рейки",
+        "project": 2,
+        "start": "2021-04-07T12:00:00Z",
+        "end": "2021-04-09T12:00:00Z",
+        "author": 9,
+        "assignee": 2,
+        "status": "new",
+        "documents": []
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 9,
+    "fields": {
+        "title": "Монтаж покрытия",
+        "description": "Монтаж покрытия",
+        "project": 2,
+        "start": "2021-04-10T12:00:00Z",
+        "end": "2021-04-13T12:00:00Z",
+        "author": 9,
+        "assignee": 3,
+        "status": "new",
+        "documents": []
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 10,
+    "fields": {
+        "title": "Выкосить траву",
+        "description": "Выкосить траву",
+        "project": 6,
+        "start": "2021-03-10T12:00:00Z",
+        "end": "2021-03-10T19:00:00Z",
+        "author": 1,
+        "assignee": 1,
+        "status": "closed",
+        "documents": []
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 11,
+    "fields": {
+        "title": "Организовать доставку окон",
+        "description": "Организовать доставку окон",
+        "project": 7,
+        "start": "2021-03-10T12:00:00Z",
+        "end": "2021-03-10T20:00:00Z",
+        "author": 1,
+        "assignee": 10,
+        "status": "closed",
+        "documents": []
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 12,
+    "fields": {
+        "title": "Снять опалубку и заглушки",
+        "description": "Снять опалубку и заглушки",
+        "project": 7,
+        "start": "2021-03-11T10:00:00Z",
+        "end": "2021-03-11T12:00:00Z",
+        "author": 1,
+        "assignee": 10,
+        "status": "done",
+        "documents": []
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 13,
+    "fields": {
+        "title": "Смонтировать окна",
+        "description": "Смонтировать окна",
+        "project": 7,
+        "start": "2021-03-11T12:00:00Z",
+        "end": "2021-03-11T20:00:00Z",
+        "author": 1,
+        "assignee": 10,
+        "status": "done",
+        "documents": []
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 14,
+    "fields": {
+        "title": "Сделать откосы у окон",
+        "description": "Сделать откосы у окон на 2-м этаже",
+        "project": 7,
+        "start": "2021-03-12T12:00:00Z",
+        "end": "2021-03-15T12:00:00Z",
+        "author": 1,
+        "assignee": 10,
+        "status": "done",
+        "documents": []
+    }
+},
+{
+    "model": "projects.task",
+    "pk": 15,
+    "fields": {
+        "title": "Установить внешние подоконники",
+        "description": "Установить внешние подоконники",
+        "project": 7,
+        "start": "2021-03-15T12:00:00Z",
+        "end": "2021-03-17T12:00:00Z",
+        "author": 1,
+        "assignee": 10,
+        "status": "new",
+        "documents": []
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 1,
+    "fields": {
+        "task": 1,
+        "created": "2021-03-21T08:31:08.870Z",
+        "description": "Коммент"
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 2,
+    "fields": {
+        "task": 1,
+        "created": "2021-03-21T08:31:34.582Z",
+        "description": "Коммент 2"
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 4,
+    "fields": {
+        "task": 1,
+        "created": "2021-03-21T08:59:54.674Z",
+        "description": "Комментарий Ч"
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 5,
+    "fields": {
+        "task": 1,
+        "created": "2021-03-21T09:00:01.735Z",
+        "description": "Кальян у Андрюхи"
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 9,
+    "fields": {
+        "task": 2,
+        "created": "2021-03-21T10:24:38.925Z",
+        "description": "```\r\npython manage.py migrate\r\n```"
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 10,
+    "fields": {
+        "task": 15,
+        "created": "2021-03-22T08:22:00.745Z",
+        "description": "Задачу не выполнили потому что Миша забухал\r\nи по пьяни попал в отделение\r\n\r\nему дали 10 суток за нарушение общественного порядка"
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 11,
+    "fields": {
+        "task": 1,
+        "created": "2021-03-21T10:07:43.981Z",
+        "description": "Список\r\n\r\n1. Элемент\r\n1. Элемент\r\n1. Элемент\r\n    * Элемент\r\n    * Элемент\r\n1. Элемент\r\n"
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 13,
+    "fields": {
+        "task": 2,
+        "created": "2021-03-21T10:27:30.639Z",
+        "description": "```javascript\r\nfunction fancyAlert(arg) {\r\n  if(arg) {\r\n    $.facebox({div:'#foo'})\r\n  }\r\n}\r\n```"
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 14,
+    "fields": {
+        "task": 2,
+        "created": "2021-03-21T10:27:42.108Z",
+        "description": "As Kanye West said:\r\n\r\n> We're living the future so\r\n> the present is our past."
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 15,
+    "fields": {
+        "task": 2,
+        "created": "2021-03-21T10:27:53.023Z",
+        "description": "I think you should use an\r\n`<addr>` element here instead."
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 16,
+    "fields": {
+        "task": 2,
+        "created": "2021-03-21T10:28:07.028Z",
+        "description": "*This text will be italic*\r\n_This will also be italic_\r\n\r\n**This text will be bold**\r\n__This will also be bold__\r\n\r\n_You **can** combine them_"
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 17,
+    "fields": {
+        "task": 2,
+        "created": "2021-03-22T08:08:21.806Z",
+        "description": "# This is an `<h1>` tag\r\n## This is an `<h2>` tag\r\n###### This is an `<h6>` tag"
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 18,
+    "fields": {
+        "task": 2,
+        "created": "2021-03-21T10:31:37.537Z",
+        "description": "this should be and image"
+    }
+},
+{
+    "model": "projects.comment",
+    "pk": 26,
+    "fields": {
+        "task": 2,
+        "created": "2021-03-21T17:20:06.163Z",
+        "description": "тыц!"
+    }
+},
+{
+    "model": "employees.employee",
+    "pk": 1,
+    "fields": {
+        "firstname": "Сергей",
+        "surname": "Иванов",
+        "email": "ivanov@example.com",
+        "birthdate": "1991-03-19"
+    }
+},
+{
+    "model": "employees.employee",
+    "pk": 2,
+    "fields": {
+        "firstname": "Дмитрий",
+        "surname": "Смирнов",
+        "email": "smirnov@example.com",
+        "birthdate": "1992-12-16"
+    }
+},
+{
+    "model": "employees.employee",
+    "pk": 3,
+    "fields": {
+        "firstname": "Андрей",
+        "surname": "Павлов",
+        "email": "pavlov@example.com",
+        "birthdate": "1993-06-17"
+    }
+},
+{
+    "model": "employees.employee",
+    "pk": 9,
+    "fields": {
+        "firstname": "Александр",
+        "surname": "Петров",
+        "email": "petrov@example.com",
+        "birthdate": "1992-10-12"
+    }
+},
+{
+    "model": "employees.employee",
+    "pk": 10,
+    "fields": {
+        "firstname": "Михаил",
+        "surname": "Синцов",
+        "email": "sintsov@example.com",
+        "birthdate": "1994-09-05"
+    }
+},
+{
+    "model": "employees.employee",
+    "pk": 11,
+    "fields": {
+        "firstname": "Игорь",
+        "surname": "Полюсов",
+        "email": "polyusov@example.com",
+        "birthdate": "1994-08-05"
+    }
+}
+]
