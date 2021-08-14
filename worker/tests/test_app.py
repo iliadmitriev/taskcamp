@@ -1,8 +1,9 @@
+import importlib
 import os
 from unittest import mock
 
 from django.test import TestCase
-import importlib
+
 from worker import app
 
 
