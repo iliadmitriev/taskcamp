@@ -36,11 +36,6 @@ class AccountsRegisterViewTestCase(TestCase):
             )
             self.assertEqual(len(self.mock_send_activation_email.call_args), 2)
             self.assertEqual(self.mock_send_activation_email.call_count, 1)
-            self.mock_send_activation_email.assert_called_once_with(
-                email,
-                self.mock_send_activation_email.call_args.args[1]
-            )
-            return self.mock_send_activation_email.call_args.args[1]
 
     def test_account_register_get(self):
         response = self.client.post(reverse('accounts:register'))
