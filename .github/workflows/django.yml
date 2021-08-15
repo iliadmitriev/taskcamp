@@ -34,7 +34,7 @@ jobs:
         python3 -m coverage run manage.py test --verbosity=2
     - name: Check coverage
       run: |
-        python3 -m coverage report -m --fail-under=80
+        python3 -m coverage report -m --fail-under=100
         python3 -m coverage xml -o coverage.xml
         
     - name: Export data to codecov

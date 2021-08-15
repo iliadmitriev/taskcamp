@@ -28,10 +28,6 @@ USER $USER
 RUN python3 manage.py compilemessages -i venv \
     && python3 manage.py collectstatic --no-input
 
-RUN coverage run manage.py test --verbosity 2 \
-    && coverage report -m \
-    && coverage erase
-
 EXPOSE 8000
 
 STOPSIGNAL SIGINT
