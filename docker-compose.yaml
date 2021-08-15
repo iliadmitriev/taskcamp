@@ -6,6 +6,8 @@ services:
     hostname: taskcamp-redis
     networks:
       - taskcamp
+    volumes:
+      - redisdata:/data
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -41,6 +43,8 @@ services:
       - .env
     networks:
       - taskcamp
+    volumes:
+      - rabbitmqdata:/var/lib/rabbitmq
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 10s
@@ -96,6 +100,8 @@ services:
 
 volumes:
   pgdata: {}
+  redisdata: {}
+  rabbitmqdata: {}
 
 networks:
   taskcamp:
