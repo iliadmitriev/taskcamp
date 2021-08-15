@@ -2,23 +2,31 @@ version: "3.9"
 
 services:
   redis:
-    image: library/redis:6.2.1-alpine
-    ports:
-    - 6380:6379
+    image: redis:6.2-alpine3.14
+    hostname: taskcamp-redis
+    networks:
+      - taskcamp
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
 
   memcached:
-    image: library/memcached:1.6.9-alpine
-    ports:
-    - 11214:11211
+    image: memcached:1.6.10-alpine3.14
+    hostname: taskcamp-memcached
+    networks:
+      - taskcamp
 
   postgres:
-    image: library/postgres:13.2-alpine
+    image: postgres:13.4-alpine3.14
+    hostname: taskcamp-postgres
     env_file:
       - .env
     volumes:
-    - pgdata:/var/lib/postgresql/data
-    ports:
-    - 5434:5432
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - taskcamp
     healthcheck:
       test: pg_isready -U taskcamp
       interval: 10s
@@ -27,56 +35,64 @@ services:
 
 
   rabbitmq:
-    image: library/rabbitmq:3.8.14-management-alpine
+    image: rabbitmq:3.8.14-management-alpine
+    hostname: taskcamp-rabbitmq
     env_file:
       - .env
-    ports:
-    - 15673:15672
-    - 5673:5672
+    networks:
+      - taskcamp
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 10s
       timeout: 5s
       retries: 3
 
-  mailcatcher:
+  mail:
     image: iliadmitriev/mailcatcher
+    hostname: taskcamp-mail
+    networks:
+      - taskcamp
     ports:
-    - 1080:1080
-    - 1025:1025
+    - "1080:1080"
 
-  uwsgi:
+  django:
     build:
       context: ./
       dockerfile: Dockerfile
     image: taskcamp-django
+    hostname: taskcamp-django
     env_file:
       - .env
     ports:
-    - 8000:8000
+      - "8000:8000"
+    networks:
+      - taskcamp
     volumes:
       - type: bind
         source: ./media
         target: /app/media
     depends_on:
-      rabbitmq:
-        condition: service_healthy
-      postgres:
-        condition: service_healthy
+      - rabbitmq
+      - postgres
 
   celery:
     build:
       context: ./
       dockerfile: Dockerfile
     image: taskcamp-django
+    hostname: taskcamp-celery
     env_file:
       - .env
-    command: celery -A worker worker -c 20
+    networks:
+      - taskcamp
+    command: celery -A worker worker -c 8
     depends_on:
-      rabbitmq:
-        condition: service_healthy
-      postgres:
-        condition: service_healthy
+      - rabbitmq
+      - postgres
 
 volumes:
   pgdata: {}
+
+networks:
+  taskcamp:
+    name: taskcamp-network
