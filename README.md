@@ -1,4 +1,4 @@
-# taskcamp
+# Taskcamp
 
 [![Unittests with coverage](https://github.com/iliadmitriev/taskcamp/actions/workflows/django.yml/badge.svg)](https://github.com/iliadmitriev/taskcamp/actions/workflows/django.yml)
 [![Build docker and push](https://github.com/iliadmitriev/taskcamp/actions/workflows/docker-build-and-push.yml/badge.svg)](https://github.com/iliadmitriev/taskcamp/actions/workflows/docker-build-and-push.yml)
@@ -6,6 +6,19 @@
 
 This software is used for educational and demonstrative purposes.
 It's a simple project management tool powered by [Django Framework](https://www.djangoproject.com)
+
+- [About](#about)
+- [Install](#install)
+  * [Bare metal install](#bare-metal-install)
+  * [Docker install](#docker-install)
+    + [Prepare](#prepare)
+    + [Build and run](#build-and-run)
+    + [Clean up](#clean-up)
+  * [Docker-compose install](#docker-compose-install)
+- [Development](#development)
+- [Testing](#testing)
+  * [Run tests](#run-tests)
+  * [Run tests with coverage](#run-tests-with-coverage)
 
 Features:
 * Class-Based Views approach
@@ -41,9 +54,18 @@ Components:
 * Template Engine [Jinja2](https://jinja.palletsprojects.com/)
 * Debugging, profiling and optimizing [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/)
 
-# install
+# Install
 
 ---
+
+Types of installation
+
+1. [Bare metal](#bare-metal-install)
+2. [Docker](#docker-install)
+3. [Docker-compose](#docker-compose-install)
+4. [Kubernetes](kubernetes/README.md)
+
+## Bare metal install
 
 1. install python3 and create virtual env
 ```shell
@@ -132,7 +154,142 @@ python3 manage.py compilemessages -i venv
 python3 manage.py createsuperuser
 ```
 
-# development
+## Docker install
+
+### Prepare
+
+1. create `.env` file
+```shell
+>.env << __EOF__
+RABBITMQ_HOST=taskcamp-rabbitmq
+RABBITMQ_PORT=5672
+RABBITMQ_DEFAULT_USER=admin
+RABBITMQ_DEFAULT_PASS=adminsecret
+RABBITMQ_DEFAULT_VHOST=celery
+
+POSTGRES_HOST=taskcamp-postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=taskcamp
+POSTGRES_USER=taskcamp
+POSTGRES_PASSWORD=secret
+
+MEMCACHED_LOCATION=taskcamp-memcached:11211
+REDIS_RESULTS_BACKEND=redis://taskcamp-redis:6379/0
+
+EMAIL_HOST=taskcamp-mail
+EMAIL_PORT=1025
+__EOF__
+```
+
+2. create network `taskcamp-network`
+```shell
+docker network create taskcamp-network
+```
+
+3. create docker containers (this is just an example, you shouldn't run in production like this)
+```shell
+docker run -d --name taskcamp-postgres --hostname taskcamp-postgres \
+    --env-file .env --network taskcamp-network postgres:13-alpine
+    
+docker run -d --name taskcamp-memcached --hostname taskcamp-memcached \
+    --network taskcamp-network memcached:alpine
+
+docker run -d \
+  --name taskcamp-rabbitmq --hostname taskcamp-rabbitmq \
+  --env-file .env --network taskcamp-network \
+  rabbitmq:3.8.14-management-alpine
+
+docker run -d --name taskcamp-mail --hostname taskcamp-mail \
+  --network taskcamp-network -p 1080:1080 iliadmitriev/mailcatcher
+ 
+docker run -d --name taskcamp-redis --hostname taskcamp-redis \
+  --network taskcamp-network redis:alpine
+```
+
+### Build and run
+1. build docker image `taskcamp-python`
+```shell
+docker build -t taskcamp-python -f Dockerfile ./
+```
+
+2. run django web application
+```shell
+docker run -p 8000:8000 --env-file=.env -d --name=taskcamp-django \
+  --hostname=taskcamp-django --network taskcamp-network taskcamp-python
+```
+
+3. run celery
+```shell
+docker run --env-file=.env -d --name=taskcamp-celery --hostname=taskcamp-celery \
+   --network taskcamp-network taskcamp-python python3 -m celery -A worker worker
+```
+
+4. apply migrations
+```shell
+docker run --env-file=.env --rm -ti --network taskcamp-network taskcamp-python \
+    python3 manage.py migrate
+```
+
+5. create superuser
+```shell
+docker run --env-file=.env --rm -ti --network taskcamp-network taskcamp-python \
+    python3 manage.py createsuperuser
+```
+
+### Clean up
+```shell
+docker rm -f $(docker ps --filter name=^taskcamp -a -q)
+docker network rm taskcamp-network
+docker rmi taskcamp-python
+```
+
+## Docker-compose install
+
+1. create `.env` environment variables file
+```shell
+>.env << __EOF__
+RABBITMQ_HOST=taskcamp-rabbitmq
+RABBITMQ_PORT=5672
+RABBITMQ_DEFAULT_USER=admin
+RABBITMQ_DEFAULT_PASS=adminsecret
+RABBITMQ_DEFAULT_VHOST=celery
+
+POSTGRES_HOST=taskcamp-postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=taskcamp
+POSTGRES_USER=taskcamp
+POSTGRES_PASSWORD=secret
+
+MEMCACHED_LOCATION=taskcamp-memcached:11211
+REDIS_RESULTS_BACKEND=redis://taskcamp-redis:6379/0
+
+EMAIL_HOST=taskcamp-mail
+EMAIL_PORT=1025
+__EOF__
+```
+
+2. start docker-compose services
+```shell
+docker-compose up -d
+```
+
+3. apply migrations
+```shell
+docker-compose exec django python3 manage.py migrate
+```
+
+4. create superuser
+```shell
+docker-compose exec django python3 manage.py createsuperuser
+```
+
+Docker-compose clean up
+
+```shell
+docker-compose down --rmi all --volumes
+```
+
+# Development
 
 ---
 1. set environment variables
@@ -175,9 +332,9 @@ with log level and queue
 celery -A worker worker -l INFO -Q email
 ```
 
-# testing
+# Testing
 
-## run tests 
+## Run tests 
 
 1. run all tests
 ```shell
@@ -192,7 +349,7 @@ python3 manage.py test --keepdb
 python3 manage.py test --verbosity=2
 ```
 
-## run tests with coverage
+## Run tests with coverage
 
 1. run with coverage
 ```shell

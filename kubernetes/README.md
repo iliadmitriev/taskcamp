@@ -12,7 +12,7 @@ apply rabbimq cluster operator service and create custom resource (with role, ro
 kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
 ```
 
-apply postgres database
+apply services, deployments and stateful sets
 ```shell
 kubectl apply -f kubernetes
 ```
