@@ -8,9 +8,9 @@ services:
       - taskcamp
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 1s
-      timeout: 3s
-      retries: 30
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   memcached:
     image: memcached:1.6.10-alpine3.14
@@ -72,8 +72,10 @@ services:
         source: ./media
         target: /app/media
     depends_on:
-      - rabbitmq
-      - postgres
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
 
   celery:
     build:
@@ -87,8 +89,10 @@ services:
       - taskcamp
     command: celery -A worker worker -c 8
     depends_on:
-      - rabbitmq
-      - postgres
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
 
 volumes:
   pgdata: {}
