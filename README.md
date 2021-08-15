@@ -7,7 +7,6 @@
 This software is used for educational and demonstrative purposes.
 It's a simple project management tool powered by [Django Framework](https://www.djangoproject.com)
 
-- [About](#about)
 - [Install](#install)
   * [Bare metal install](#bare-metal-install)
   * [Docker install](#docker-install)
