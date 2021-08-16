@@ -1,5 +1,6 @@
 __pycache__/
 /venv
+/.git
 /.idea
 /.env
 /db.sqlite3

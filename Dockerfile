@@ -13,11 +13,19 @@ WORKDIR $APP_HOME
 COPY --chown=$USER requirements.txt $APP_HOME/
 
 RUN apk add --no-cache \
-            python3 py3-pip py3-wheel gettext mailcap \
-            uwsgi uwsgi-python3 uwsgi-http \
-            py3-psycopg2 \
-    && pip install -r requirements.txt \
-    && pip install coverage \
+                python3 \
+                postgresql-libs icu-libs libpq \
+                py3-pip \
+                py3-wheel \
+                gettext \
+                mailcap \
+    && apk add --no-cache --virtual .build-deps \
+                build-base \
+                python3-dev \
+                postgresql-dev \
+                linux-headers \
+    && pip install --ignore-installed six -r requirements.txt \
+    && apk del .build-deps \
     && rm -rf /root/.cache/ \
     && chown -R $USER:$USER $APP_HOME
 
