@@ -86,7 +86,7 @@ echo DJANGO_SECRET_KEY=test_secret_key  >> .env
 ```
 4. add connection data to `.env` file
 ```shell
->>.env << __EOF__
+>.env << __EOF__
 RABBITMQ_HOST=192.168.10.1
 RABBITMQ_PORT=5673
 RABBITMQ_DEFAULT_USER=admin

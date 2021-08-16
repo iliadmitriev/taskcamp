@@ -127,6 +127,7 @@ else:
         }
     }
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 if env.get('MEMCACHED_LOCATION'):
     CACHES = {
