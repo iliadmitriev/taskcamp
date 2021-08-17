@@ -4,8 +4,6 @@ metadata:
   labels:
     run: mailcatcher
   name: mailcatcher
-  annotations:
-    apparmor.security.beta.kubernetes.io/allowedProfileNames: "runtime/default"
 spec:
   containers:
   - image: iliadmitriev/mailcatcher
@@ -26,6 +24,8 @@ spec:
     securityContext:
       allowPrivilegeEscalation: false
       runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
       readOnlyRootFilesystem: true
       capabilities:
         drop:
