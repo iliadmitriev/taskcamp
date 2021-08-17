@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-30 17:02+0000\n"
+"POT-Creation-Date: 2021-08-17 09:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,6 +45,17 @@ msgstr ""
 #: employees/templates/employee_list.html:17
 msgid "Birthdate"
 msgstr "Birthdate"
+
+#: accounts/templates/account_profile.html:6 templates/nav.html:47
+msgid "Profile"
+msgstr ""
+
+#: accounts/templates/account_profile.html:14
+#: employees/templates/employee_form.html:17
+#: projects/templates/project_form.html:17
+#: projects/templates/task_detail.html:163 projects/templates/task_form.html:26
+msgid "Save"
+msgstr ""
 
 #: accounts/templates/login.html:9 accounts/templates/login.html:42
 msgid "Login"
@@ -169,14 +180,14 @@ msgid "Document"
 msgstr ""
 
 #: documents/models.py:24 projects/models.py:8 projects/models.py:34
-#: projects/templates/project_detail.html:135
+#: projects/templates/project_detail.html:137
 #: projects/templates/project_list.html:15 projects/templates/task_list.html:22
 msgid "Title"
 msgstr "Title"
 
 #: documents/models.py:25 projects/models.py:10 projects/models.py:36
-#: projects/models.py:71 projects/templates/project_detail.html:92
-#: projects/templates/task_detail.html:101
+#: projects/models.py:71 projects/templates/project_detail.html:94
+#: projects/templates/task_detail.html:103
 msgid "Description"
 msgstr "Description"
 
@@ -212,6 +223,10 @@ msgstr ""
 #: projects/templates/task_confirm_delete.html:29
 #: projects/templates/task_form.html:29 projects/templates/task_form.html:33
 msgid "Cancel"
+msgstr ""
+
+#: documents/views.py:13 projects/views.py:21 projects/views.py:46
+msgid "You have no permission to view Projects"
 msgstr ""
 
 #: employees/apps.py:7 employees/models.py:20
@@ -250,14 +265,14 @@ msgid "You want to delete?"
 msgstr ""
 
 #: employees/templates/employee_detail.html:50
-#: projects/templates/project_detail.html:109
-#: projects/templates/task_detail.html:116
+#: projects/templates/project_detail.html:111
+#: projects/templates/task_detail.html:118
 msgid "Edit"
 msgstr ""
 
 #: employees/templates/employee_detail.html:54
-#: projects/templates/project_detail.html:113
-#: projects/templates/task_detail.html:120
+#: projects/templates/project_detail.html:115
+#: projects/templates/task_detail.html:122
 msgid "Delete"
 msgstr ""
 
@@ -267,12 +282,6 @@ msgstr ""
 #: projects/templates/project_list.html:9 projects/templates/task_form.html:9
 #: projects/templates/task_list.html:11
 msgid "Create"
-msgstr ""
-
-#: employees/templates/employee_form.html:17
-#: projects/templates/project_form.html:17
-#: projects/templates/task_detail.html:161 projects/templates/task_form.html:26
-msgid "Save"
 msgstr ""
 
 #: employees/templates/employee_list.html:18
@@ -324,7 +333,7 @@ msgstr "Projects"
 
 #: home/templates/home.html:51 projects/models.py:64
 #: projects/templates/project_detail.html:27
-#: projects/templates/project_detail.html:120
+#: projects/templates/project_detail.html:122
 #: projects/templates/project_list.html:17 projects/templates/task_list.html:8
 #: templates/nav.html:27
 msgid "Tasks"
@@ -398,12 +407,12 @@ msgstr "End date"
 msgid "Author"
 msgstr "Author"
 
-#: projects/models.py:50 projects/templates/project_detail.html:136
+#: projects/models.py:50 projects/templates/project_detail.html:138
 #: projects/templates/task_detail.html:43 projects/templates/task_list.html:30
 msgid "Assignee"
 msgstr "Assignee"
 
-#: projects/models.py:54 projects/templates/project_detail.html:139
+#: projects/models.py:54 projects/templates/project_detail.html:141
 #: projects/templates/task_detail.html:69 projects/templates/task_list.html:42
 msgid "Status"
 msgstr "Status"
@@ -421,17 +430,17 @@ msgid "Comments"
 msgstr ""
 
 #: projects/templates/project_detail.html:68
-#: projects/templates/project_detail.html:127
+#: projects/templates/project_detail.html:129
 #: projects/templates/task_detail.html:80
 msgid "Add"
 msgstr ""
 
-#: projects/templates/project_detail.html:137
+#: projects/templates/project_detail.html:139
 #: projects/templates/task_detail.html:53 projects/templates/task_list.html:34
 msgid "Start"
 msgstr "Start date"
 
-#: projects/templates/project_detail.html:138
+#: projects/templates/project_detail.html:140
 #: projects/templates/task_detail.html:61 projects/templates/task_list.html:38
 msgid "End"
 msgstr "End date"
@@ -452,11 +461,39 @@ msgstr ""
 msgid "No tasks"
 msgstr "There is on Tasks, perhaps you should add some"
 
-#: taskcamp/settings.py:164
+#: projects/views.py:82
+msgid "You have no permission to create Projects"
+msgstr ""
+
+#: projects/views.py:94
+msgid "You have no permission to edit Projects"
+msgstr ""
+
+#: projects/views.py:108
+msgid "You have no permission to delete Projects"
+msgstr ""
+
+#: projects/views.py:118 projects/views.py:140 projects/views.py:158
+msgid "You have no permission to view Tasks"
+msgstr ""
+
+#: projects/views.py:170
+msgid "You have no permission to edit Tasks"
+msgstr ""
+
+#: projects/views.py:182
+msgid "You have no permission to delete Tasks"
+msgstr ""
+
+#: projects/views.py:191
+msgid "You have no permission to add Comment"
+msgstr ""
+
+#: taskcamp/settings.py:189
 msgid "English"
 msgstr "English"
 
-#: taskcamp/settings.py:165
+#: taskcamp/settings.py:190
 msgid "Russian"
 msgstr "Russian"
 
@@ -486,10 +523,6 @@ msgstr ""
 
 #: templates/nav.html:40
 msgid "Account"
-msgstr ""
-
-#: templates/nav.html:47
-msgid "Profile"
 msgstr ""
 
 #: templates/nav.html:53
