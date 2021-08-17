@@ -4,11 +4,32 @@ metadata:
   labels:
     run: mailcatcher
   name: mailcatcher
+  annotations:
+    apparmor.security.beta.kubernetes.io/allowedProfileNames: "runtime/default"
 spec:
   containers:
   - image: iliadmitriev/mailcatcher
+    imagePullPolicy: Always
     name: mailcatcher
-    resources: {}
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 100m
+        memory: 128Mi
+    livenessProbe:
+      tcpSocket:
+        port: 1025
+      timeoutSeconds: 5
+      initialDelaySeconds: 5
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+          - all
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 ---
