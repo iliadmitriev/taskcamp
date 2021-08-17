@@ -35,10 +35,35 @@ spec:
         name: taskcamp
         ports:
         - containerPort: 8000
-        resources: {}
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 250Mi
+          limits:
+            cpu: 2000m
+            memory: 500Mi
         envFrom:
         - secretRef:
             name: taskcamp-secret
+        livenessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /status-page/
+            port: 8000
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 1000
+          runAsGroup: 1000
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          capabilities:
+            drop:
+              - all
         volumeMounts:
           - mountPath: /app/media
             name: media
@@ -69,9 +94,30 @@ spec:
         name: taskcamp-celery
         command: ["python3"]
         args: ["-m", "celery", "-A", "worker", "worker"]
-        ports:
-        - containerPort: 8000
-        resources: {}
+        livenessProbe:
+          exec:
+            command: ["python3", "-m", "celery", "-A", "worker", "status"]
+          initialDelaySeconds: 3
+          periodSeconds: 30
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 1000
+          runAsGroup: 1000
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          capabilities:
+            drop:
+              - all
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 250Mi
+          limits:
+            cpu: 2000m
+            memory: 500Mi
         envFrom:
         - secretRef:
             name: taskcamp-secret
