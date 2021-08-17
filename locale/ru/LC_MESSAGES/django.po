@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-30 17:02+0000\n"
+"POT-Creation-Date: 2021-08-17 09:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,6 +45,17 @@ msgstr "Адрес e-mail"
 #: employees/templates/employee_list.html:17
 msgid "Birthdate"
 msgstr "Дата рождения"
+
+#: accounts/templates/account_profile.html:6 templates/nav.html:47
+msgid "Profile"
+msgstr "Профиль"
+
+#: accounts/templates/account_profile.html:14
+#: employees/templates/employee_form.html:17
+#: projects/templates/project_form.html:17
+#: projects/templates/task_detail.html:163 projects/templates/task_form.html:26
+msgid "Save"
+msgstr "Сохранить"
 
 #: accounts/templates/login.html:9 accounts/templates/login.html:42
 msgid "Login"
@@ -105,39 +116,42 @@ msgstr "Войти"
 
 #: accounts/templates/password_reset_complete.html:9
 msgid "Your password has been set.  You may go ahead and log in now."
-msgstr ""
+msgstr "Новый пароль установлей. Вы можете теперь воийт."
 
 #: accounts/templates/password_reset_complete.html:11
 msgid "Log in"
-msgstr ""
+msgstr "Войти"
 
 #: accounts/templates/password_reset_confirm.html:12
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
-msgstr ""
+msgstr "Пожалуйста введите пароль дважды, чтобы убедиться в его корректности"
 
 #: accounts/templates/password_reset_confirm.html:27
 msgid "Change my password"
-msgstr ""
+msgstr "Изменить пароль"
 
 #: accounts/templates/password_reset_confirm.html:33
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
-msgstr ""
+msgstr "Ссылка на сброс пароля не действительна, возможно она уже была использована."
+"Пожалуйста запросите новую ссылку на сброс пароля."
 
 #: accounts/templates/password_reset_done.html:9
 msgid ""
 "We’ve emailed you instructions for setting your password, if an account "
 "exists with the email you entered. You should receive them shortly."
-msgstr ""
+msgstr "Мы отправили Вам инструкции для установки пароля, если ваш аккаунт "
+"существует то вы в скором времени получите письмо."
 
 #: accounts/templates/password_reset_done.html:11
 msgid ""
 "If you don’t receive an email, please make sure you’ve entered the address "
 "you registered with, and check your spam folder."
-msgstr ""
+msgstr "Если вы не получили пиьсма, пожалуста убедитесь что введенный адрес "
+"тот с который использовался при регистрации, и проверьте папку спам."
 
 #: accounts/templates/register.html:9 accounts/templates/register.html:63
 #: accounts/templates/register_done.html:8
@@ -152,7 +166,8 @@ msgstr "Регистрация почти завершена"
 msgid ""
 "To finish registrations you have to go check your email address and follow "
 "link we have sent you"
-msgstr ""
+msgstr "Для того чтобы закончить регистрацию, проверьте ваш почтовый ящик "
+"и перейдите по ссылке из письма"
 
 #: documents/apps.py:7 documents/models.py:32 projects/models.py:16
 #: projects/models.py:57 projects/templates/project_detail.html:65
@@ -169,14 +184,14 @@ msgid "Document"
 msgstr "Документ"
 
 #: documents/models.py:24 projects/models.py:8 projects/models.py:34
-#: projects/templates/project_detail.html:135
+#: projects/templates/project_detail.html:137
 #: projects/templates/project_list.html:15 projects/templates/task_list.html:22
 msgid "Title"
 msgstr "Название"
 
 #: documents/models.py:25 projects/models.py:10 projects/models.py:36
-#: projects/models.py:71 projects/templates/project_detail.html:92
-#: projects/templates/task_detail.html:101
+#: projects/models.py:71 projects/templates/project_detail.html:94
+#: projects/templates/task_detail.html:103
 msgid "Description"
 msgstr "Описание"
 
@@ -214,6 +229,10 @@ msgstr "Подтвердить"
 msgid "Cancel"
 msgstr "Отмена"
 
+#: documents/views.py:13 projects/views.py:21 projects/views.py:46
+msgid "You have no permission to view Projects"
+msgstr "У вас недостаточно прав для просмотра Проектов"
+
 #: employees/apps.py:7 employees/models.py:20
 #: employees/templates/employee_list.html:7 home/templates/home.html:89
 #: templates/nav.html:33
@@ -248,14 +267,14 @@ msgid "You want to delete?"
 msgstr "Подтвердите удаление?"
 
 #: employees/templates/employee_detail.html:50
-#: projects/templates/project_detail.html:109
-#: projects/templates/task_detail.html:116
+#: projects/templates/project_detail.html:111
+#: projects/templates/task_detail.html:118
 msgid "Edit"
 msgstr "Редактировать"
 
 #: employees/templates/employee_detail.html:54
-#: projects/templates/project_detail.html:113
-#: projects/templates/task_detail.html:120
+#: projects/templates/project_detail.html:115
+#: projects/templates/task_detail.html:122
 msgid "Delete"
 msgstr "Удалить"
 
@@ -266,12 +285,6 @@ msgstr "Удалить"
 #: projects/templates/task_list.html:11
 msgid "Create"
 msgstr "Создать"
-
-#: employees/templates/employee_form.html:17
-#: projects/templates/project_form.html:17
-#: projects/templates/task_detail.html:161 projects/templates/task_form.html:26
-msgid "Save"
-msgstr "Сохранить"
 
 #: employees/templates/employee_list.html:18
 #: projects/templates/project_list.html:20 projects/templates/task_list.html:44
@@ -316,7 +329,7 @@ msgstr "Открыть Проекты"
 
 #: home/templates/home.html:51 projects/models.py:64
 #: projects/templates/project_detail.html:27
-#: projects/templates/project_detail.html:120
+#: projects/templates/project_detail.html:122
 #: projects/templates/project_list.html:17 projects/templates/task_list.html:8
 #: templates/nav.html:27
 msgid "Tasks"
@@ -386,12 +399,12 @@ msgstr "Дата окончания"
 msgid "Author"
 msgstr "Автор"
 
-#: projects/models.py:50 projects/templates/project_detail.html:136
+#: projects/models.py:50 projects/templates/project_detail.html:138
 #: projects/templates/task_detail.html:43 projects/templates/task_list.html:30
 msgid "Assignee"
 msgstr "Исполнитель"
 
-#: projects/models.py:54 projects/templates/project_detail.html:139
+#: projects/models.py:54 projects/templates/project_detail.html:141
 #: projects/templates/task_detail.html:69 projects/templates/task_list.html:42
 msgid "Status"
 msgstr "Статус"
@@ -409,17 +422,17 @@ msgid "Comments"
 msgstr "Комментарии"
 
 #: projects/templates/project_detail.html:68
-#: projects/templates/project_detail.html:127
+#: projects/templates/project_detail.html:129
 #: projects/templates/task_detail.html:80
 msgid "Add"
 msgstr "Добавить"
 
-#: projects/templates/project_detail.html:137
+#: projects/templates/project_detail.html:139
 #: projects/templates/task_detail.html:53 projects/templates/task_list.html:34
 msgid "Start"
 msgstr "Дата начала"
 
-#: projects/templates/project_detail.html:138
+#: projects/templates/project_detail.html:140
 #: projects/templates/task_detail.html:61 projects/templates/task_list.html:38
 msgid "End"
 msgstr "Дата окончания"
@@ -440,11 +453,39 @@ msgstr "Вперед"
 msgid "No tasks"
 msgstr "Нет задач, возможно надо их добавить или отключить фильтры"
 
-#: taskcamp/settings.py:164
+#: projects/views.py:82
+msgid "You have no permission to create Projects"
+msgstr "У вас недостаточно прав для создания Проектов"
+
+#: projects/views.py:94
+msgid "You have no permission to edit Projects"
+msgstr "У вас недостаточно прав для редактирования Проектов"
+
+#: projects/views.py:108
+msgid "You have no permission to delete Projects"
+msgstr "У вас недостаточно прав для удаления Проектов"
+
+#: projects/views.py:118 projects/views.py:140 projects/views.py:158
+msgid "You have no permission to view Tasks"
+msgstr "У вас недостаточно прав для просмотра Задач"
+
+#: projects/views.py:170
+msgid "You have no permission to edit Tasks"
+msgstr "У вас недостаточно прав для редактирования Задач"
+
+#: projects/views.py:182
+msgid "You have no permission to delete Tasks"
+msgstr "У вас недостаточно прав для удаления Задач"
+
+#: projects/views.py:191
+msgid "You have no permission to add Comment"
+msgstr "У вас недостаточно прав для добавления Комментариев"
+
+#: taskcamp/settings.py:189
 msgid "English"
 msgstr "Английский"
 
-#: taskcamp/settings.py:165
+#: taskcamp/settings.py:190
 msgid "Russian"
 msgstr "Русский"
 
@@ -477,10 +518,6 @@ msgstr ""
 #| msgid "Accounts"
 msgid "Account"
 msgstr "Аккаунты"
-
-#: templates/nav.html:47
-msgid "Profile"
-msgstr "Профиль"
 
 #: templates/nav.html:53
 msgid "Admin"
