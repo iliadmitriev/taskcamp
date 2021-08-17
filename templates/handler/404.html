@@ -5,6 +5,8 @@
     <hr>
     {% if request.META.HTTP_REFERER %}
         <a href="{{ request.META.HTTP_REFERER }}">{% translate 'Back' %}</a>
+    {% else %}
+        <a href="{% url 'home' %}">{% translate 'Home' %}</a>
     {% endif %}
     <p>
         {% translate 'Page or object you are requested is not found' %}
