@@ -6,9 +6,30 @@ metadata:
   name: memcached
 spec:
   containers:
-  - image: memcached:1.6.10-alpine3.14
-    name: memcached
-    resources: {}
+  - name: memcached
+    image: memcached:1.6.10-alpine3.14
+    imagePullPolicy: Always
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 100m
+        memory: 128Mi
+    livenessProbe:
+      tcpSocket:
+        port: 11211
+      timeoutSeconds: 5
+      initialDelaySeconds: 5
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      runAsUser: 11211
+      runAsGroup: 11211
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+          - all
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 ---
