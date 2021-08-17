@@ -7,7 +7,7 @@ def http_404(request, exception):
 
 
 def http_403(request, exception):
-    data = {}
+    data = {'message': str(exception)}
     return render(request, 'handler/403.html', data, status=403)
 
 

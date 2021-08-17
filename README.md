@@ -105,13 +105,13 @@ EMAIL_HOST=192.168.10.1
 EMAIL_PORT=1025
 __EOF__
 ```
-if you need a debug to be enabled
 ```shell
+# if you need a debug be enabled
 >>.env << __EOF__
 DJANGO_DEBUG=True
 __EOF__
 
-if you need to keep celery results 
+#if you need to keep celery results 
 >>.env << __EOF__
 REDIS_RESULTS_BACKEND=redis://192.168.10.1:6380/0
 __EOF__
@@ -130,8 +130,8 @@ docker run -d -p 15673:15672 -p 5673:5672 \
 docker run -d -p 1080:1080 -p 1025:1025 \
  --name taskcamp-mailcatcher iliadmitriev/mailcatcher
 ```
-if you need to store celery results
 ```shell
+# if you enabled REDIS_RESULTS_BACKEND to store celery results
 docker run -d --name taskcamp-redis --hostname taskcamp-redis \
  -p 6380:6379 redis:alpine
 ```
