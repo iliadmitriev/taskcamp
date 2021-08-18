@@ -24,13 +24,13 @@ kubectl get pods -w
 
 migrate database and create superuser
 ```shell
-kubectl exec -ti deployment/taskcamp -- python3 manage.py migrate
-kubectl exec -ti deployment/taskcamp -- python3 manage.py createsuperuser
+kubectl exec -ti deployment/taskcamp -- python3 manage.py migrate --database=master
+kubectl exec -ti deployment/taskcamp -- python3 manage.py createsuperuser --database=master
 ```
 
 load data from fixture file `data.json`
 ```shell
-cat data.json | kubectl exec -i deploy/taskcamp -- python3 manage.py loaddata --format=json -
+cat data.json | kubectl exec -i deploy/taskcamp -- python3 manage.py loaddata --database=master --format=json -
 ```
 
 # expose
