@@ -92,9 +92,22 @@ spec:
       - name: pg-postgres-pod
         imagePullPolicy: Always
         image: iliadmitriev/postgres-cluster
+        resources:
+          requests:
+            cpu: 500m
+            memory: 250Mi
+          limits:
+            cpu: 1000m
+            memory: 500Mi
         securityContext:
           runAsUser: 70
           runAsGroup: 70
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          capabilities:
+            drop:
+              - all
         readinessProbe:
           httpGet:
             scheme: HTTP
