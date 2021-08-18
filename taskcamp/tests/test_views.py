@@ -21,12 +21,16 @@ class HandlingViewsTestCase(TestCase):
         self.assertTemplateUsed('handler/403.html')
 
     def test_status_page_OK(self):
-        response = status_page(request=None)
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "DB connection is OK")
+        with mock.patch('django.db.backends.base.base.BaseDatabaseWrapper.connect',
+                        mock.Mock()):
+            response = status_page(request=None)
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response, "DB connection is OK")
 
     def test_status_page_fail(self):
-        with mock.patch('django.db.connection.ensure_connection',
+        with mock.patch('django.db.backends.base.base.BaseDatabaseWrapper.connect',
                         mock.Mock(side_effect=OperationalError)):
-            response = status_page(request=None)
-            self.assertEqual(response.status_code, 500)
+            with mock.patch('django.db.backends.base.base.BaseDatabaseWrapper.cursor',
+                            mock.Mock(side_effect=OperationalError)):
+                response = status_page(request=None)
+                self.assertEqual(response.status_code, 500)
