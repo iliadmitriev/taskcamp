@@ -121,6 +121,12 @@ spec:
         envFrom:
         - secretRef:
             name: taskcamp-secret
+        volumeMounts:
+          - mountPath: /tmp
+            name: tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
