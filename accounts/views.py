@@ -133,5 +133,3 @@ class AccountsProfile(LoginRequiredMixin, UpdateView):
         user_model = get_user_model()
         user_id = self.request.user.id
         return user_model.objects.get(pk=user_id)
-
-

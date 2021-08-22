@@ -11,7 +11,7 @@ spec:
   image: rabbitmq:3.9.1-management-alpine
   rabbitmq:
     additionalConfig: |
-      default_user = guest 
+      default_user = guest
       default_pass = guest
       default_vhost = guest
       default_user_tags.administrator = true

@@ -24,7 +24,7 @@ RUN apk add --no-cache \
                 python3-dev \
                 postgresql-dev \
                 linux-headers \
-    && pip install --ignore-installed six -r requirements.txt \
+    && pip install --no-cache-dir --ignore-installed six -r requirements.txt \
     && apk del .build-deps \
     && rm -rf /root/.cache/ \
     && chown -R $USER:$USER $APP_HOME

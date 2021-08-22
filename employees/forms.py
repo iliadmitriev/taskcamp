@@ -12,4 +12,3 @@ class EmployeeModelForm(forms.ModelForm):
             'birthdate': forms.DateInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
         }
-
