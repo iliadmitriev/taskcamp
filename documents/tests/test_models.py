@@ -22,4 +22,3 @@ class DocumentQuerySetTestCase(TestCase):
 
     def test_document_representation(self):
         self.assertEqual(self.doc1.__str__(), f'{self.doc1.id} {self.doc1.title}')
-

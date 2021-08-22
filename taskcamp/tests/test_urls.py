@@ -18,5 +18,3 @@ class UrlsTestCase(TestCase):
                 url_list = list(map(lambda x: x.pattern.regex.pattern, urls.urlpatterns))
                 self.assertIn('^__debug__/', url_list)
                 self.assertIn('^media/(?P<path>.*)$', url_list)
-
-

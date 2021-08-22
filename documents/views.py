@@ -49,6 +49,3 @@ class DocumentUpload(PermissionRequiredMixin, FormView):
 
     def __init__(self):
         super(DocumentUpload, self).__init__()
-
-
-

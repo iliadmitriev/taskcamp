@@ -17,5 +17,3 @@ def generate_user_hash_and_token(user_id):
         settings.ACCOUNT_ACTIVATION_LINK_EXPIRE
     )
     return user_hash, token
-
-

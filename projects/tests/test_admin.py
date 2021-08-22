@@ -32,4 +32,3 @@ class ProjectAdminTestCase(TestCase):
     def test_comment_admin_view_on_site_url(self):
         url = self.comment_admin.get_view_on_site_url(obj=self.comment)
         self.assertEqual(url, reverse('projects-task-detail', kwargs={'pk': self.comment.task.id}))
-

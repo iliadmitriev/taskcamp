@@ -157,4 +157,3 @@ class AccountsProfileTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed('account_profile.html')
         self.assertIn('form', response.context)
-
