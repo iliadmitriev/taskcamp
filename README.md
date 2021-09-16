@@ -282,6 +282,11 @@ docker-compose exec django python3 manage.py migrate
 docker-compose exec django python3 manage.py createsuperuser
 ```
 
+5. load test data if needed
+```shell
+cat data.json | docker-compose exec -T django python3 manage.py loaddata --format=json - 
+```
+
 Docker-compose clean up
 
 ```shell
