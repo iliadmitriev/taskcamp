@@ -13,7 +13,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.7, 3.8, 3.9, 3.10.0]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -28,9 +28,8 @@ jobs:
     - name: Run Tests with coverage
       run: |
         python3 -m coverage run manage.py test --verbosity=2
-    - name: Check coverage
+    - name: Generate coverage
       run: |
-        python3 -m coverage report -m --fail-under=100
         python3 -m coverage xml -o coverage.xml
     - name: Export data to codecov
       uses: codecov/codecov-action@v2
@@ -41,3 +40,6 @@ jobs:
         name: codecov-umbrella
         fail_ci_if_error: true
         verbose: true
+    - name: Generate coverage
+      run: |
+        python3 -m coverage report -m --fail-under=100
