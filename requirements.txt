@@ -9,7 +9,7 @@ click-repl==0.2.0
 coverage==6.1.2
 Django==3.2.9
 kombu==5.2.2
-Markdown==3.3.4
+Markdown==3.3.5
 prompt-toolkit==3.0.22
 psycopg2==2.9.2
 python-memcached==1.59
