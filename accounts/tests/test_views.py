@@ -13,7 +13,7 @@ from accounts.helpers import generate_user_hash_and_token
 class AccountsRegisterViewTestCase(TestCase):
 
     def setUp(self) -> None:
-        self.client = Client(HTTP_ACCEPT_LANGUAGE='ru')
+        self.client = Client(HTTP_ACCEPT_LANGUAGE='ru', enforce_csrf_checks=False)
         self.mock_send_activation_email = mock.Mock()
 
     def register_post(self, email):
@@ -117,7 +117,6 @@ class AccountsLoginViewTestCase(TestCase):
         self.assertIn('csrf_token', get.context)
         self.assertIn('form', get.context)
         self.assertTemplateUsed('login.html')
-        self.assertTrue(get.csrf_cookie_set)
         csrf_token = get.context['csrf_token']
         response = self.client.post(
             reverse('accounts:login'),
