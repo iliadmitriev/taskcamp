@@ -10,7 +10,7 @@ coverage==6.3
 Django==4.0.1
 kombu==5.2.3
 Markdown==3.3.6
-prompt-toolkit==3.0.24
+prompt-toolkit==3.0.26
 psycopg2==2.9.3
 python-memcached==1.59
 pytz==2021.3
