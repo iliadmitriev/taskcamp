@@ -13,7 +13,7 @@ Markdown==3.3.6
 prompt-toolkit==3.0.28
 psycopg2==2.9.3
 python-memcached==1.59
-pytz==2021.3
+pytz==2022.1
 redis==4.1.4
 six==1.16.0
 sqlparse==0.4.2
