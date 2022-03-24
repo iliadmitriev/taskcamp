@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   redis:
-    image: redis:6.2-alpine3.14
+    image: redis:6.2-alpine3.15
     hostname: taskcamp-redis
     networks:
       - taskcamp
@@ -15,13 +15,18 @@ services:
       retries: 3
 
   memcached:
-    image: memcached:1.6.10-alpine3.14
+    image: memcached:1.6.10-alpine
     hostname: taskcamp-memcached
     networks:
       - taskcamp
+    healthcheck:
+      test: netstat -ltn | grep -c 11211
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   postgres:
-    image: postgres:13.4-alpine3.14
+    image: postgres:14-alpine3.15
     hostname: taskcamp-postgres
     env_file:
       - .env
@@ -79,6 +84,8 @@ services:
       rabbitmq:
         condition: service_healthy
       postgres:
+        condition: service_healthy
+      memcached:
         condition: service_healthy
 
   celery:
