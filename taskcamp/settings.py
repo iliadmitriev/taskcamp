@@ -203,9 +203,9 @@ EMAIL_SUBJECT_PREFIX = ''
 
 ACCOUNT_ACTIVATION_LINK_EXPIRE = 86400 * 3
 
-
+# setup
 if DEBUG and pkgutil.find_loader('debug_toolbar'):
     import debug_toolbar
     INSTALLED_APPS += ['debug_toolbar']
     MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
-    INTERNAL_IPS = ['127.0.0.1', '192.168.10.1']
+    INTERNAL_IPS = ['127.0.0.1', '192.168.10.1', '172.21.0.1']
