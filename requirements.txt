@@ -6,7 +6,7 @@ click==8.1.3
 click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.2.0
-coverage==6.4
+coverage==6.4.1
 Django==4.0.4
 kombu==5.2.4
 Markdown==3.3.7
