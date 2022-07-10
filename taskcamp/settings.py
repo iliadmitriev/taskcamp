@@ -10,11 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
-from os import environ as env
-from django.utils.translation import gettext_lazy as _
 import pkgutil
+from os import environ as env
+from pathlib import Path
 
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,146 +24,132 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.get('DJANGO_SECRET_KEY', 'test_secret_key')
+SECRET_KEY = env.get("DJANGO_SECRET_KEY", "test_secret_key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.get('DJANGO_DEBUG', False) == 'True'
+DEBUG = env.get("DJANGO_DEBUG", False) == "True"
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 # Auth user model
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = "accounts.User"
 
 # Application definition
 
 INSTALLED_APPS = [
-    'projects.apps.ProjectsConfig',
-    'employees.apps.EmployeesConfig',
-    'home.apps.HomeConfig',
-    'documents.apps.DocumentConfig',
-    'accounts.apps.AccountsConfig',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "projects.apps.ProjectsConfig",
+    "employees.apps.EmployeesConfig",
+    "home.apps.HomeConfig",
+    "documents.apps.DocumentConfig",
+    "accounts.apps.AccountsConfig",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'taskcamp.urls'  # noqa
+ROOT_URLCONF = "taskcamp.urls"  # noqa
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'taskcamp.wsgi.application'  # noqa
+WSGI_APPLICATION = "taskcamp.wsgi.application"  # noqa
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if env.get('POSTGRES_HOST'):
+if env.get("POSTGRES_HOST"):
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env.get('POSTGRES_DB'),
-            'USER': env.get('POSTGRES_USER'),
-            'PASSWORD': env.get('POSTGRES_PASSWORD'),
-            'HOST': env.get('POSTGRES_HOST'),
-            'PORT': env.get('POSTGRES_PORT'),
-            'CONN_MAX_AGE': None,
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": env.get("POSTGRES_DB"),
+            "USER": env.get("POSTGRES_USER"),
+            "PASSWORD": env.get("POSTGRES_PASSWORD"),
+            "HOST": env.get("POSTGRES_HOST"),
+            "PORT": env.get("POSTGRES_PORT"),
+            "CONN_MAX_AGE": None,
         }
     }
-elif env.get('POSTGRES_MASTER_HOST') and env.get('POSTGRES_REPLICA_HOST'):
+elif env.get("POSTGRES_MASTER_HOST") and env.get("POSTGRES_REPLICA_HOST"):
     DATABASES = {
-        'default': {},
-        'master': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env.get('POSTGRES_DB'),
-            'USER': env.get('POSTGRES_USER'),
-            'PASSWORD': env.get('POSTGRES_PASSWORD'),
-            'HOST': env.get('POSTGRES_MASTER_HOST'),
-            'PORT': env.get('POSTGRES_PORT'),
-            'CONN_MAX_AGE': None,
+        "default": {},
+        "master": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": env.get("POSTGRES_DB"),
+            "USER": env.get("POSTGRES_USER"),
+            "PASSWORD": env.get("POSTGRES_PASSWORD"),
+            "HOST": env.get("POSTGRES_MASTER_HOST"),
+            "PORT": env.get("POSTGRES_PORT"),
+            "CONN_MAX_AGE": None,
         },
-        'replica': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env.get('POSTGRES_DB'),
-            'USER': env.get('POSTGRES_USER'),
-            'PASSWORD': env.get('POSTGRES_PASSWORD'),
-            'HOST': env.get('POSTGRES_REPLICA_HOST'),
-            'PORT': env.get('POSTGRES_PORT'),
-            'CONN_MAX_AGE': None,
-        }
+        "replica": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": env.get("POSTGRES_DB"),
+            "USER": env.get("POSTGRES_USER"),
+            "PASSWORD": env.get("POSTGRES_PASSWORD"),
+            "HOST": env.get("POSTGRES_REPLICA_HOST"),
+            "PORT": env.get("POSTGRES_PORT"),
+            "CONN_MAX_AGE": None,
+        },
     }
-    DATABASE_ROUTERS = ['taskcamp.dbrouter.SimpleDBRouter']
+    DATABASE_ROUTERS = ["taskcamp.dbrouter.SimpleDBRouter"]
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
-if env.get('MEMCACHED_LOCATION'):
+if env.get("MEMCACHED_LOCATION"):
     CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-            'LOCATION': env.get('MEMCACHED_LOCATION'),
+        "default": {
+            "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+            "LOCATION": env.get("MEMCACHED_LOCATION"),
         }
     }
-    SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+    SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = []
-# AUTH_PASSWORD_VALIDATORS = [
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-#     },
-# ]
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -175,37 +161,36 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / "static"
 
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / "media"
 
 
 LANGUAGES = [
-    ('en', _('English')),
-    ('ru', _('Russian')),
+    ("en", _("English")),
+    ("ru", _("Russian")),
 ]
 
-LOCALE_PATHS = [
-    'locale'
-]
+LOCALE_PATHS = ["locale"]
 
-DEFAULT_FROM_EMAIL = 'taskcamp@example.com'
-EMAIL_HOST = env.get('EMAIL_HOST')
-EMAIL_PORT = env.get('EMAIL_PORT')
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_SUBJECT_PREFIX = ''
+DEFAULT_FROM_EMAIL = "taskcamp@example.com"
+EMAIL_HOST = env.get("EMAIL_HOST")
+EMAIL_PORT = env.get("EMAIL_PORT")
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
+EMAIL_SUBJECT_PREFIX = ""
 
 ACCOUNT_ACTIVATION_LINK_EXPIRE = 86400 * 3
 
 # setup
-if DEBUG and pkgutil.find_loader('debug_toolbar'):
-    import debug_toolbar
-    INSTALLED_APPS += ['debug_toolbar']
-    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
-    INTERNAL_IPS = ['127.0.0.1', '192.168.10.1', '172.21.0.1']
+if DEBUG and pkgutil.find_loader("debug_toolbar"):
+    import debug_toolbar  # noqa
+
+    INSTALLED_APPS += ["debug_toolbar"]
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+    INTERNAL_IPS = ["127.0.0.1", "192.168.10.1", "172.21.0.1"]

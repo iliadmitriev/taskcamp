@@ -7,18 +7,28 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Employee',
+            name="Employee",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('firstname', models.CharField(max_length=50, verbose_name='Firstname')),
-                ('surname', models.CharField(max_length=50, verbose_name='Surname')),
-                ('email', models.EmailField(max_length=100, verbose_name='Email')),
-                ('birthdate', models.DateField(verbose_name='Birthdate')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "firstname",
+                    models.CharField(max_length=50, verbose_name="Firstname"),
+                ),
+                ("surname", models.CharField(max_length=50, verbose_name="Surname")),
+                ("email", models.EmailField(max_length=100, verbose_name="Email")),
+                ("birthdate", models.DateField(verbose_name="Birthdate")),
             ],
         ),
     ]

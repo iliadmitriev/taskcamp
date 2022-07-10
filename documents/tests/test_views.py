@@ -28,7 +28,7 @@ class DocumentUploadTestCase(TestCase):
         document = DocumentUpload()
         document.model = Model
         document.form_class = Form
-        document.success_url = reverse('home')
+        document.success_url = reverse("home")
         document.get_object = mock.Mock(side_effect=IntegrityError())
         ret = document.form_valid(form=mock.Mock())
         self.assertIsInstance(ret, HttpResponseRedirect)

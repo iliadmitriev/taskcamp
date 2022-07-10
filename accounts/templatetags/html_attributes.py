@@ -1,8 +1,9 @@
 from django import template
+
 register = template.Library()
 
 
-@register.filter(name='add_attr')
+@register.filter(name="add_attr")
 def add_attr(field, extra_attr):
     attrs = field.field.widget.attrs
     attrs.update(extra_attr)

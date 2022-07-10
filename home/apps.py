@@ -1,5 +1,10 @@
+"""
+Index page application config.
+"""
 from django.apps import AppConfig
 
 
 class HomeConfig(AppConfig):
-    name = 'home'
+    """Home page application config class."""
+
+    name = "home"

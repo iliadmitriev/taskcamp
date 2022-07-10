@@ -1,15 +1,16 @@
 from django import forms
+
 from .models import Document
 
 
 class DocumentModelForm(forms.ModelForm):
     class Meta:
         model = Document
-        fields = ['document', 'description', 'title']
+        fields = ["document", "description", "title"]
         widgets = {
-            'document': forms.FileInput(attrs={'class': 'form-control'}),
-            'description': forms.TextInput(attrs={'class': 'form-control'}),
-            'title': forms.HiddenInput()
+            "document": forms.FileInput(attrs={"class": "form-control"}),
+            "description": forms.TextInput(attrs={"class": "form-control"}),
+            "title": forms.HiddenInput(),
         }
 
     def save(self, commit=True):

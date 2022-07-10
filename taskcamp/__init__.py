@@ -1,0 +1,3 @@
+"""
+Taskcamp project.
+"""

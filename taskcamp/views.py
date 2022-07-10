@@ -1,23 +1,23 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.db import router, connections
-from psycopg2 import OperationalError as pgOperationalError
 from django.db import OperationalError as dbOperationalError
+from django.db import connections, router
+from django.http import HttpResponse
+from django.shortcuts import render
+from psycopg2 import OperationalError as pgOperationalError
 
 
 def http_404(request, exception):
     data = {}
-    return render(request, 'handler/404.html', data, status=404)
+    return render(request, "handler/404.html", data, status=404)
 
 
 def http_403(request, exception):
-    data = {'message': str(exception)}
-    return render(request, 'handler/403.html', data, status=403)
+    data = {"message": str(exception)}
+    return render(request, "handler/403.html", data, status=403)
 
 
 def http_500(request):
     data = {}
-    return render(request, 'handler/500.html', data, status=500)
+    return render(request, "handler/500.html", data, status=500)
 
 
 def status_page(request):

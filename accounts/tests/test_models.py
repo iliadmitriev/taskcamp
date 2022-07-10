@@ -1,5 +1,5 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.test import TestCase
 
 
 class UserManagerTest(TestCase):
@@ -8,22 +8,15 @@ class UserManagerTest(TestCase):
 
     def test_create_user_without_email_raise(self):
         with self.assertRaises(ValueError):
-            self.user_model.objects.create_user(
-                email=None,
-                password='password'
-            )
+            self.user_model.objects.create_user(email=None, password="password")
 
     def test_create_superuser_without_attributes_raise(self):
         with self.assertRaises(ValueError):
             self.user_model.objects.create_superuser(
-                email='test@example.com',
-                password='password',
-                is_superuser=False
+                email="test@example.com", password="password", is_superuser=False
             )
 
         with self.assertRaises(ValueError):
             self.user_model.objects.create_superuser(
-                email='test@example.com',
-                password='password',
-                is_staff=False
+                email="test@example.com", password="password", is_staff=False
             )
