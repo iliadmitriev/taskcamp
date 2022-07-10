@@ -1,3 +1,6 @@
+"""
+Projects forms module.
+"""
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
@@ -5,7 +8,16 @@ from .models import Comment, Project, Task
 
 
 class ProjectModelForm(forms.ModelForm):
+    """Project model form for creating and updating."""
+
     class Meta:
+        """Project model form config.
+
+        Args:
+            fields (list): list of included model fields
+            widgets (dict): dict of used widgets for fields
+        """
+
         model = Project
         fields = ["title", "description", "due_date", "is_closed"]
         widgets = {
@@ -17,7 +29,17 @@ class ProjectModelForm(forms.ModelForm):
 
 
 class TaskModelForm(forms.ModelForm):
+    """Task model form for creating and updating."""
+
     class Meta:
+        """Task Model form config.
+
+        Args:
+            fields (list): list of included model fields
+            widgets (dict): dict of used widgets for fields
+
+        """
+
         model = Task
         fields = [
             "project",
@@ -42,7 +64,16 @@ class TaskModelForm(forms.ModelForm):
 
 
 class CommentModelForm(forms.ModelForm):
+    """Comment model form for creating and updating."""
+
     class Meta:
+        """Comment model form config.
+
+        Args:
+            fields (list): list of included model fields
+            widgets (dict): dict of used widgets for fields
+        """
+
         model = Comment
         fields = ["description"]
         widgets = {
