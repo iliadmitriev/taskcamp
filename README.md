@@ -196,7 +196,7 @@ docker run -d --name taskcamp-memcached --hostname taskcamp-memcached \
 docker run -d \
   --name taskcamp-rabbitmq --hostname taskcamp-rabbitmq \
   --env-file .env --network taskcamp-network \
-  rabbitmq:3.8.14-management-alpine
+  rabbitmq:management-alpine
 
 docker run -d --name taskcamp-mail --hostname taskcamp-mail \
   --network taskcamp-network -p 1080:1080 iliadmitriev/mailcatcher

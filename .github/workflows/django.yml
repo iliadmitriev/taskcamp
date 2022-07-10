@@ -25,6 +25,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements-dev.txt
+    - name: Run flake8 check
+      run: |
+        flake8 --config=setup.cfg
     - name: Run Tests with coverage
       run: |
         python3 -m coverage run manage.py test --verbosity=2

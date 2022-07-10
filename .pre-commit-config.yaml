@@ -1,0 +1,24 @@
+repos:
+-   repo: local
+    hooks:
+    -   id: flake8
+        name: flake8
+        entry: flake8
+        args: ["--config=setup.cfg"]
+        language: python
+        types: [python]
+        always_run: true
+    -   id: unittests
+        name: unittests
+        entry: coverage run manage.py test --verbosity=2
+        language: python
+        types: [python]
+        pass_filenames: false
+        always_run: true
+    -   id: coverage
+        name: coverage
+        entry: coverage report -m --fail-under=100
+        language: python
+        types: [python]
+        pass_filenames: false
+        always_run: true

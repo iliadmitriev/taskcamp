@@ -6,14 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('documents', '0002_auto_20210322_0732'),
-        ('projects', '0008_auto_20210321_1025'),
+        ("documents", "0002_auto_20210322_0732"),
+        ("projects", "0008_auto_20210321_1025"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='task',
-            name='documents',
-            field=models.ManyToManyField(to='documents.Document', verbose_name='Documents'),
+            model_name="task",
+            name="documents",
+            field=models.ManyToManyField(
+                to="documents.Document", verbose_name="Documents"
+            ),
         ),
     ]
