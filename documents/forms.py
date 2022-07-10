@@ -13,7 +13,7 @@ class DocumentModelForm(forms.ModelForm):
             "title": forms.HiddenInput(),
         }
 
-    def save(self, commit=True):
+    def save(self, commit: bool = True) -> Document:
         instance = super(DocumentModelForm, self).save(False)
         instance.title = instance.document.name
         if commit:

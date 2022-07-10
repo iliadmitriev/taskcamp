@@ -1,3 +1,5 @@
+from typing import Optional, Dict, Any
+
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader
@@ -9,7 +11,7 @@ from worker.app import app
 @app.task(
     max_retries=5, default_retry_delay=60, autoretry_for=(ConnectionRefusedError,)
 )
-def send_activation_email(email, url_link):
+def send_activation_email(email: str, url_link: str) -> int:
     subject = "Your taskcamp account activation"
 
     html_message = render_to_string(
@@ -30,7 +32,7 @@ def send_activation_email(email, url_link):
 
 
 @app.task
-def send_welcome_message(email, tour_link):
+def send_welcome_message(email: str, tour_link: str) -> int:
     subject = "Taskcamp welcomes you"
 
     html_message = render_to_string(
@@ -54,13 +56,13 @@ def send_welcome_message(email, tour_link):
     max_retries=5, default_retry_delay=60, autoretry_for=(ConnectionRefusedError,)
 )
 def send_reset_email(
-    subject_template_name,
-    email_template_name,
-    context,
-    from_email,
-    to_email,
-    html_email_template_name=None,
-):
+    subject_template_name: str,
+    email_template_name: str,
+    context: Dict[str, Any],
+    from_email: str,
+    to_email: str,
+    html_email_template_name: Optional[str] = None,
+) -> int:
     subject = loader.render_to_string(subject_template_name, context)
     # Email subject *must not* contain newlines
     subject = "".join(subject.splitlines())
@@ -71,4 +73,4 @@ def send_reset_email(
         html_email = loader.render_to_string(html_email_template_name, context)
         email_message.attach_alternative(html_email, "text/html")
 
-    email_message.send()
+    return email_message.send()

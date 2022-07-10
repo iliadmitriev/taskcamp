@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -5,13 +7,14 @@ from .helpers import document_upload_path
 
 
 class DocumentQuerySet(models.QuerySet):
-    """queryset for Document model.
+    """Queryset for Document model.
+
     it's only purpose to override default delete operation.
     It deletes uploaded files associated with document instances
     when deleting instance from db.
     """
 
-    def delete(self):
+    def delete(self) -> tuple[int, dict[Any, int]]:
         for obj in self:
             obj.document.delete()
         return super(DocumentQuerySet, self).delete()
@@ -34,7 +37,7 @@ class Document(models.Model):
         verbose_name=_("Description"), max_length=500, blank=True, null=True
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.id} {self.title}"
 
     class Meta:

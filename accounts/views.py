@@ -1,10 +1,13 @@
+from typing import Optional
+
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, AbstractUser
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.cache import cache
-from django.http import HttpResponseBadRequest, HttpResponseRedirect
+from django.db.models import QuerySet
+from django.http import HttpResponseBadRequest, HttpResponseRedirect, HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView, TemplateView, UpdateView, View
 
@@ -19,7 +22,7 @@ class AccountsRegisterView(FormView):
     form_class = RegisterForm
     success_url = reverse_lazy("accounts:register-done")
 
-    def form_valid(self, form):
+    def form_valid(self, form: RegisterForm) -> HttpResponse:
         user_model = get_user_model()
 
         user = user_model.objects.create_user(
@@ -58,7 +61,7 @@ class AccountsRegisterDoneView(TemplateView):
 
 
 class AccountsRegisterActivate(View):
-    def get(self, *args, **kwargs):
+    def get(self, *args, **kwargs) -> HttpResponse:
         user_hash = kwargs.get("user_hash")
         token = kwargs.get("token")
         user_model = get_user_model()
@@ -95,7 +98,7 @@ class AccountsRegisterActivate(View):
 class AccountsLoginView(auth_views.LoginView):
     template_name = "login.html"
 
-    def get_success_url(self):
+    def get_success_url(self) -> str:
         url = self.get_redirect_url()
         return url or reverse("home")
 
@@ -133,7 +136,7 @@ class AccountsProfile(LoginRequiredMixin, UpdateView):
 
     success_url = reverse_lazy("accounts:profile")
 
-    def get_object(self, queryset=None):
+    def get_object(self, queryset: Optional[QuerySet] = None) -> AbstractUser:
         user_model = get_user_model()
         user_id = self.request.user.id
         return user_model.objects.get(pk=user_id)

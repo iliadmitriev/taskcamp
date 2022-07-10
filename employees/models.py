@@ -8,10 +8,10 @@ class Employee(models.Model):
     email = models.EmailField(verbose_name=_("Email"), max_length=100)
     birthdate = models.DateField(verbose_name=_("Birthdate"))
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.id}: {self.firstname} {self.surname}"
 
-    def full_name(self):
+    def full_name(self) -> str:
         return f"{self.firstname} {self.surname}"
 
     full_name.short_description = _("Full name")

@@ -3,7 +3,7 @@ import os
 import time
 
 
-def document_upload_path(instance, filename):
+def document_upload_path(instance: object, filename: str) -> str:
     now_date_str = time.time().__str__()
     filename_md5 = hashlib.md5(filename.encode() + now_date_str.encode()).hexdigest()
     _, extension = os.path.splitext(filename)
