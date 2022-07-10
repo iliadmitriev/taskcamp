@@ -78,48 +78,48 @@ pip install -r requirements.txt
 3. put django secret key into file .env
 generate DJANGO_SECRET_KEY
 ```shell
-echo DJANGO_SECRET_KEY=\'$(python3 -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')\'  >> .env
+echo DJANGO_SECRET_KEY=\'$(python3 -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')\'  > .env
 ```
 or just create test
 ```shell
-echo DJANGO_SECRET_KEY=test_secret_key  >> .env
+echo DJANGO_SECRET_KEY=test_secret_key  > .env
 ```
 4. add connection data to `.env` file
 ```shell
->.env << __EOF__
-RABBITMQ_HOST=192.168.10.1
+cat > .env << __EOF__
+RABBITMQ_HOST=localhost
 RABBITMQ_PORT=5673
 RABBITMQ_DEFAULT_USER=admin
 RABBITMQ_DEFAULT_PASS=adminsecret
 RABBITMQ_DEFAULT_VHOST=celery
 
-POSTGRES_HOST=192.168.10.1
+POSTGRES_HOST=localhost
 POSTGRES_PORT=5434
 POSTGRES_DB=taskcamp
 POSTGRES_USER=taskcamp
 POSTGRES_PASSWORD=secret
 
-MEMCACHED_LOCATION=192.168.10.1:11214
+MEMCACHED_LOCATION=localhost:11214
 
-EMAIL_HOST=192.168.10.1
+EMAIL_HOST=localhost
 EMAIL_PORT=1025
 __EOF__
 ```
 ```shell
 # if you need a debug be enabled
->>.env << __EOF__
+cat >>.env << __EOF__
 DJANGO_DEBUG=True
 __EOF__
 
 #if you need to keep celery results 
 >>.env << __EOF__
-REDIS_RESULTS_BACKEND=redis://192.168.10.1:6380/0
+REDIS_RESULTS_BACKEND=redis://localhost:6380/0
 __EOF__
 ```
 5. create and run postgresql, memcached, mailcatcher and rabbitmq instance (if needed)
 ```shell
 docker run -d --name taskcamp-postgres --hostname taskcamp-postgres \
-    -p 5434:5432 --env-file .env postgres:13-alpine
+    -p 5434:5432 --env-file .env postgres:14-alpine
     
 docker run -d -p 11214:11211 --name taskcamp-memcached memcached:alpine
 
@@ -188,7 +188,7 @@ docker network create taskcamp-network
 3. create docker containers (this is just an example, you shouldn't run in production like this)
 ```shell
 docker run -d --name taskcamp-postgres --hostname taskcamp-postgres \
-    --env-file .env --network taskcamp-network postgres:13-alpine
+    --env-file .env --network taskcamp-network postgres:14-alpine
     
 docker run -d --name taskcamp-memcached --hostname taskcamp-memcached \
     --network taskcamp-network memcached:alpine
@@ -328,7 +328,9 @@ celery -A worker worker
 5. run celery for emails and other async tasks
 ```shell
 python3 -m celery -A worker worker
-# or
+```
+or
+```shell
 celery -A worker worker
 ```
 with log level and queue
