@@ -17,7 +17,7 @@ class DocumentQuerySet(models.QuerySet):
     when deleting instance from db.
     """
 
-    def delete(self) -> tuple[int, dict[Any, int]]:
+    def delete(self) -> Any:
         """Delete document from queryset."""
         for obj in self:
             obj.document.delete()
