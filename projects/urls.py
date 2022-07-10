@@ -1,3 +1,9 @@
+"""
+Project url patterns.
+
+path = '/projects/'
+
+"""
 from django.urls import path
 
 from .views import (
