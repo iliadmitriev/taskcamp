@@ -24,7 +24,7 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
     - name: Run Tests with coverage
       run: |
         python3 -m coverage run manage.py test --verbosity=2
