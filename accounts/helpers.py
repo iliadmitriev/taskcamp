@@ -1,3 +1,6 @@
+"""
+Helper functions module.
+"""
 import uuid
 from typing import Tuple
 
@@ -6,6 +9,10 @@ from django.core.cache import cache
 
 
 def generate_user_hash_and_token(user_id: int) -> Tuple[str, str]:
+    """Generate user hash and token pair.
+
+    Save token to cache.
+    """
     user_hash = uuid.uuid4().hex
     token = uuid.uuid4().hex
 

@@ -1,3 +1,6 @@
+"""
+Accounts admin module.
+"""
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
 from django.contrib.auth.admin import UserAdmin
@@ -8,6 +11,8 @@ from .models import User
 
 
 class UserAccountAdmin(UserAdmin):
+    """User Accounts model admin."""
+
     fieldsets = (
         (None, {"fields": ("id", "email", "password")}),
         (_("Personal info"), {"fields": ("first_name", "last_name", "birthdate")}),
@@ -50,6 +55,8 @@ class UserAccountAdmin(UserAdmin):
 
 
 class ContentTypeAdmin(admin.ModelAdmin):
+    """Content types model admin."""
+
     list_display = ["id", "app_label", "model"]
     list_filter = ["app_label"]
     search_fields = ["app_label", "model"]
@@ -58,6 +65,8 @@ class ContentTypeAdmin(admin.ModelAdmin):
 
 
 class PermissionsAdmin(admin.ModelAdmin):
+    """Permissions model admin."""
+
     list_select_related = True
     list_display = ["id", "name", "content_type", "codename"]
     list_filter = ["content_type"]
@@ -65,6 +74,8 @@ class PermissionsAdmin(admin.ModelAdmin):
 
 
 class LogEntryAdmin(admin.ModelAdmin):
+    """Logs model admin."""
+
     list_display = [
         "id",
         "action_time",

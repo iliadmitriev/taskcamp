@@ -1,3 +1,6 @@
+"""
+Document models module.
+"""
 from typing import Any
 
 from django.db import models
@@ -15,12 +18,14 @@ class DocumentQuerySet(models.QuerySet):
     """
 
     def delete(self) -> tuple[int, dict[Any, int]]:
+        """Delete document from queryset."""
         for obj in self:
             obj.document.delete()
         return super(DocumentQuerySet, self).delete()
 
 
 class Document(models.Model):
+    """Document Base Model."""
 
     objects = DocumentQuerySet.as_manager()
 
@@ -38,8 +43,11 @@ class Document(models.Model):
     )
 
     def __str__(self) -> str:
+        """Represent as string."""
         return f"{self.id} {self.title}"
 
     class Meta:
+        """Model config."""
+
         verbose_name = _("Document")
         verbose_name_plural = _("Documents")

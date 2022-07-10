@@ -1,3 +1,6 @@
+"""
+Documents views module.
+"""
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import ImproperlyConfigured
 from django.db import IntegrityError
@@ -10,6 +13,13 @@ from documents.models import Document
 
 
 class DocumentUpload(PermissionRequiredMixin, FormView):
+    """Documents upload form view.
+
+    Usage:
+        1) Override in subclasses which will be use as many-to-many model.
+        2) set attributes `model` and `model_field`
+    """
+
     template_name = "document_form.html"
     permission_required = "documents.add_document"
     permission_denied_message = gettext_lazy("You have no permission to view Projects")
@@ -18,6 +28,7 @@ class DocumentUpload(PermissionRequiredMixin, FormView):
     model_field = "documents"
 
     def get_object(self) -> Document:
+        """Get object for editing."""
         if self.model is None:
             raise ImproperlyConfigured(
                 "No object to connect document to. Provide a model attribute "
@@ -30,7 +41,7 @@ class DocumentUpload(PermissionRequiredMixin, FormView):
         return obj
 
     def form_valid(self, form: DocumentModelForm) -> HttpResponse:
-
+        """Validate form data and save to DB, redirect to success url."""
         form.save(commit=True)
 
         try:
@@ -51,4 +62,5 @@ class DocumentUpload(PermissionRequiredMixin, FormView):
         return HttpResponseRedirect(self.get_success_url())
 
     def __init__(self) -> None:
+        """Init instance."""
         super(DocumentUpload, self).__init__()
