@@ -1,3 +1,6 @@
+"""
+Celery worker tasks module.
+"""
 from typing import Optional, Dict, Any
 
 from django.conf import settings
@@ -12,6 +15,7 @@ from worker.app import app
     max_retries=5, default_retry_delay=60, autoretry_for=(ConnectionRefusedError,)
 )
 def send_activation_email(email: str, url_link: str) -> int:
+    """Send activation email celery task."""
     subject = "Your taskcamp account activation"
 
     html_message = render_to_string(
@@ -33,6 +37,7 @@ def send_activation_email(email: str, url_link: str) -> int:
 
 @app.task
 def send_welcome_message(email: str, tour_link: str) -> int:
+    """Send welcome message celery task."""
     subject = "Taskcamp welcomes you"
 
     html_message = render_to_string(
@@ -63,6 +68,7 @@ def send_reset_email(
     to_email: str,
     html_email_template_name: Optional[str] = None,
 ) -> int:
+    """Send reset email celery task."""
     subject = loader.render_to_string(subject_template_name, context)
     # Email subject *must not* contain newlines
     subject = "".join(subject.splitlines())

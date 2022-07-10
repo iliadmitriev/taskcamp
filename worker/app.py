@@ -1,3 +1,6 @@
+"""
+Worker application configuration module.
+"""
 from os import environ as env
 
 from celery import Celery

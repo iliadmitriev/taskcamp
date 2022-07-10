@@ -1,0 +1,3 @@
+"""
+Celery email tasks package.
+"""
