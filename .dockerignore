@@ -11,3 +11,5 @@ __pycache__/
 /htmlcov
 /data.json
 /media/
+.DS_Store
+/docs
