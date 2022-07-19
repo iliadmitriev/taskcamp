@@ -13,7 +13,7 @@ uWSGI = "^2.0.20"
 psycopg2 = "^2.9.3"
 python-memcached = "^1.59"
 redis = "^4.3.4"
-Markdown = "^3.3.7"
+Markdown = "^3.4.1"
 
 [tool.poetry.dev-dependencies]
 flake8-isort = "^4.1.1"
