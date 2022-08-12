@@ -19,7 +19,7 @@ prompt-toolkit==3.0.30; python_full_version >= "3.6.2" and python_version >= "3.
 psycopg2==2.9.3; python_version >= "3.6"
 pyparsing==3.0.9; python_full_version >= "3.6.8" and python_version >= "3.6"
 python-memcached==1.59
-pytz==2022.1; python_version >= "3.7"
+pytz==2022.2; python_version >= "3.7"
 redis==4.3.4; python_version >= "3.6"
 six==1.16.0; python_version >= "3.7" and python_full_version < "3.0.0" or python_full_version >= "3.3.0" and python_version >= "3.7"
 sqlparse==0.4.2; python_version >= "3.8"
