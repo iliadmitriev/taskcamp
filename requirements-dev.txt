@@ -14,7 +14,7 @@ colorama==0.4.5; platform_system == "Windows" and python_version >= "3.7" and py
 coverage==6.4.4; python_version >= "3.7"
 deprecated==1.2.13; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.4.0" and python_version >= "3.6"
 django-debug-toolbar==3.6.0; python_version >= "3.7"
-django==4.1; python_version >= "3.8"
+django==4.1.1; python_version >= "3.8"
 flake8-annotations==2.9.1; python_version >= "3.7" and python_version < "4.0"
 flake8-comprehensions==3.10.0; python_version >= "3.7"
 flake8-docstrings==1.6.0
