@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   redis:
-    image: redis:6.2-alpine3.15
+    image: redis:7.0.5-alpine3.16
     hostname: taskcamp-redis
     networks:
       - taskcamp
@@ -15,7 +15,7 @@ services:
       retries: 3
 
   memcached:
-    image: memcached:1.6.10-alpine
+    image: memcached:1.6.17-alpine3.16
     hostname: taskcamp-memcached
     networks:
       - taskcamp
@@ -26,7 +26,7 @@ services:
       retries: 3
 
   postgres:
-    image: postgres:14-alpine3.15
+    image: postgres:14.5-alpine3.16
     hostname: taskcamp-postgres
     env_file:
       - .env
@@ -42,8 +42,10 @@ services:
 
 
   rabbitmq:
-    image: rabbitmq:3.8.14-management-alpine
+    image: rabbitmq:3.11.0-management-alpine
     hostname: taskcamp-rabbitmq
+    ports:
+      - "15672:15672"
     env_file:
       - .env
     networks:
