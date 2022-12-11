@@ -88,18 +88,18 @@ echo DJANGO_SECRET_KEY=test_secret_key  > .env
 ```shell
 cat > .env << __EOF__
 RABBITMQ_HOST=localhost
-RABBITMQ_PORT=5673
+RABBITMQ_PORT=5672
 RABBITMQ_DEFAULT_USER=admin
 RABBITMQ_DEFAULT_PASS=adminsecret
 RABBITMQ_DEFAULT_VHOST=celery
 
 POSTGRES_HOST=localhost
-POSTGRES_PORT=5434
+POSTGRES_PORT=5432
 POSTGRES_DB=taskcamp
 POSTGRES_USER=taskcamp
 POSTGRES_PASSWORD=secret
 
-MEMCACHED_LOCATION=localhost:11214
+MEMCACHED_LOCATION=localhost:11211
 
 EMAIL_HOST=localhost
 EMAIL_PORT=1025
@@ -113,19 +113,19 @@ __EOF__
 
 #if you need to keep celery results 
 >>.env << __EOF__
-REDIS_RESULTS_BACKEND=redis://localhost:6380/0
+REDIS_RESULTS_BACKEND=redis://localhost:6379/0
 __EOF__
 ```
 5. create and run postgresql, memcached, mailcatcher and rabbitmq instance (if needed)
 ```shell
 docker run -d --name taskcamp-postgres --hostname taskcamp-postgres \
-    -p 5434:5432 --env-file .env postgres:14-alpine
+    -p 5432:5432 --env-file .env postgres:alpine
     
-docker run -d -p 11214:11211 --name taskcamp-memcached memcached:alpine
+docker run -d -p 11211:11211 --name taskcamp-memcached memcached:alpine
 
-docker run -d -p 15673:15672 -p 5673:5672 \
+docker run -d -p 15672:15672 -p 5672:5672 \
   --name taskcamp-rabbit --hostname taskcamp-rabbit \
-  --env-file .env rabbitmq:3.8.14-management-alpine
+  --env-file .env rabbitmq:management-alpine
 
 docker run -d -p 1080:1080 -p 1025:1025 \
  --name taskcamp-mailcatcher iliadmitriev/mailcatcher
@@ -133,7 +133,7 @@ docker run -d -p 1080:1080 -p 1025:1025 \
 ```shell
 # if you enabled REDIS_RESULTS_BACKEND to store celery results
 docker run -d --name taskcamp-redis --hostname taskcamp-redis \
- -p 6380:6379 redis:alpine
+ -p 6379:6379 redis:alpine
 ```
 
 5. export variables from .env file
