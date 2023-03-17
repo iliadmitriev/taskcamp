@@ -420,14 +420,14 @@ flake8 = ">=3.7"
 
 [[package]]
 name = "flake8-comprehensions"
-version = "3.10.0"
+version = "3.10.1"
 description = "A flake8 plugin to help you write better list/set/dict comprehensions."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "flake8-comprehensions-3.10.0.tar.gz", hash = "sha256:181158f7e7aa26a63a0a38e6017cef28c6adee71278ce56ce11f6ec9c4905058"},
-    {file = "flake8_comprehensions-3.10.0-py3-none-any.whl", hash = "sha256:dad454fd3d525039121e98fa1dd90c46bc138708196a4ebbc949ad3c859adedb"},
+    {file = "flake8-comprehensions-3.10.1.tar.gz", hash = "sha256:412052ac4a947f36b891143430fef4859705af11b2572fbb689f90d372cf26ab"},
+    {file = "flake8_comprehensions-3.10.1-py3-none-any.whl", hash = "sha256:d763de3c74bc18a79c039a7ec732e0a1985b0c79309ceb51e56401ad0a2cd44e"},
 ]
 
 [package.dependencies]
@@ -999,4 +999,4 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4.0"
-content-hash = "33919be8dc90aa190e50f7ff3fa1d7f7d25d7dbbf09db36d49f4cd3e1ce23703"
+content-hash = "ac803cefb002237c2d98c0cd8da67814645054a8a9bf768a6ffa1aa5286b7ef9"
