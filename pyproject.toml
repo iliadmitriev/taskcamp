@@ -14,7 +14,7 @@ psycopg2 = "^2.9.5"
 redis = "^4.5.3"
 Markdown = "^3.4.3"
 pymemcache = "^4.0.0"
-tzdata = "^2022.7"
+tzdata = "^2023.2"
 
 [tool.poetry.dev-dependencies]
 flake8-isort = "^6.0.0"
