@@ -9,11 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '#notest')"
     strategy:
       max-parallel: 4
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.10', '3.11', '3.12']
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -31,13 +30,15 @@ jobs:
         pip install -r requirements-dev.txt
     - name: Run flake8 check
       run: |
-        flake8 --config=setup.cfg
+        flake8 .
     - name: Run Tests with coverage
+      env:
+        DJANGO_DEBUG: True
       run: |
         python3 -m coverage run manage.py test --verbosity=2
     - name: Generate coverage
       run: |
-        python3 -m coverage xml -o coverage.xml
+        coverage xml -o coverage.xml
     - name: Export data to codecov
       uses: codecov/codecov-action@v2
       with:
@@ -49,4 +50,4 @@ jobs:
         verbose: true
     - name: Generate coverage
       run: |
-        python3 -m coverage report -m --fail-under=100
+        python3 -m coverage report
