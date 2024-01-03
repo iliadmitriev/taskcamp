@@ -12,3 +12,5 @@ __pycache__/
 /data.json
 /media/
 /docs
+/.coverage*
+/coverage.xml

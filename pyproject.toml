@@ -6,8 +6,8 @@ authors = ["Ilia Dmitriev <ilia.dmitriev@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4.0"
-Django = "^4.2"
+python = ">=3.10,<4.0"
+Django = "^5.0.1"
 celery = "^5.3.6"
 uWSGI = "^2.0.23"
 psycopg2 = "^2.9.9"
@@ -15,6 +15,8 @@ redis = "^5.0.1"
 Markdown = "^3.5"
 pymemcache = "^4.0.0"
 tzdata = "^2023.4"
+flake8-pyproject = "^1.2.3"
+coverage = {extras = ["toml"], version = "^7.4.0"}
 
 [tool.poetry.dev-dependencies]
 flake8-isort = "^6.1.1"
@@ -29,6 +31,73 @@ pdoc3 = "^0.10.0"
 coverage = "^7.4.0"
 django-debug-toolbar = "^4.2.0"
 
+[tool.poetry.group.dev.dependencies]
+django-coverage-plugin = "^3.1.0"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.flake8]
+ignore = ["D200", "D107", "I001", "I005",
+         "ANN002", "ANN003", "ANN101", "ANN401"]
+per-file-ignores = [
+    "test_*.py: S101,DAR101,D100",
+    "__init__.py:F401",
+    "test_*.py: S101,DAR101,D100",
+    "*/models/*: N815",
+]
+max-line-length = 88
+exclude = [
+    "manage.py",
+    "*migrations*",
+    "*/tests.py",
+    ".git",
+    "__pycache__",
+    "docs",
+    "old",
+    "build",
+    "dist",
+    ".eggs/*",
+    "*venv*/*",
+    "*/tests/*",
+    "*/test_utils/*",
+    "*/test_*.py",
+    "alembic/*",
+]
+
+inline-quotes = "\""
+statistics = true
+count = true
+
+
+[tool.isort]
+profile = "black"
+
+[tool.coverage.run]
+source = ["."]
+branch = true
+plugins = ["django_coverage_plugin",]
+parallel = true
+omit = [
+	"venv/*",
+	"tests/*",
+	"alembic/versions/*",
+]
+
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true
+
+[tool.coverage.django_coverage_plugin]
+template_extensions = "html, txt"
+
+[tool.pylint]
+max-line-length = 88
+
+[tool.pyright]
+venvPath = "./"
+venv = "venv"
+
+
