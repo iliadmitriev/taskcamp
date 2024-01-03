@@ -92,7 +92,7 @@ class AccountsRegisterActivateViewTestCase(TestCase):
                     "accounts:activate", kwargs={"user_hash": user_hash, "token": token}
                 )
             )
-            self.assertEquals(response.status_code, 400)
+            self.assertEqual(response.status_code, 400)
             self.assertIsNotNone(cache.get(user_hash))
             self.assertEqual(self.mock_send_welcome_message.call_count, 0)
 
@@ -108,7 +108,7 @@ class AccountsRegisterActivateViewTestCase(TestCase):
                     "accounts:activate", kwargs={"user_hash": user_hash, "token": token}
                 )
             )
-            self.assertEquals(response.status_code, 400)
+            self.assertEqual(response.status_code, 400)
             self.assertEqual(self.mock_send_welcome_message.call_count, 0)
 
 

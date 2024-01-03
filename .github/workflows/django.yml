@@ -35,10 +35,10 @@ jobs:
       env:
         DJANGO_DEBUG: True
       run: |
-        python3 -m coverage run --rcfile=pyproject.toml manage.py test --verbosity=2
+        python3 -m coverage run manage.py test --verbosity=2
     - name: Generate coverage
       run: |
-        coverage xml -o coverage.xml --rcfile=pyproject.toml
+        coverage xml -o coverage.xml
     - name: Export data to codecov
       uses: codecov/codecov-action@v2
       with:
@@ -50,4 +50,4 @@ jobs:
         verbose: true
     - name: Generate coverage
       run: |
-        python3 -m coverage report --rcfile=pyproject.toml
+        python3 -m coverage report
