@@ -22,7 +22,7 @@ from .views import (
 app_name = "accounts"
 
 urlpatterns = [
-    # path('', include('django.contrib.auth.urls')),
+    # path("", include("django.contrib.auth.urls")),
     path("register/", AccountsRegisterView.as_view(), name="register"),
     path("register_done/", AccountsRegisterDoneView.as_view(), name="register-done"),
     path(
