@@ -8,7 +8,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
 Django = "^5.0.4"
-celery = "^5.3.6"
+celery = "^5.4.0"
 uWSGI = "^2.0.26"
 psycopg2 = "^2.9.9"
 redis = "^5.0.5"
