@@ -12,7 +12,7 @@ celery = "^5.3.6"
 uWSGI = "^2.0.26"
 psycopg2 = "^2.9.9"
 redis = "^5.0.5"
-Markdown = "^3.6"
+Markdown = "^3.7"
 pymemcache = "^4.0.0"
 tzdata = "^2024.1"
 
@@ -27,7 +27,7 @@ black = "^24.4.2"
 flake8-polyfill = "^1.0.2"
 pep8-naming = "^0.14.1"
 pdoc3 = "^0.11.1"
-coverage = {extras = ["toml"], version = "^7.5.4"}
+coverage = {extras = ["toml"], version = "^7.6.1"}
 django-debug-toolbar = "^4.4.2"
 
 [build-system]
