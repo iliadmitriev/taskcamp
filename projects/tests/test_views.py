@@ -77,7 +77,7 @@ class ProjectListViewTestCase(TestCaseWithUser):
 
         response = self.client.get(reverse("project-list"))
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(response.context["project_list"], [])
+        self.assertQuerySetEqual(response.context["project_list"], [])
         self.client.logout()
 
     def test_project_list_view_authorized_not_empty(self):
@@ -98,7 +98,7 @@ class ProjectListViewTestCase(TestCaseWithUser):
 
         response = self.client.get(reverse("project-list"))
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             response.context["project_list"],
             Project.objects.order_by("id"),
             transform=lambda x: x,
@@ -131,7 +131,7 @@ class ProjectDetailViewTestCase(TestCaseWithUser):
         )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name="project_detail.html")
-        self.assertQuerysetEqual(response.context["task_list"], [])
+        self.assertQuerySetEqual(response.context["task_list"], [])
         self.assertEqual(response.context["total"], 0)
         self.assertEqual(response.context["completed"], 0)
         self.client.logout()
@@ -162,7 +162,7 @@ class ProjectDetailViewTestCase(TestCaseWithUser):
         )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name="project_detail.html")
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             response.context["task_list"],
             Task.objects.filter(project=project1).order_by("id"),
             transform=lambda x: x,
@@ -311,7 +311,7 @@ class TaskListViewTestCase(TestCaseWithUser):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name="task_list.html")
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             response.context["task_list"],
             Task.objects.all().order_by("id"),
             transform=lambda x: x,
@@ -324,7 +324,7 @@ class TaskListViewTestCase(TestCaseWithUser):
             "{}?{}".format(reverse("projects-task-list"), q.urlencode())
         )
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             response.context["task_list"],
             Task.objects.all()
             .filter(
@@ -364,7 +364,7 @@ class TaskListDetailTestCase(TestCaseWithUser):
         )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name="task_detail.html")
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             response.context["comments"],
             Comment.objects.filter(task=task1),
             transform=lambda x: x,
@@ -480,7 +480,7 @@ class CommentCreateTestCase(TestCaseWithUser):
             reverse("projects-task-detail", kwargs={"pk": task.id})
         )
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             response.context["comments"],
             Comment.objects.filter(task=task),
             transform=lambda x: x,
