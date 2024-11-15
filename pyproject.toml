@@ -27,7 +27,7 @@ black = "^24.10.0"
 flake8-polyfill = "^1.0.2"
 pep8-naming = "^0.14.1"
 pdoc3 = "^0.11.1"
-coverage = {extras = ["toml"], version = "^7.6.4"}
+coverage = {extras = ["toml"], version = "^7.6.5"}
 django-debug-toolbar = "^4.4.6"
 
 [build-system]
