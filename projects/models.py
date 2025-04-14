@@ -1,6 +1,7 @@
 """
 Models for project module.
 """
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -21,9 +22,7 @@ class Project(models.Model):
     """
 
     title = models.CharField(verbose_name=_("Title"), max_length=200)
-    description = models.TextField(
-        verbose_name=_("Description"), max_length=20000, null=True, blank=True
-    )
+    description = models.TextField(verbose_name=_("Description"), max_length=20000, null=True, blank=True)
     due_date = models.DateField(verbose_name=_("Due date"), null=True, blank=True)
     is_closed = models.BooleanField(verbose_name=_("Is closed"), default=False)
 
@@ -66,12 +65,8 @@ class Task(models.Model):
     """
 
     title = models.CharField(verbose_name=_("Title"), max_length=200)
-    description = models.TextField(
-        verbose_name=_("Description"), max_length=20000, null=True, blank=True
-    )
-    project = models.ForeignKey(
-        Project, verbose_name=_("Project"), on_delete=models.CASCADE
-    )
+    description = models.TextField(verbose_name=_("Description"), max_length=20000, null=True, blank=True)
+    project = models.ForeignKey(Project, verbose_name=_("Project"), on_delete=models.CASCADE)
     start = models.DateTimeField(verbose_name=_("Start date"), null=True, blank=True)
     end = models.DateTimeField(verbose_name=_("End date"), null=True, blank=True)
     author = models.ForeignKey(
@@ -119,9 +114,7 @@ class Comment(models.Model):
     """
 
     task = models.ForeignKey(Task, verbose_name=_("Task"), on_delete=models.CASCADE)
-    created = models.DateTimeField(
-        verbose_name=_("Created"), auto_now=True, db_index=True
-    )
+    created = models.DateTimeField(verbose_name=_("Created"), auto_now=True, db_index=True)
     description = models.TextField(
         verbose_name=_("Description"),
         max_length=5000,

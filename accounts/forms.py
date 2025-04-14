@@ -11,6 +11,7 @@ Forms:
     + AccountProfileForm - profile edit form.
 
 """
+
 from typing import Any, Optional, Dict
 
 from django.contrib.auth import get_user_model

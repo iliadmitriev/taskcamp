@@ -4,6 +4,7 @@ Project url patterns.
 path = '/projects/'
 
 """
+
 from django.urls import path
 
 from .views import (
@@ -43,7 +44,5 @@ urlpatterns = [
         name="task-document-upload",
     ),
     path("tasks/<int:pk>/edit/", TaskUpdateView.as_view(), name="projects-task-edit"),
-    path(
-        "tasks/<int:pk>/delete/", TaskDeleteView.as_view(), name="projects-task-delete"
-    ),
+    path("tasks/<int:pk>/delete/", TaskDeleteView.as_view(), name="projects-task-delete"),
 ]

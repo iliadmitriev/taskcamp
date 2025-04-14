@@ -2,6 +2,7 @@
 Html filters and tags for Jinja2 module.
 
 """
+
 from typing import Dict, Any
 
 from django import template

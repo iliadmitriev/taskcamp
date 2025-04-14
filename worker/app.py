@@ -1,6 +1,7 @@
 """
 Worker application configuration module.
 """
+
 from os import environ as env
 
 from celery import Celery
@@ -18,26 +19,23 @@ RABBIT_PORT = env.get("RABBITMQ_PORT")
 REDIS_RESULTS_BACKEND = env.get("REDIS_RESULTS_BACKEND", None)
 
 if RABBIT_HOST and RABBIT_PORT and RABBIT_VHOST and RABBIT_USER and RABBIT_PASS:
-    broker_url = (
-        f"pyamqp://{RABBIT_USER}:{RABBIT_PASS}@"
-        f"{RABBIT_HOST}:{RABBIT_PORT}/{RABBIT_VHOST}"
-    )
+    broker_url = f"pyamqp://{RABBIT_USER}:{RABBIT_PASS}@{RABBIT_HOST}:{RABBIT_PORT}/{RABBIT_VHOST}"
 else:
     broker_url = None
 
 
-app = Celery("worker")
+celery_app = Celery("worker")
 
-app.config_from_object("django.conf:settings", namespace="CELERY")
+celery_app.config_from_object("django.conf:settings", namespace="CELERY")
 
-app.conf.broker_url = broker_url
+celery_app.conf.broker_url = broker_url
 
-app.conf.result_backend = REDIS_RESULTS_BACKEND
+celery_app.conf.result_backend = REDIS_RESULTS_BACKEND
 
-app.config_from_object(config)
+celery_app.config_from_object(config)
 
-app.autodiscover_tasks(["worker.email"])
+celery_app.autodiscover_tasks(["worker.email"])
 
 queue_names_list = [x.name for x in config.task_queue]
 
-app.select_queues(queue_names_list)
+celery_app.select_queues(queue_names_list)

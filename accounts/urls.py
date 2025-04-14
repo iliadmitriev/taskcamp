@@ -4,6 +4,7 @@ Accounts base url router.
 path = '/accounts/'
 
 """
+
 from django.urls import path
 
 from .views import (

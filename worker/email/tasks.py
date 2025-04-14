@@ -1,6 +1,7 @@
 """
 Celery worker tasks module.
 """
+
 from typing import Optional, Dict, Any
 
 from django.conf import settings
@@ -8,58 +9,42 @@ from django.core.mail import EmailMultiAlternatives
 from django.template import loader
 from django.template.loader import render_to_string
 
-from worker.app import app
+from worker.app import celery_app
 
 
-@app.task(
-    max_retries=5, default_retry_delay=60, autoretry_for=(ConnectionRefusedError,)
-)
+@celery_app.task(max_retries=5, default_retry_delay=60, autoretry_for=(ConnectionRefusedError,))
 def send_activation_email(email: str, url_link: str) -> int:
     """Send activation email celery task."""
     subject = "Your taskcamp account activation"
 
-    html_message = render_to_string(
-        "email/register_activate.html", {"url_link": url_link}
-    )
+    html_message = render_to_string("email/register_activate.html", {"url_link": url_link})
 
-    txt_message = render_to_string(
-        "email/register_activate.txt", {"url_link": url_link}
-    )
+    txt_message = render_to_string("email/register_activate.txt", {"url_link": url_link})
 
-    message = EmailMultiAlternatives(
-        subject, txt_message, settings.DEFAULT_FROM_EMAIL, [email]
-    )
+    message = EmailMultiAlternatives(subject, txt_message, settings.DEFAULT_FROM_EMAIL, [email])
 
     message.attach_alternative(html_message, "text/html")
 
     return message.send()
 
 
-@app.task
+@celery_app.task
 def send_welcome_message(email: str, tour_link: str) -> int:
     """Send welcome message celery task."""
     subject = "Taskcamp welcomes you"
 
-    html_message = render_to_string(
-        "email/register_welcome.html", {"tour_link": tour_link}
-    )
+    html_message = render_to_string("email/register_welcome.html", {"tour_link": tour_link})
 
-    txt_message = render_to_string(
-        "email/register_welcome.txt", {"tour_link": tour_link}
-    )
+    txt_message = render_to_string("email/register_welcome.txt", {"tour_link": tour_link})
 
-    message = EmailMultiAlternatives(
-        subject, txt_message, settings.DEFAULT_FROM_EMAIL, [email]
-    )
+    message = EmailMultiAlternatives(subject, txt_message, settings.DEFAULT_FROM_EMAIL, [email])
 
     message.attach_alternative(html_message, "text/html")
 
     return message.send()
 
 
-@app.task(
-    max_retries=5, default_retry_delay=60, autoretry_for=(ConnectionRefusedError,)
-)
+@celery_app.task(max_retries=5, default_retry_delay=60, autoretry_for=(ConnectionRefusedError,))
 def send_reset_email(
     subject_template_name: str,
     email_template_name: str,

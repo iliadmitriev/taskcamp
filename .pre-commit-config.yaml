@@ -1,20 +1,52 @@
 repos:
--   repo: local
+  - repo: local
     hooks:
-    -   id: flake8
-        name: flake8
-        entry: flake8
+      - id: trailing-whitespace-fixer
+        name: Run trailing-whitespace-fixer
+        entry: trailing-whitespace-fixer
+        language: system
+
+      - id: end-of-file-fixer
+        name: Run end-of-file-fixer
+        entry: end-of-file-fixer
+        language: system
+
+      - id: check-merge-conflict
+        name: Run check-merge-conflict
+        entry: check-merge-conflict
+        language: system
+
+      - id: ruff
+        name: ruff
+        description: "Run 'ruff' for extremely fast Python linting"
+        entry: ruff check --force-exclude
         language: python
-        types: [python]
-        always_run: true
-    -   id: unittests
+        types_or: [python, pyi, jupyter]
+        args: []
+        require_serial: true
+        additional_dependencies: []
+        minimum_pre_commit_version: "2.9.2"
+
+      - id: ruff-format
+        name: ruff-format
+        description: "Run 'ruff format' for extremely fast Python formatting"
+        entry: ruff format --force-exclude
+        language: python
+        types_or: [python, pyi, jupyter]
+        args: []
+        require_serial: true
+        additional_dependencies: []
+        minimum_pre_commit_version: "2.9.2"
+
+      - id: unittests
         name: unittests
         entry: coverage run manage.py test --verbosity=2
         language: python
         types: [python]
         pass_filenames: false
         always_run: true
-    -   id: coverage
+
+      - id: coverage
         name: coverage
         entry: coverage report -m --fail-under=100
         language: python

@@ -1,6 +1,7 @@
 """
 Index page application config.
 """
+
 from django.apps import AppConfig
 
 

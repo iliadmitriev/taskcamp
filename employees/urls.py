@@ -4,6 +4,7 @@ Employee base url path.
 base path = '/employee/'
 
 """
+
 from django.urls import path
 
 from .views import (

@@ -14,31 +14,26 @@ jobs:
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install poetry poetry-plugin-export
-          poetry install -n --dry-run
-          poetry export --without-hashes -o requirements.txt
-          poetry export --with=dev --without-hashes -o requirements-dev.txt
-          pip install -r requirements-dev.txt
-      - name: Run flake8 check
-        run: |
-          flake8 .
+
+      - name: Install the project
+        run: uv sync --all-extras --dev
+
       - name: Run Tests with coverage
         env:
           DJANGO_DEBUG: True
         run: |
-          python3 -m coverage run manage.py test --verbosity=2
+          uv run coverage run manage.py test --verbosity=2
+
       - name: Generate coverage
         run: |
-          coverage xml -o coverage.xml
+          uv run coverage xml -o coverage.xml
+
       - name: Export data to codecov
         uses: codecov/codecov-action@v4
         with:
@@ -48,6 +43,7 @@ jobs:
           name: codecov-umbrella
           fail_ci_if_error: true
           verbose: true
+
       - name: Generate coverage
         run: |
-          python3 -m coverage report
+          uv run coverage report

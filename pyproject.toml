@@ -1,50 +1,32 @@
-[tool.poetry]
+[project]
 name = "taskcamp"
 version = "0.1.0"
 description = "simple project management tool powered by Django Framework"
-authors = ["Ilia Dmitriev <ilia.dmitriev@gmail.com>"]
-license = "MIT"
-
-[tool.poetry.dependencies]
-python = ">=3.10,<4.0"
-Django = "^5.1.7"
-celery = "^5.4.0"
-uWSGI = "^2.0.28"
-psycopg2 = "^2.9.10"
-redis = "^5.2.1"
-Markdown = "^3.7"
-pymemcache = "^4.0.0"
-tzdata = "^2025.2"
-
-[tool.poetry.group.dev.dependencies]
-flake8-isort = "^6.1.2"
-flake8-quotes = "^3.4.0"
-flake8-docstrings = "^1.7.0"
-flake8-annotations = "^3.1.1"
-flake8-comprehensions = "^3.16.0"
-flake8-pyproject = "^1.2.3"
-black = "^25.1.0"
-flake8-polyfill = "^1.0.2"
-pep8-naming = "^0.14.1"
-pdoc3 = "^0.11.6"
-coverage = {extras = ["toml"], version = "^7.7.1"}
-django-debug-toolbar = "^5.1.0"
-flake8 = "^7.1.2"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.flake8]
-ignore = ["D200", "D107", "I001", "I005",
-         "ANN002", "ANN003", "ANN101", "ANN401"]
-per-file-ignores = [
-    "test_*.py: S101,DAR101,D100",
-    "__init__.py:F401",
-    "test_*.py: S101,DAR101,D100",
-    "*/models/*: N815",
+authors = [{ name = "Ilia Dmitriev", email = "ilia.dmitriev@gmail.com" }]
+requires-python = ">=3.10"
+dependencies = [
+    "celery>=5.4.0",
+    "django>=5.1.7",
+    "markdown>=3.7",
+    "psycopg2>=2.9.10",
+    "pymemcache>=4.0.0",
+    "redis>=5.2.1",
+    "tzdata>=2025.2",
+    "uwsgi>=2.0.28",
 ]
-max-line-length = 88
+
+[dependency-groups]
+dev = [
+    "coverage[toml]>=7.7.1",
+    "django-debug-toolbar>=5.1.0",
+    "pdoc3>=0.11.6",
+    "pre-commit>=4.2.0",
+    "pre-commit-hooks>=5.0.0",
+    "ruff>=0.11.5",
+]
+
+[tool.ruff]
+line-length = 120
 exclude = [
     "manage.py",
     "*migrations*",
@@ -63,25 +45,17 @@ exclude = [
     "alembic/*",
 ]
 
-inline-quotes = "\""
-statistics = true
-count = true
-
-
-[tool.isort]
-profile = "black"
-
 [tool.coverage.run]
 source = ["."]
 branch = true
 data_file = ".coverage"
 omit = [
-	"venv/*",
-	"*/migrations/*.py",
-	"taskcamp/asgi.py",
-	"taskcamp/wsgi.py",
-	"taskcamp/settings.py",
-	"manage.py",
+    "venv/*",
+    "*/migrations/*.py",
+    "taskcamp/asgi.py",
+    "taskcamp/wsgi.py",
+    "taskcamp/settings.py",
+    "manage.py",
 ]
 
 
@@ -89,17 +63,6 @@ omit = [
 fail_under = 100
 show_missing = true
 
-[tool.pylint]
-max-line-length = 88
-
-[tool.pyright]
-venvPath = "./"
-venv = "venv"
-
-[tool.mypy]
-plugins = ["mypy_django_plugin.main"]
-strict_optional = true
 
 [tool.django-stubs]
 django_settings_module = "taskcamp.settings"
-

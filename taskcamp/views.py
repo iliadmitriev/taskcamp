@@ -7,6 +7,7 @@ Methods:
         http_500: 500-page handler
         status_page: status page handler function
 """
+
 from django.db import OperationalError as dbOperationalError
 from django.db import connections, router
 from django.http import HttpResponse, HttpRequest, Http404
