@@ -1,6 +1,7 @@
 """
 Url routers for home page.
 """
+
 from django.urls import path
 
 from .views import HomeView

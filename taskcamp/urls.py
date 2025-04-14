@@ -10,6 +10,7 @@ Attributes:
     handler500: name of method or a class for 500-page handler with exception
 
 """
+
 import pkgutil
 
 from django.conf import settings

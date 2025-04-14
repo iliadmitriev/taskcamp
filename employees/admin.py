@@ -1,4 +1,5 @@
 """Employee admin config module."""
+
 from typing import Optional
 
 from django.contrib import admin

@@ -1,6 +1,7 @@
 """
 Accounts views module.
 """
+
 from typing import Optional
 
 from django.contrib.auth import get_user_model, login
@@ -87,7 +88,6 @@ class AccountsRegisterActivate(View):
         data = cache.get(user_hash)
 
         if isinstance(data, dict) and data.get("token") == token:
-
             try:
                 user_id = data.get("user_id")
                 user = user_model.objects.get(pk=user_id)
@@ -99,9 +99,7 @@ class AccountsRegisterActivate(View):
 
                 cache.delete(user_hash)
 
-                tour_link = "{}://{}{}".format(
-                    self.request.scheme, get_current_site(self.request), reverse("home")
-                )
+                tour_link = "{}://{}{}".format(self.request.scheme, get_current_site(self.request), reverse("home"))
 
                 send_welcome_message.delay(user.email, tour_link)
 

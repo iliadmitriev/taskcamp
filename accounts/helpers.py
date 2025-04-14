@@ -1,6 +1,7 @@
 """
 Helper functions module.
 """
+
 import uuid
 from typing import Tuple
 

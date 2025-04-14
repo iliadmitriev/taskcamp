@@ -1,6 +1,7 @@
 """
 Documents views module.
 """
+
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import ImproperlyConfigured
 from django.db import IntegrityError

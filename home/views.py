@@ -1,6 +1,7 @@
 """
 Home page views module.
 """
+
 from typing import Dict, Any
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -45,16 +46,12 @@ class HomeView(LoginRequiredMixin, TemplateView):
             total=Count("id"),
             in_progress=Count("id", filter=Q(is_closed=False)),
             completed=Count("id", filter=Q(is_closed=True)),
-            overdue=Count(
-                "id", filter=Q(is_closed=False, due_date__lte=timezone.now())
-            ),
+            overdue=Count("id", filter=Q(is_closed=False, due_date__lte=timezone.now())),
         )
         context["projects"] = projects
         tasks = Task.objects.values("id").aggregate(
             total=Count("id"),
-            in_progress=Count(
-                "id", filter=Q(status__in=[TaskStatus.NEW, TaskStatus.IN_PROGRESS])
-            ),
+            in_progress=Count("id", filter=Q(status__in=[TaskStatus.NEW, TaskStatus.IN_PROGRESS])),
             overdue=Count(
                 "id",
                 filter=Q(
@@ -62,9 +59,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
                     end__lte=timezone.now(),
                 ),
             ),
-            completed=Count(
-                "id", filter=Q(status__in=[TaskStatus.DONE, TaskStatus.CLOSED])
-            ),
+            completed=Count("id", filter=Q(status__in=[TaskStatus.DONE, TaskStatus.CLOSED])),
         )
         context["tasks"] = tasks
         employees = (

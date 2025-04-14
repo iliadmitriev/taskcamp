@@ -1,6 +1,7 @@
 """
 Projects forms module.
 """
+
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
@@ -77,7 +78,5 @@ class CommentModelForm(forms.ModelForm):
         model = Comment
         fields = ["description"]
         widgets = {
-            "description": forms.Textarea(
-                attrs={"class": "form-control", "rows": 8, "placeholder": _("Comment")}
-            ),
+            "description": forms.Textarea(attrs={"class": "form-control", "rows": 8, "placeholder": _("Comment")}),
         }

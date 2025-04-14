@@ -1,6 +1,7 @@
 """
 Celery workers configuration module.
 """
+
 from kombu import Exchange, Queue
 
 worker_prefetch_multiplier = 1

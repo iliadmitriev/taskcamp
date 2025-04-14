@@ -4,6 +4,7 @@ Database simple router module.
 Attributes:
     SimpleDBRouter: class for simple router.
 """
+
 from typing import Optional
 
 from django.contrib.contenttypes.models import ContentType
@@ -39,9 +40,7 @@ class SimpleDBRouter:
         """
         return "master"
 
-    def allow_relation(
-            self, obj1: ContentType, obj2: ContentType, **hints
-    ) -> Optional[bool]:
+    def allow_relation(self, obj1: ContentType, obj2: ContentType, **hints) -> Optional[bool]:
         """Return the possibility to proceed create relation between models.
 
         Args:
@@ -55,9 +54,7 @@ class SimpleDBRouter:
         """
         return True
 
-    def allow_migrate(
-            self, db: str, app_label: str, model_name: str = None, **hints
-    ) -> Optional[bool]:
+    def allow_migrate(self, db: str, app_label: str, model_name: str = None, **hints) -> Optional[bool]:
         """Check if migration for model cold be applied to database db.
 
         Args:

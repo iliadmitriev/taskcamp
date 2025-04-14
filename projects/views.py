@@ -1,6 +1,7 @@
 """
 Projects views module.
 """
+
 from typing import Any, Dict
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -96,11 +97,7 @@ class ProjectDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
         context = super().get_context_data(**kwargs)
 
         project_id = self.kwargs.get("pk")
-        tasks = (
-            Task.objects.filter(project_id=project_id)
-            .order_by("id")
-            .select_related("assignee")
-        )
+        tasks = Task.objects.filter(project_id=project_id).order_by("id").select_related("assignee")
         if self.request.user.has_perm("projects.view_task"):
             context["task_list"] = tasks
 
@@ -108,13 +105,15 @@ class ProjectDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
             total=Count("id"),
             completed=Case(
                 When(total=0, then=0.0),
-                default=100.0 * Cast(
+                default=100.0
+                * Cast(
                     Count(
                         "id",
                         filter=~Q(status__in=[TaskStatus.NEW, TaskStatus.IN_PROGRESS]),
                     ),
                     output_field=FloatField(),
-                ) / Cast(Count("id"), output_field=FloatField()),
+                )
+                / Cast(Count("id"), output_field=FloatField()),
             ),
         )
 
@@ -141,9 +140,7 @@ class ProjectCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
 
     login_url = reverse_lazy("accounts:login")
     permission_required = ["projects.add_project"]
-    permission_denied_message = gettext_lazy(
-        "You have no permission to create Projects"
-    )
+    permission_denied_message = gettext_lazy("You have no permission to create Projects")
     template_name = "project_form.html"
     model = Project
     form_class = ProjectModelForm
@@ -210,9 +207,7 @@ class ProjectDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
 
     login_url = reverse_lazy("accounts:login")
     permission_required = ["projects.delete_project"]
-    permission_denied_message = gettext_lazy(
-        "You have no permission to delete Projects"
-    )
+    permission_denied_message = gettext_lazy("You have no permission to delete Projects")
     template_name = "project_confirm_delete.html"
     model = Project
     ordering = "id"
@@ -256,9 +251,7 @@ class TaskListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         ordering = self.request.GET.get("order_by") or self.ordering
         if self.request.GET.get("q"):
             search = self.request.GET.get("q")
-            tasks = tasks.filter(
-                Q(title__icontains=search) | Q(description__icontains=search)
-            )
+            tasks = tasks.filter(Q(title__icontains=search) | Q(description__icontains=search))
 
         return tasks.order_by(ordering)
 

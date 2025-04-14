@@ -1,6 +1,7 @@
 """
 Accounts admin module.
 """
+
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
 from django.contrib.auth.admin import UserAdmin
