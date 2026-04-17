@@ -7,9 +7,9 @@ from typing import Any, Dict
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Case, Count, F, FloatField, Q, When, QuerySet
 from django.db.models.functions import Cast
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import (
     CreateView,
     DeleteView,
@@ -22,6 +22,7 @@ from django.views.generic import (
 from documents.views import DocumentUpload
 
 from .forms import CommentModelForm, ProjectModelForm, TaskModelForm
+from .mixins import ProjectAuthMixin, ProjectURLMixin, TaskAuthMixin
 from .models import Comment, Project, Task, TaskStatus
 
 
@@ -43,7 +44,7 @@ class ProjectsListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = reverse_lazy("accounts:login")
     template_name = "project_list.html"
     permission_required = "projects.view_project"
-    permission_denied_message = gettext_lazy("You have no permission to view Projects")
+    permission_denied_message = _("You don't have permission to perform this action.")
     queryset = (
         Project.objects.annotate(
             status_count=Count("task"),
@@ -79,7 +80,7 @@ class ProjectDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
 
     login_url = reverse_lazy("accounts:login")
     permission_required = ["projects.view_project"]
-    permission_denied_message = gettext_lazy("You have no permission to view Projects")
+    permission_denied_message = _("You don't have permission to perform this action.")
     template_name = "project_detail.html"
     model = Project
 
@@ -117,43 +118,25 @@ class ProjectDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
             ),
         )
 
-        context["completed"] = completed_data.get("completed")
-        context["total"] = completed_data.get("total")
+        context["completed"] = completed_data.get("completed", 0.0)
+        context["total"] = completed_data.get("total", 0)
 
         return context
 
 
-class ProjectCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class ProjectCreateView(ProjectAuthMixin, ProjectURLMixin, LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """Create Project view.
 
     Attributes:
-        login_url (str): path to redirect not logged-in users.
-        template_name (str): template filename to render create form
         permission_required (str): permission requirements code
-        permission_denied_message (str): message for user without permissions
         model: model to create, link to Project
         form_class: link to class form
-
-    Methods:
-        get_success_url: returns success url path for redirect
     """
 
-    login_url = reverse_lazy("accounts:login")
     permission_required = ["projects.add_project"]
-    permission_denied_message = gettext_lazy("You have no permission to create Projects")
     template_name = "project_form.html"
     model = Project
     form_class = ProjectModelForm
-
-    def get_success_url(self) -> str:
-        """Return success url path for redirect.
-
-        Redirects to project detail view by project id.
-
-        Returns:
-            (str): success url path
-        """
-        return reverse_lazy("project-detail", kwargs={"pk": self.object.id})
 
 
 class ProjectEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -173,7 +156,7 @@ class ProjectEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     login_url = reverse_lazy("accounts:login")
     permission_required = ["projects.change_project"]
-    permission_denied_message = gettext_lazy("You have no permission to edit Projects")
+    permission_denied_message = _("You don't have permission to perform this action.")
     template_name = "project_form.html"
     model = Project
     form_class = ProjectModelForm
@@ -207,7 +190,7 @@ class ProjectDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
 
     login_url = reverse_lazy("accounts:login")
     permission_required = ["projects.delete_project"]
-    permission_denied_message = gettext_lazy("You have no permission to delete Projects")
+    permission_denied_message = _("You don't have permission to perform this action.")
     template_name = "project_confirm_delete.html"
     model = Project
     ordering = "id"
@@ -235,7 +218,7 @@ class TaskListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     login_url = reverse_lazy("accounts:login")
     permission_required = ["projects.view_task"]
-    permission_denied_message = gettext_lazy("You have no permission to view Tasks")
+    permission_denied_message = _("You don't have permission to perform this action.")
     template_name = "task_list.html"
     model = Task
     ordering = "id"
@@ -272,7 +255,7 @@ class TaskDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
 
     login_url = reverse_lazy("accounts:login")
     permission_required = ["projects.view_task"]
-    permission_denied_message = gettext_lazy("You have no permission to view Tasks")
+    permission_denied_message = _("You don't have permission to perform this action.")
     template_name = "task_detail.html"
     model = Task
 
@@ -314,7 +297,7 @@ class TaskCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
     login_url = reverse_lazy("accounts:login")
     permission_required = ["projects.add_task"]
-    permission_denied_message = gettext_lazy("You have no permission to view Tasks")
+    permission_denied_message = _("You don't have permission to perform this action.")
     template_name = "task_form.html"
     model = Task
     form_class = TaskModelForm
@@ -347,7 +330,7 @@ class TaskUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     login_url = reverse_lazy("accounts:login")
     permission_required = ["projects.change_task"]
-    permission_denied_message = gettext_lazy("You have no permission to edit Tasks")
+    permission_denied_message = _("You don't have permission to perform this action.")
     template_name = "task_form.html"
     model = Task
     form_class = TaskModelForm
@@ -363,21 +346,15 @@ class TaskUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         return reverse_lazy("projects-task-detail", kwargs={"pk": self.object.id})
 
 
-class TaskDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class TaskDeleteView(TaskAuthMixin, LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """Task confirm deletion view.
 
     Attributes:
-        login_url (str): path to redirect not logged-in users.
-        template_name (str): template filename to render edit form
         permission_required (str): permission requirements code
-        permission_denied_message (str): message for user without permissions
         model: model to delete, link to `Task`
-        success_url (str): success url path for redirect after delete operation
     """
 
-    login_url = reverse_lazy("accounts:login")
     permission_required = ["projects.delete_task"]
-    permission_denied_message = gettext_lazy("You have no permission to delete Tasks")
     template_name = "task_confirm_delete.html"
     model = Task
     success_url = reverse_lazy("projects-task-list")
@@ -397,7 +374,7 @@ class CommentCreate(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     login_url = reverse_lazy("accounts:login")
     permission_required = ["projects.add_comment"]
-    permission_denied_message = gettext_lazy("You have no permission to add Comment")
+    permission_denied_message = _("You don't have permission to perform this action.")
 
     def post(self, *args, **kwargs) -> HttpResponse:
         """Add Comment to post.
@@ -432,14 +409,8 @@ class TaskDocumentUpload(LoginRequiredMixin, DocumentUpload):
     model = Task
     model_field = "documents"
 
-    def get_success_url(self, *args, **kwargs) -> str:
-        """Return success url path for redirect.
-
-        Redirects to task detail view by task id
-
-        Returns:
-            (str): success url path
-        """
+    def get_success_url(self) -> str:
+        """Return success url path for redirect."""
         task_id = self.kwargs.get("pk")
         return reverse("projects-task-detail", args=(task_id,))
 
@@ -452,12 +423,6 @@ class ProjectDocumentUpload(LoginRequiredMixin, DocumentUpload):
     model_field = "documents"
 
     def get_success_url(self) -> str:
-        """Return success url path for redirect.
-
-        Redirects to project detail view by task id
-
-        Returns:
-            (str): success url path
-        """
+        """Return success url path for redirect."""
         project_id = self.kwargs.get("pk")
         return reverse("project-detail", args=(project_id,))

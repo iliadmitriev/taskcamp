@@ -2,19 +2,24 @@
 Documents views module.
 """
 
+import logging
+
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import ImproperlyConfigured
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect, HttpResponse
-from django.utils.translation import gettext_lazy
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 
 from documents.forms import DocumentModelForm
 from documents.models import Document
 
+logger = logging.getLogger(__name__)
+
 
 class DocumentUpload(PermissionRequiredMixin, FormView):
-    """Documents upload form view.
+    """Documents upload view.
 
     Usage:
         1) Override in subclasses which will be use as many-to-many model.
@@ -23,7 +28,7 @@ class DocumentUpload(PermissionRequiredMixin, FormView):
 
     template_name = "document_form.html"
     permission_required = "documents.add_document"
-    permission_denied_message = gettext_lazy("You have no permission to view Projects")
+    permission_denied_message = _("You don't have permission to upload documents.")
     form_class = DocumentModelForm
     model = None
     model_field = "documents"
@@ -37,11 +42,9 @@ class DocumentUpload(PermissionRequiredMixin, FormView):
             )
 
         obj_id = self.kwargs.get("pk")
-        obj = self.model.objects.get(pk=obj_id)
+        return get_object_or_404(self.model, pk=obj_id)
 
-        return obj
-
-    def form_valid(self, form: DocumentModelForm) -> HttpResponse:
+    def form_valid(self, form: DocumentModelForm) -> HttpResponseRedirect:
         """Validate form data and save to DB, redirect to success url."""
         form.save(commit=True)
 
@@ -49,19 +52,11 @@ class DocumentUpload(PermissionRequiredMixin, FormView):
             obj = self.get_object()
             documents = getattr(obj, self.model_field)
             documents.add(form.instance)
-        except IntegrityError:
+        except IntegrityError as e:
+            logger.warning(f"Document upload failed due to integrity error: {e}")
             pass
-
-        except AttributeError:
-            raise AttributeError(
-                f"There is no many to many attribute "
-                f"{self.model.__name__}.{self.model_field} "
-                f"Perhaps you should specify {self.model.__name__}"
-                f".model_field attribute"
-            )
+        except AttributeError as e:
+            logger.error(f"Document upload failed due to missing model_field: {e}")
+            raise
 
         return HttpResponseRedirect(self.get_success_url())
-
-    def __init__(self) -> None:
-        """Init instance."""
-        super(DocumentUpload, self).__init__()

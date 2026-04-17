@@ -111,7 +111,7 @@ cat >>.env << __EOF__
 DJANGO_DEBUG=True
 __EOF__
 
-#if you need to keep celery results 
+#if you need to keep celery results
 >>.env << __EOF__
 REDIS_RESULTS_BACKEND=redis://localhost:6379/0
 __EOF__
@@ -120,7 +120,7 @@ __EOF__
 ```shell
 docker run -d --name taskcamp-postgres --hostname taskcamp-postgres \
     -p 5432:5432 --env-file .env postgres:alpine
-    
+
 docker run -d -p 11211:11211 --name taskcamp-memcached memcached:alpine
 
 docker run -d -p 15672:15672 -p 5672:5672 \
@@ -189,7 +189,7 @@ docker network create taskcamp-network
 ```shell
 docker run -d --name taskcamp-postgres --hostname taskcamp-postgres \
     --env-file .env --network taskcamp-network postgres:14-alpine
-    
+
 docker run -d --name taskcamp-memcached --hostname taskcamp-memcached \
     --network taskcamp-network memcached:alpine
 
@@ -200,7 +200,7 @@ docker run -d \
 
 docker run -d --name taskcamp-mail --hostname taskcamp-mail \
   --network taskcamp-network -p 1080:1080 iliadmitriev/mailcatcher
- 
+
 docker run -d --name taskcamp-redis --hostname taskcamp-redis \
   --network taskcamp-network redis:alpine
 ```
@@ -284,7 +284,7 @@ docker-compose exec django python3 manage.py createsuperuser
 
 5. load test data if needed
 ```shell
-cat data.json | docker-compose exec -T django python3 manage.py loaddata --format=json - 
+cat data.json | docker-compose exec -T django python3 manage.py loaddata --format=json -
 ```
 
 Docker-compose clean up
@@ -340,7 +340,7 @@ celery -A worker worker -l INFO -Q email
 
 # Testing
 
-## Run tests 
+## Run tests
 
 1. run all tests
 ```shell

@@ -1,3 +1,5 @@
+from unittest import mock
+
 from django.core import mail
 from django.test import TestCase
 
@@ -20,11 +22,27 @@ class TestMyCeleryWorker(TestCase):
         self.assertEqual(mail.outbox[0].subject, "Your taskcamp account activation")
         self.assertEqual(res, 1)
 
+    def test_send_activation_email_error(self):
+        with mock.patch(
+            "worker.email.tasks.EmailMultiAlternatives.send",
+            side_effect=Exception("Email send failed"),
+        ):
+            with self.assertRaises(Exception):
+                send_activation_email("test@example.com", "https://example.com/")
+
     def test_send_welcome_message(self):
         res = send_welcome_message("test_email@exmaple.com", "https://example.com/")
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, "Taskcamp welcomes you")
         self.assertEqual(res, 1)
+
+    def test_send_welcome_message_error(self):
+        with mock.patch(
+            "worker.email.tasks.EmailMultiAlternatives.send",
+            side_effect=Exception("Email send failed"),
+        ):
+            with self.assertRaises(Exception):
+                send_welcome_message("test@example.com", "https://example.com/")
 
     def send_reset_email_success(self, html=True):
         send_reset_email(
@@ -51,3 +69,17 @@ class TestMyCeleryWorker(TestCase):
 
     def test_send_reset_email_not_html(self):
         self.send_reset_email_success(html=False)
+
+    def test_send_reset_email_error(self):
+        with mock.patch(
+            "worker.email.tasks.EmailMultiAlternatives.send",
+            side_effect=Exception("Email send failed"),
+        ):
+            with self.assertRaises(Exception):
+                send_reset_email(
+                    subject_template_name="email/password_reset_email_subj.txt",
+                    email_template_name="email/password_reset_email.html",
+                    context={"uid": "uid"},
+                    from_email="from@example.com",
+                    to_email="to@example.com",
+                )

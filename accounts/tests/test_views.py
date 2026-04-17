@@ -22,7 +22,7 @@ class AccountsRegisterViewTestCase(TestCase):
         ):
             response = self.client.post(
                 reverse("accounts:register"),
-                data={"email": email, "password1": "password", "password2": "password"},
+                data={"email": email, "password1": "SecurePass123!", "password2": "SecurePass123!"},
             )
             self.assertRedirects(
                 response,
