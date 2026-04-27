@@ -11,7 +11,7 @@ dependencies = [
     "psycopg2>=2.9.10",
     "pymemcache>=4.0.0",
     "redis>=5.2.1",
-    "tzdata>=2025.2",
+    "tzdata>=2026.2",
     "uwsgi>=2.0.28",
 ]
 
