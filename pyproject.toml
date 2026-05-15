@@ -22,7 +22,7 @@ dev = [
     "pdoc3>=0.11.6",
     "pre-commit>=4.6.0",
     "pre-commit-hooks>=5.0.0",
-    "ruff>=0.15.12",
+    "ruff>=0.15.13",
 ]
 
 [tool.ruff]
