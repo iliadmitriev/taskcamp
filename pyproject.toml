@@ -20,7 +20,7 @@ dev = [
     "coverage[toml]>=7.15.2",
     "django-debug-toolbar>=7.0.0",
     "pdoc3>=0.11.6",
-    "pre-commit>=4.6.0",
+    "pre-commit>=4.6.1",
     "pre-commit-hooks>=5.0.0",
     "ruff>=0.15.22",
 ]
